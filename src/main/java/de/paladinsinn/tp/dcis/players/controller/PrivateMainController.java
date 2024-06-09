@@ -16,7 +16,7 @@ public class PrivateMainController {
     public String getMethodName(Model model) {
         model.addAttribute("access_level", "Spieler");
 
-        return "dcis";
+        return "main";
     }
     
 }

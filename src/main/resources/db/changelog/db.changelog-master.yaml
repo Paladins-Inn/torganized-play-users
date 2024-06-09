@@ -1,0 +1,9 @@
+---
+databaseChangeLog:
+  - changeSet:
+      id: 20240609-rlichti-001
+      author: rlichti
+      context: init
+      labels: init
+      runInTransaction: true
+      comment: initialization of the database

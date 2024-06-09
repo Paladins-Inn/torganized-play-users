@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+.bg-torg-marble {
+    background-image: url("/commons/0.1.0/assets/img/marble.png");
+    background-size: cover;
+    width: 100%;
+    background-color: blue;
+    text-color: beige;
+}
+
+.bg-torg-thunder {
+    background-image: url("/commons/0.1.0/assets/img/thunder.png");
+    background-size: cover;
+    height: 100%;
+    background-color: darkblue;
+    text-color: beige;
+}
+
+.bg-torg-paper {
+    background-image: url("/commons/0.1.0/assets/img/paper.png"), url("/commons/0.1.0/assets/img/marble.png");
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    background-color: beige;
+}
+
+.torg-header-indent {
+    margin-left: 6em;
+}

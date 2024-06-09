@@ -1,0 +1,61 @@
+---
+spring:
+    application:
+        name: dcis-players
+        admin:
+            enabled: false
+    profiles:
+        active:
+        - LOCAL
+    main:
+        banner-mode: off
+
+    security:
+        user:
+            name: monitor
+            password: observing
+            roles: OBSERVER
+        oauth2:
+            client:
+                provider:
+                    delphi-council:
+                        issuerUri: https://sso.kaiserpfalz-edv.de/realms/delphi-council
+                        user-info-uri: https://sso.kaiserpfalz-edv.de/realms/delphi-council/protocol/openid-connect/userinfo
+                        token-uri: https://sso.kaiserpfalz-edv.de/realms/delphi-council/protocol/openid-connect/token
+                        authorization-uri: https://sso.kaiserpfalz-edv.de/realms/delphi-council/protocol/openid-connect/auth
+                        user-name-attribute: preferred_username
+            resourceserver:
+                jwt:
+                    issuerUri: https://sso.kaiserpfalz-edv.de/realms/delphi-council
+
+management:
+    tracing:
+        sampling:
+            probability: 1
+    endpoint:
+        health:
+            probes:
+                enabled: true
+    endpoints:
+        web:
+            exposure:
+                include: health,info,env,prometheus
+    health:
+        livenessState:
+            enabled: true
+        readinessState:
+            enabled: true
+
+
+
+## default connection pool
+#spring.datasource.hikari.connectionTimeout=20000
+#spring.datasource.hikari.maximumPoolSize=5
+
+## PostgreSQL
+#spring.datasource.url=jdbc:postgresql://localhost:5432/mydb
+#spring.datasource.username=mkyong
+#spring.datasource.password=password
+
+## create and drop table, good for testing, production set to none or comment it
+#spring.jpa.hibernate.ddl-auto=validate

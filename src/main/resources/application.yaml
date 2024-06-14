@@ -10,6 +10,10 @@ spring:
     main:
         banner-mode: off
 
+    mvc:
+        servlet:
+            path: /players
+
     security:
         user:
             name: monitor
@@ -17,6 +21,12 @@ spring:
             roles: OBSERVER
         oauth2:
             client:
+                registration:
+                    delphi-council:
+                        provider: delphi-council
+                        authorization-grant-type: authorization_code
+                        scope: openid,profile
+
                 provider:
                     delphi-council:
                         issuerUri: https://sso.kaiserpfalz-edv.de/realms/delphi-council
@@ -29,8 +39,11 @@ spring:
                     issuerUri: https://sso.kaiserpfalz-edv.de/realms/delphi-council
 
 server:
-    servlet:
-        contextPath: /players
+    error:  
+        whitelabel:
+            enabled: false
+#    servlet:
+#        contextPath: /players
 
 management:
     tracing:
@@ -69,3 +82,8 @@ logging:
         web: DEBUG
         security: DEBUG
         rest: DEBUG
+        org:
+            springframework:
+                security: DEBUG
+        de:
+            paladinsinn: TRACE

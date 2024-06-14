@@ -9,7 +9,7 @@ import jakarta.annotation.security.PermitAll;
 
 
 @Controller
-@RequestMapping("/players/dcis/")
+@RequestMapping("/dcis/")
 public class PrivateMainController {
     @GetMapping
     @PermitAll

@@ -28,6 +28,10 @@ spring:
                 jwt:
                     issuerUri: https://sso.kaiserpfalz-edv.de/realms/delphi-council
 
+server:
+    servlet:
+        contextPath: /players
+
 management:
     tracing:
         sampling:
@@ -59,3 +63,9 @@ management:
 
 ## create and drop table, good for testing, production set to none or comment it
 #spring.jpa.hibernate.ddl-auto=validate
+
+logging:
+    level:
+        web: DEBUG
+        security: DEBUG
+        rest: DEBUG

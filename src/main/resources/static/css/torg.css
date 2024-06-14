@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .bg-torg-marble {
-    background-image: url("/assets/img/marble.png");
+    background-image: url("/players/assets/img/marble.png");
     background-size: cover;
     width: 100%;
     background-color: blue;
@@ -9,7 +9,7 @@
 }
 
 .bg-torg-thunder {
-    background-image: url("/assets/img/thunder.png");
+    background-image: url("/players/assets/img/thunder.png");
     background-size: cover;
     height: 100%;
     background-color: blue;
@@ -17,7 +17,7 @@
 }
 
 .bg-torg-paper {
-    background-image: url("/assets/img/paper.png"), url("/assets/img/marble.png");
+    background-image: url("/players/assets/img/paper.png"), url("/players/assets/img/marble.png");
     background-size: 100% 100%;
     height: 100%;
     width: 100%;
@@ -36,7 +36,7 @@
     color: beige;
     align-content: center;
     align-self: center;
-    background-image: url("/assets/img/torg-header-double.png");
+    background-image: url("/players/assets/img/torg-header-double.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }

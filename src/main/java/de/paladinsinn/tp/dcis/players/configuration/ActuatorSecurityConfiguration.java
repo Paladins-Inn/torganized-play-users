@@ -16,9 +16,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,17 +28,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class ActuatorSecurityConfiguration {
-    @Value("${spring.mvc.servlet.path}")
-    private String contextPath;
-    
     @Bean
-    public SecurityFilterChain observabilitySecurity(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
-        MvcRequestMatcher.Builder matcher = new MvcRequestMatcher.Builder(introspector).servletPath(contextPath);
+    public SecurityFilterChain observabilitySecurity(HttpSecurity http) throws Exception {
+        AntPathRequestMatcher matcher = new AntPathRequestMatcher("/actuator/**");
 
         http
-            .securityMatcher(matcher.pattern("/actuator/**"))
+            .securityMatcher(matcher)
             .authorizeHttpRequests(r -> r
-                .requestMatchers(new AntPathRequestMatcher("/actuator/**"))
+                .requestMatchers(matcher)
                 .authenticated()
                 .anyRequest().hasRole("OBSERVER")
                 

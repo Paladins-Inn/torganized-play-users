@@ -10,9 +10,9 @@ spring:
     main:
         banner-mode: off
 
-    mvc:
-        servlet:
-            path: /players
+#    mvc:
+#        servlet:
+#            path: /players
 
     security:
         user:
@@ -30,10 +30,7 @@ spring:
                 provider:
                     delphi-council:
                         issuerUri: https://sso.kaiserpfalz-edv.de/realms/delphi-council
-                        user-info-uri: https://sso.kaiserpfalz-edv.de/realms/delphi-council/protocol/openid-connect/userinfo
-                        token-uri: https://sso.kaiserpfalz-edv.de/realms/delphi-council/protocol/openid-connect/token
-                        authorization-uri: https://sso.kaiserpfalz-edv.de/realms/delphi-council/protocol/openid-connect/auth
-                        user-name-attribute: preferred_username
+                        userNameAttribute: preferred_username
             resourceserver:
                 jwt:
                     issuerUri: https://sso.kaiserpfalz-edv.de/realms/delphi-council
@@ -42,8 +39,8 @@ server:
     error:  
         whitelabel:
             enabled: false
-#    servlet:
-#        contextPath: /players
+    servlet:
+        contextPath: /players
 
 management:
     tracing:
@@ -78,6 +75,8 @@ management:
 #spring.jpa.hibernate.ddl-auto=validate
 
 logging:
+    group:
+        rest: de.paladinsinn.tp.dcis.api,org.springframework.web,org.springframework.http
     level:
         web: DEBUG
         security: DEBUG

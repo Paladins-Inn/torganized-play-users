@@ -53,7 +53,7 @@ public class WebSecurityConfiguration {
             .oauth2Client(Customizer.withDefaults())
             .cors(Customizer.withDefaults())
             .csrf(Customizer.withDefaults())
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
             .rememberMe(Customizer.withDefaults())
             .oauth2ResourceServer(s -> s.jwt(Customizer.withDefaults()));
         http

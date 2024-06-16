@@ -24,8 +24,8 @@ spring:
                 registration:
                     delphi-council:
                         provider: delphi-council
-                        authorization-grant-type: authorization_code
-                        scope: openid,profile
+                        authorizationGrantType: authorization_code
+                        scope: openid,profile,roles
 
                 provider:
                     delphi-council:
@@ -34,6 +34,13 @@ spring:
             resourceserver:
                 jwt:
                     issuerUri: https://sso.kaiserpfalz-edv.de/realms/delphi-council
+                    jwkSetUri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+jwt:
+    auth:
+        converter:
+            resource-id: ${spring.security.oauth2.client.registration.delphi-council.client-id:changeme}
+            principal-attribute: principal_username
 
 server:
     error:  
@@ -77,12 +84,10 @@ management:
 logging:
     group:
         rest: de.paladinsinn.tp.dcis.api,org.springframework.web,org.springframework.http
+        security: org.springframework.security
     level:
         web: DEBUG
         security: DEBUG
         rest: DEBUG
-        org:
-            springframework:
-                security: DEBUG
         de:
             paladinsinn: TRACE

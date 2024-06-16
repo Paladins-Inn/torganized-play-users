@@ -78,8 +78,9 @@ public class ActuatorSecurityConfiguration {
 	public UserDetailsService userDetailsService() {
         log.debug("Observability user. name={}, password={}, roles=[{}]", username, password, roles);
 
-		UserDetails userDetails = User.withDefaultPasswordEncoder()
-			.username(username)
+		UserDetails userDetails = User
+            .withDefaultPasswordEncoder()
+            .username(username)
 			.password(password)
 			.roles(roles.split(","))
 			.build();

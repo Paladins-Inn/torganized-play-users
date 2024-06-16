@@ -11,6 +11,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -37,7 +39,7 @@ public class WebSecurityConfiguration {
     
 
     @Bean
-	public SecurityFilterChain userSecurityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
+	public SecurityFilterChain userSecurityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector, AuthenticationSuccessHandler successHandler) throws Exception {
         MvcRequestMatcher.Builder matcher = new MvcRequestMatcher.Builder(introspector);
 
 		http
@@ -45,17 +47,24 @@ public class WebSecurityConfiguration {
                 .requestMatchers(matcher.pattern("/dcis/**"), matcher.pattern("/oauth2/**"), matcher.pattern("/login/**"), matcher.pattern("/logout/**"))
             )
             .authorizeHttpRequests((authorize) -> authorize
-                    .anyRequest().hasAnyRole("ADMIN", "ORGA", "JUDGE", "GM", "PLAYER")
-            )
+                    .anyRequest().authenticated()
+            );
+        http
             .oauth2Client(Customizer.withDefaults())
             .cors(Customizer.withDefaults())
             .csrf(Customizer.withDefaults())
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .rememberMe(Customizer.withDefaults())
-            .oauth2ResourceServer(s -> s.jwt(Customizer.withDefaults()))
-            .logout(l -> l.addLogoutHandler(keycloakLogoutHandler).logoutSuccessUrl("/players/"))
-            .oauth2Login(Customizer.withDefaults())
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter)))
+            .oauth2ResourceServer(s -> s.jwt(Customizer.withDefaults()));
+        http
+            .logout(l -> l
+                .addLogoutHandler(keycloakLogoutHandler).logoutSuccessUrl("/players/")
+            )
+            .oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter))
+            );
+        http
+            .oauth2Login(l -> l.successHandler(successHandler))
             ;
 
         return http.build();
@@ -65,4 +74,11 @@ public class WebSecurityConfiguration {
 	public JwtDecoder jwtDecoder() {
 		return JwtDecoders.fromIssuerLocation(jwtIssuerUri);
 	}
+
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler();
+        handler.setDefaultTargetUrl("/dcis/");
+        return handler;
+    }
 }

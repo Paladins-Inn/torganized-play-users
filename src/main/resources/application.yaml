@@ -84,10 +84,9 @@ management:
 logging:
     group:
         rest: de.paladinsinn.tp.dcis.api,org.springframework.web,org.springframework.http
-        security: org.springframework.security
     level:
-        web: DEBUG
-        security: DEBUG
-        rest: DEBUG
+        web: INFO
+        security: INFO
+        rest: INFO
         de:
             paladinsinn: TRACE

@@ -35,6 +35,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * 
@@ -42,21 +45,21 @@ import org.springframework.stereotype.Component;
  * @since 2024-06-16
  */
 @Component
+@RequiredArgsConstructor
+@Slf4j
 public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
     private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
 
     private final JwtConverterProperties properties;
 
-    public JwtConverter(JwtConverterProperties properties) {
-        this.properties = properties;
-    }
-
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
         Collection<GrantedAuthority> authorities = Stream.concat(
                 jwtGrantedAuthoritiesConverter.convert(jwt).stream(),
                 extractResourceRoles(jwt).stream()).collect(Collectors.toSet());
+        log.info("JTW Converter. authorities={}", authorities);
+        
         return new JwtAuthenticationToken(jwt, authorities, getPrincipalClaimName(jwt));
     }
 
@@ -74,13 +77,17 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
         Map<String, Object> resource;
         Collection<String> resourceRoles;
 
-        if (resourceAccess == null
-                || (resource = (Map<String, Object>) resourceAccess.get(properties.getResourceId())) == null
-                || (resourceRoles = (Collection<String>) resource.get("roles")) == null) {
+        resource = (Map<String, Object>) resourceAccess.get(properties.getResourceId());
+        resourceRoles = (Collection<String>) resource.get("roles");
+
+        log.info("Java Web Token. jwt={}", jwt);
+        
+        if (resourceAccess == null || resource == null || resourceRoles == null) {
             return Set.of();
         }
+
         return resourceRoles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
                 .collect(Collectors.toSet());
     }
 }

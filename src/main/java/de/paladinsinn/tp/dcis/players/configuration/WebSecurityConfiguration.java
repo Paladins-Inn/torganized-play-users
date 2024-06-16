@@ -43,11 +43,12 @@ public class WebSecurityConfiguration {
         MvcRequestMatcher.Builder matcher = new MvcRequestMatcher.Builder(introspector);
 
 		http
-            .securityMatchers(m -> m
-                .requestMatchers(matcher.pattern("/dcis/**"), matcher.pattern("/oauth2/**"), matcher.pattern("/login/**"), matcher.pattern("/logout/**"))
-            )
             .authorizeHttpRequests((authorize) -> authorize
-                    .anyRequest().authenticated()
+                    .requestMatchers(matcher.pattern("/dcis/**")).authenticated()
+                    .requestMatchers(matcher.pattern("/oauth2/**")).authenticated()
+                    .requestMatchers(matcher.pattern("/login/**")).authenticated()
+                    .requestMatchers(matcher.pattern("/logout/**")).authenticated()
+                    .anyRequest().permitAll()
             );
         http
             .oauth2Client(Customizer.withDefaults())

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="de">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="de">
 
 <head>
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Delphi Council IS</title>
@@ -146,7 +146,15 @@
                 <div class="sb-sidenav-footer">
                     <!-- START dcis-players part -->
                     <div class="small">Logged in as:</div>
-                    -none-
+                    <span sec:authorize="isAnonymous()">---</span>
+                    <span sec:authorize="isAuthenticated()">
+                        <span sec:authentication="name"></span><br/>
+                        (<span sec:authorize="hasRole('ADMIN')">admin </span>
+                        <span sec:authorize="hasRole('ORGA')">orga </span>
+                        <span sec:authorize="hasRole('JUDGE')">judge </span>
+                        <span sec:authorize="hasRole('GM')">gm </span>
+                        <span sec:authorize="hasRole('PLAYER')">player </span>)
+                    </span>
                     <!-- END dcis-players-part -->
                 </div>
             </nav>

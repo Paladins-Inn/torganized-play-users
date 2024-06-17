@@ -41,6 +41,7 @@ jwt:
         converter:
             resource-id: ${spring.security.oauth2.client.registration.delphi-council.client-id:changeme}
             principal-attribute: principal_username
+            role-attribute: groups
 
 server:
     error:  
@@ -86,10 +87,7 @@ logging:
         rest: de.paladinsinn.tp.dcis.api,org.springframework.web,org.springframework.http
     level:
         web: INFO
-        security: TRACE
+        security: INFO
         rest: INFO
         de:
             paladinsinn: TRACE
-        org:
-            springframework:
-                security: TRACE

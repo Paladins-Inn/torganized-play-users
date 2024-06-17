@@ -39,4 +39,5 @@ import lombok.Data;
 public class JwtConverterProperties {
     private String resourceId;
     private String principalAttribute;
+    private String roleAttribute;
 }

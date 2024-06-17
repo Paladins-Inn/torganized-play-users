@@ -28,7 +28,7 @@ public class PrivateMainController {
             authentication.getAuthorities(), authentication.getDetails(), authentication.getPrincipal().getClass().getCanonicalName());
 
         DefaultOidcUser user = (DefaultOidcUser) authentication.getPrincipal();
-        log.info("Userinfo. claims={}", user.getUserInfo().getClaims());
+        log.info("Userinfo. claims={}, claims={}", user.getClaims(), user.getUserInfo().getClaims());
 
         return "main";
     }

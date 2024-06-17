@@ -1,29 +1,36 @@
 package de.paladinsinn.tp.dcis.players.configuration;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
+import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import com.jayway.jsonpath.JsonPath;
-
-import de.paladinsinn.tp.dcis.players.configuration.security.JwtGrantedAuthoritiesConverter;
 import de.paladinsinn.tp.dcis.players.configuration.security.KeycloakLogoutHandler;
-import groovy.transform.ToString;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,12 +53,10 @@ public class WebSecurityConfiguration {
         HttpSecurity http, 
         HandlerMappingIntrospector introspector, 
         AuthenticationSuccessHandler successHandler,
-        JwtConverter jwtConverter,
+        GrantedAuthoritiesMapper authoritiesMapper,
         KeycloakLogoutHandler keycloakLogoutHandler
         ) throws Exception {
         MvcRequestMatcher.Builder matcher = new MvcRequestMatcher.Builder(introspector);
-
-        log.info("Security filter chain created. jwtConverter={}", jwtConverter);
 
 		http
             .authorizeHttpRequests(authorize -> authorize
@@ -61,11 +66,16 @@ public class WebSecurityConfiguration {
                     .requestMatchers(matcher.pattern("/logout/**")).authenticated()
                     .anyRequest().permitAll()
             )
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(j -> j.jwtAuthenticationConverter(jwtConverter)))
             .oauth2Client(Customizer.withDefaults())
-            .oauth2Login(l -> l.successHandler(successHandler))
+            .oauth2Login(l -> l
+                .userInfoEndpoint(u -> u
+                    .userAuthoritiesMapper(authoritiesMapper)
+                )
+                .successHandler(successHandler)
+            )
             .logout(l -> l
-                .addLogoutHandler(keycloakLogoutHandler).logoutSuccessUrl("/players/")
+                .addLogoutHandler(keycloakLogoutHandler)
+                .logoutSuccessUrl("/players/")
             )
             .cors(Customizer.withDefaults())
             .csrf(Customizer.withDefaults())
@@ -78,7 +88,7 @@ public class WebSecurityConfiguration {
 
 	@Bean
 	public JwtDecoder jwtDecoder() {
-		return JwtDecoders.fromIssuerLocation(jwtIssuerUri);
+		return JwtDecoders.fromOidcIssuerLocation(jwtIssuerUri);
 	}
 
     @Bean
@@ -88,30 +98,52 @@ public class WebSecurityConfiguration {
         return handler;
     }
 
-    @Bean
-    public JwtConverter jwtConverter(JwtGrantedAuthoritiesConverter authoritiesConverter) {
-        return new JwtConverter(authoritiesConverter);
-    }
 
-    @ToString(includeNames = true)
-    static class JwtConverter implements Converter<Jwt, JwtAuthenticationToken> {
-        private final JwtGrantedAuthoritiesConverter authoritiesConverter;
-
-        public JwtConverter(final JwtGrantedAuthoritiesConverter authoritiesConverter) {
-            this.authoritiesConverter = authoritiesConverter;
-
-            log.info("JwtConverter created. authoritiesConverter={}", authoritiesConverter);
-        }
+    static class KeycloakGroupAuthorityMapper implements GrantedAuthoritiesMapper {
 
         @Override
-        public JwtAuthenticationToken convert(Jwt jwt) {
-            log.info("JWT received: jwt={}", jwt.getClaims());
+        public Collection<? extends GrantedAuthority> mapAuthorities(Collection<? extends GrantedAuthority> authorities) {
+            Set<GrantedAuthority> result = new HashSet<>();
 
-            final var authorities = authoritiesConverter.convert(jwt);
-            log.debug("authorities={}", authorities);
+            log.debug("Authority Mapper called. authorities={}", authorities);
 
-            final String username = JsonPath.read(jwt.getClaims(), "preferred_username");
-            return new JwtAuthenticationToken(jwt, authorities, username);
+            authorities.forEach(authority -> {
+                log.debug("Authority mapper working. authority={}", authority);
+
+                if (authority instanceof OidcUserAuthority) {
+                    OidcUserAuthority oidc = (OidcUserAuthority) authority;
+
+                    log.debug("Reading roles. oidc={}, groups={}", oidc, oidc.getUserInfo().getClaimAsString("groups"));
+
+                    result.addAll(oidc.getUserInfo().getClaimAsStringList("groups")
+                        .stream()
+                        .map(r -> { return "ROLE_" + r.toUpperCase(); })
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toSet())
+                    );
+                }
+            });
+
+            log.trace("Roles mapped. roles={}", result);
+            return result;
         }
+
+    }
+
+    @Bean
+    public GrantedAuthoritiesMapper userAuthoritiesMapper() {
+        return new KeycloakGroupAuthorityMapper();
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtConverter() {
+        JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
+        converter.setAuthoritiesClaimName("groups");
+        converter.setAuthorityPrefix("ROLE_");
+        
+        JwtAuthenticationConverter result = new JwtAuthenticationConverter();
+        result.setJwtGrantedAuthoritiesConverter(converter);
+
+        return result;
     }
 }

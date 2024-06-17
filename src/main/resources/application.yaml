@@ -25,7 +25,7 @@ spring:
                     delphi-council:
                         provider: delphi-council
                         authorizationGrantType: authorization_code
-                        scope: openid,profile,roles
+                        scope: openid,profile,roles,microprofile-jwt
 
                 provider:
                     delphi-council:
@@ -86,7 +86,10 @@ logging:
         rest: de.paladinsinn.tp.dcis.api,org.springframework.web,org.springframework.http
     level:
         web: INFO
-        security: INFO
+        security: TRACE
         rest: INFO
         de:
             paladinsinn: TRACE
+        org:
+            springframework:
+                security: TRACE

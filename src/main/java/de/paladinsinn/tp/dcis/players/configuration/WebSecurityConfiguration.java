@@ -54,7 +54,7 @@ public class WebSecurityConfiguration {
         log.info("Security filter chain created. jwtConverter={}", jwtConverter);
 
 		http
-            .authorizeHttpRequests((authorize) -> authorize
+            .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(matcher.pattern("/dcis/**")).authenticated()
                     .requestMatchers(matcher.pattern("/oauth2/**")).authenticated()
                     .requestMatchers(matcher.pattern("/login/**")).authenticated()
@@ -69,7 +69,7 @@ public class WebSecurityConfiguration {
             )
             .cors(Customizer.withDefaults())
             .csrf(Customizer.withDefaults())
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
             .rememberMe(Customizer.withDefaults())
             ;
 

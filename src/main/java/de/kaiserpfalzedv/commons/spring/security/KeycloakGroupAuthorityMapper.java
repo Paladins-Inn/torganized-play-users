@@ -1,4 +1,4 @@
-package de.paladinsinn.tp.dcis.players.configuration.security;
+package de.kaiserpfalzedv.commons.spring.security;
 
 import java.util.Collection;
 import java.util.HashSet;

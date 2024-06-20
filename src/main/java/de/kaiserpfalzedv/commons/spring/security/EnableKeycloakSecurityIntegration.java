@@ -15,29 +15,29 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.paladinsinn.tp.dcis.players.configuration.security;
+package de.kaiserpfalzedv.commons.spring.security;
 
 
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.validation.annotation.Validated;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import lombok.Data;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 
 
 /**
  * 
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2024-06-16
+ * @since 2024-06-20
  */
-@Data
-@Validated
-@Configuration
-@ConfigurationProperties(prefix = "jwt.auth.converter")
-public class JwtConverterProperties {
-    private String resourceId;
-    private String principalAttribute;
-    private String roleAttribute;
-}
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Documented
+@Import({ JwtConverterProperties.class, KeycloakGroupAuthorityMapper.class, KeycloakLogoutHandler.class })
+@EnableGlobalAuthentication
+public @interface EnableKeycloakSecurityIntegration {}

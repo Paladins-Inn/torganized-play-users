@@ -16,13 +16,15 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import de.paladinsinn.tp.dcis.players.configuration.security.KeycloakGroupAuthorityMapper;
-import de.paladinsinn.tp.dcis.players.configuration.security.KeycloakLogoutHandler;
+import de.kaiserpfalzedv.commons.spring.security.EnableKeycloakSecurityIntegration;
+import de.kaiserpfalzedv.commons.spring.security.KeycloakGroupAuthorityMapper;
+import de.kaiserpfalzedv.commons.spring.security.KeycloakLogoutHandler;
 import lombok.RequiredArgsConstructor;
 
 
 @Configuration
 @EnableWebSecurity(debug = false)
+@EnableKeycloakSecurityIntegration
 @Order(2)
 @RequiredArgsConstructor
 public class WebSecurityConfiguration {

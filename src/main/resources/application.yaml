@@ -91,3 +91,8 @@ logging:
         rest: INFO
         de:
             paladinsinn: TRACE
+        org:
+            springframework:
+                web:
+                    filter:
+                        CommonsRequestLoggingFilter: DEBUG

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="de">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="lang=${#locale.language}" th:lang="${lang}">
 
 <head>
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Delphi Council IS</title>
@@ -22,11 +22,10 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-torg-marble">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Delphi Council IS</a>
+        <a class="navbar-brand ps-3" href="/players/index.html"><span th:text="#{app.title}">Delphi Council IS</span></a>
 
         <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-                class="fas fa-bars"></i></button>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
@@ -72,39 +71,40 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark bg-torg-thunder" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <div sec:authorize="hasRole('ADMIN')">
-                            <div class="sb-sidenav-menu-heading">System Admin</div>
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard
-                            </a>
+                        <div sec:authorize="hasRole('PLAYER')">
+                            <div class="sb-sidenav-menu-heading" th:text="#{roles.player}"></div>
+                            <a class="nav-link" href="/players/dcis/player-dashboard"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
+                            <a class="nav-link" href="/players/dcis/stormknights"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
+                            <a class="nav-link" href="/players/dcis/player-dashboard"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
+                        </div>
+
+                        <div sec:authorize="hasRole('GM')">
+                            <div class="sb-sidenav-menu-heading" th:text="#{roles.gm}"></div>
+                            <a class="nav-link" href="/gaming/tables"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
+                            <a class="nav-link" href="/gaming/tables"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Publish new Table</a>
                         </div>
 
                         <div sec:authorize="hasRole('ORGA')">
-                            <div class="sb-sidenav-menu-heading">Campaign Orga</div>
+                            <div class="sb-sidenav-menu-heading" th:text="#{roles.orga}"></div>
                             <a class="nav-link" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard
                             </a>
                         </div>
 
                         <div sec:authorize="hasRole('JUDGE')">
-                            <div class="sb-sidenav-menu-heading">Campaign Judge</div>
+                            <div class="sb-sidenav-menu-heading" th:text="#{roles.judge}"></div>
                             <a class="nav-link" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard
                             </a>
                         </div>
 
-                        <div sec:authorize="hasRole('GM')">
-                            <div class="sb-sidenav-menu-heading">Game Master</div>
-                            <a class="nav-link" href="/gaming/tables"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
-                            <a class="nav-link" href="/gaming/tables"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Publish new Table</a>
+                        <div sec:authorize="hasRole('ADMIN')">
+                            <div class="sb-sidenav-menu-heading" th:text="#{roles.admin}"></div>
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard
+                            </a>
                         </div>
 
-                        <div sec:authorize="hasRole('PLAYER')">
-                            <div class="sb-sidenav-menu-heading">Player</div>
-                            <a class="nav-link" href="/players/dcis/player-dashboard"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
-                            <a class="nav-link" href="/players/dcis/stormknights"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
-                            <a class="nav-link" href="/players/dcis/player-dashboard"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
-                        </div>
 
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
                             data-bs-parent="#sidenavAccordion">
@@ -152,15 +152,15 @@
                 </div>
                 <div class="sb-sidenav-footer">
                     <!-- START dcis-players part -->
-                    <div class="small">Logged in as:</div>
+                    <div class="small"><span th:text="#{security.logged-in-as}"></span>:</div>
                     <span sec:authorize="isAnonymous()">---</span>
                     <span sec:authorize="isAuthenticated()">
                         <span sec:authentication="name"></span><br/>
-                        (<span sec:authorize="hasRole('ADMIN')">admin </span>
-                        <span sec:authorize="hasRole('ORGA')">orga </span>
-                        <span sec:authorize="hasRole('JUDGE')">judge </span>
-                        <span sec:authorize="hasRole('GM')">gm </span>
-                        <span sec:authorize="hasRole('PLAYER')">player </span>)
+                        (<span sec:authorize="hasRole('ADMIN')" th:text="#{roles.admin} | " ></span>
+                        <span sec:authorize="hasRole('ORGA')" th:text="#{roles.orga} | "></span>
+                        <span sec:authorize="hasRole('JUDGE')" th:text="#{roles.judge} | "></span>
+                        <span sec:authorize="hasRole('GM')" th:text="#{roles.gm} | "></span>
+                        <span sec:authorize="hasRole('PLAYER')" th:text="#{roles.player}"></span>)
                     </span>
                     <!-- END dcis-players-part -->
                 </div>

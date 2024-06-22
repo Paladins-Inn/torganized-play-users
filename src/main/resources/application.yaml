@@ -36,12 +36,11 @@ spring:
                     issuerUri: https://sso.kaiserpfalz-edv.de/realms/delphi-council
                     jwkSetUri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
-jwt:
-    auth:
-        converter:
-            resource-id: ${spring.security.oauth2.client.registration.delphi-council.client-id:changeme}
-            principal-attribute: principal_username
-            role-attribute: groups
+kp:
+    security:
+        keycloak:
+            group-authority-mapper:
+                role-attribute: groups
 
 server:
     error:  

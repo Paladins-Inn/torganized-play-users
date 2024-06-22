@@ -40,8 +40,7 @@
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <button class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Settings</a></li>
                     <li><a class="dropdown-item" href="#!">Activity Log</a></li>
@@ -53,8 +52,7 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarSystemSwitch" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-chair fa-fw"></i></a>
+                <a class="nav-link dropdown-toggle" id="navbarSystemSwitch" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-chair fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSystemSwitch">
                     <li><a class="dropdwon-item" href="#!">Players</a></li>
                     <li><a class="dropdwon-item" href="#!">Storm Knights</a></li>
@@ -156,11 +154,12 @@
                     <span sec:authorize="isAnonymous()">---</span>
                     <span sec:authorize="isAuthenticated()">
                         <span sec:authentication="name"></span><br/>
-                        (<span sec:authorize="hasRole('ADMIN')" th:text="#{roles.admin} | " ></span>
-                        <span sec:authorize="hasRole('ORGA')" th:text="#{roles.orga} | "></span>
-                        <span sec:authorize="hasRole('JUDGE')" th:text="#{roles.judge} | "></span>
-                        <span sec:authorize="hasRole('GM')" th:text="#{roles.gm} | "></span>
-                        <span sec:authorize="hasRole('PLAYER')" th:text="#{roles.player}"></span>)
+                        | <!-- remove blank
+                        --><span sec:authorize="hasRole('PLAYER')" th:text="#{roles.player} + ' | '"></span><!-- remove blank
+                        --><span sec:authorize="hasRole('GM')" th:text="#{roles.gm} + ' | '"></span><!-- remove blank
+                        --><span sec:authorize="hasRole('JUDGE')" th:text="#{roles.judge} + ' | '"></span><!-- remove blank
+                        --><span sec:authorize="hasRole('ORGA')" th:text="#{roles.orga} + ' | '"></span><!-- remove blank
+                        --><span sec:authorize="hasRole('ADMIN')" th:text="#{roles.admin} + ' | '"></span>
                     </span>
                     <!-- END dcis-players-part -->
                 </div>
@@ -294,11 +293,11 @@
             <footer class="py-4 bg-light mt-auto bg-dark">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small text-white">
-                        <div>Copyright &copy; 2023 Paladins Inn for Torganized Play</div>
+                        <div>Copyright &copy; <span th:text="#{frame.copyright}"></span></div>
                         <div>
-                            <a href="/players/privacy-policy">Privacy Policy</a>
+                            <a href="/players/privacy-policy" th:text="#{frame.privacy_policy}"></a>
                             &middot;
-                            <a href="/players/terms-and-conditions">Terms &amp; Conditions</a>
+                            <a href="/players/terms-and-conditions" th:text="#{frame.t_and_a}"></a>
                         </div>
                     </div>
                 </div>

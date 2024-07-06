@@ -3,12 +3,22 @@ spring:
     application:
         name: dcis-players
         admin:
-            enabled: false
-    profiles:
-        active:
-        - LOCAL
+            enabled: true
     main:
         banner-mode: off
+
+    datasource:
+        url: ${DB_pgbouncer-jdbc-uri}
+        username: ${DB_user}
+        password: ${DB_password}
+
+        hikari:
+            connectionTimeout: 20000
+            maximumPoolSize: 5
+
+        jpa:
+            hibernate:
+                ddl-auto: validate
 
 #    mvc:
 #        servlet:
@@ -69,17 +79,6 @@ management:
 
 
 
-## default connection pool
-#spring.datasource.hikari.connectionTimeout=20000
-#spring.datasource.hikari.maximumPoolSize=5
-
-## PostgreSQL
-#spring.datasource.url=jdbc:postgresql://localhost:5432/mydb
-#spring.datasource.username=mkyong
-#spring.datasource.password=password
-
-## create and drop table, good for testing, production set to none or comment it
-#spring.jpa.hibernate.ddl-auto=validate
 
 logging:
     group:

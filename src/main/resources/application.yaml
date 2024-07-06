@@ -11,20 +11,23 @@ spring:
         url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:changeme}
         username: ${DB_USER:postgres}
         password: ${DB_PASSWORD:postgres}
+        driverClassName: org.postgresql.Driver
 
         hikari:
             connectionTimeout: 20000
             maximumPoolSize: 5
 
-        jpa:
-            hibernate:
-                ddl-auto: validate
-                dialect: org.hibernate.dialect.PostgreSQLDialect
+    jpa:
+        database: POSTGRESQL
+        showSql: true
+        hibernate:
+            ddlAuto: validate
+            dialect: org.hibernate.dialect.PostgreSQLDialect
     
     liquibase:
         enabled: false
-        show-summary-output: log
-        ui-service: log
+        showSummaryOutput: console
+        uiService: console
 
 #    mvc:
 #        servlet:

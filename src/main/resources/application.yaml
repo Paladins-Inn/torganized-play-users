@@ -8,9 +8,9 @@ spring:
         banner-mode: off
 
     datasource:
-        url: jdbc:postgresql://${DB_pgbouncer_host}:${DB_pgbouncer_port}/${DB_dbname}
-        username: ${DB_USER}
-        password: ${DB_PASSWORD}
+        url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:changeme}
+        username: ${DB_USER:postgres}
+        password: ${DB_PASSWORD:postgres}
 
         hikari:
             connectionTimeout: 20000

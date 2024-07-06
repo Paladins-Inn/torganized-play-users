@@ -32,18 +32,20 @@ spring:
         oauth2:
             client:
                 registration:
-                    delphi-council:
-                        provider: delphi-council
+                    sso:
+                        clientId: ${SSO_CLIENT_ID}
+                        clientSecret: ${SSO_CLIENT_SECRET}
+                        provider: sso
                         authorizationGrantType: authorization_code
                         scope: openid,profile,roles,microprofile-jwt
 
                 provider:
-                    delphi-council:
-                        issuerUri: https://sso.kaiserpfalz-edv.de/realms/delphi-council
-                        userNameAttribute: preferred_username
+                    sso:
+                        issuerUri: ${SSO_URI}
+                        userNameAttribute: ${SSO_USER_NAME_ATTRIBUTE:preferred_username}
             resourceserver:
                 jwt:
-                    issuerUri: https://sso.kaiserpfalz-edv.de/realms/delphi-council
+                    issuerUri: ${SSO_URI}
                     jwkSetUri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 kp:

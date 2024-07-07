@@ -37,7 +37,7 @@ spring:
         user:
             name: monitor
             password: observing
-            roles: OBSERVER
+            roles: ACTUATOR
         oauth2:
             client:
                 registration:
@@ -74,6 +74,10 @@ server:
         contextPath: /players
 
 management:
+    port: 8081
+    contectPath: /
+    ssl:
+        enabled: false
     tracing:
         sampling:
             probability: 1

@@ -40,9 +40,11 @@
 
         <!-- Navbar-->
         <div class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-            <div class="nav-item dropdown">
-                <button class="nav-link dropdown-toggle" id="navbarUser" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></button>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUser">
+            <div class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <button class="nav-link dropdown-toggle" id="navbarUserMenu" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user fa-fw"></i><span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserMenu">
                     <a class="dropdown-item" href="#!">Settings</a>
                     <a class="dropdown-item" href="#!">Activity Log</a>
                     <hr class="dropdown-divider" />
@@ -50,16 +52,8 @@
                     <a sec:authorize="isAuthenticated()" class="dropdown-item" href="/players/logout">Logout</a>
                 </div>
             </div>
-
-            <div class="nav-item dropdown">
-                <button class="nav-link dropdown-toggle" id="navbarSystemSwitch" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-chair fa-fw"></i></button>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSystemSwitch">
-                    <a class="dropdwon-item" href="#!">Players</a>
-                    <a class="dropdwon-item" href="#!">Storm Knights</a>
-                    <a class="dropdwon-item" href="#!">Tables</a>
-                    <a class="dropdwon-item" href="#!">Games</a>
-                    <a class="dropdwon-item" href="#!">Threads</a>
-                </div>
+            <div class="nav-item" sec:authorize="isAnonymous()">
+                <button class="nav-link" id="navbarUserLogin" href="/players/dcis/" role="button" aria-expanded="false" th:text="#{security.log-in-prompt}"><i class="fas fa-user fa-fw"></i></button>
             </div>
         </div>
     </nav>

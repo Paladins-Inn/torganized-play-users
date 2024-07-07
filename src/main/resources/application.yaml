@@ -75,7 +75,7 @@ server:
 
 management:
     port: 8081
-    contectPath: /
+    contextPath: /
     ssl:
         enabled: false
     tracing:

@@ -39,31 +39,29 @@
         </form>
 
         <!-- Navbar-->
-        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-            <li class="nav-item dropdown">
+        <div class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <div class="nav-item dropdown">
                 <button class="nav-link dropdown-toggle" id="navbarUser" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUser">
-                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                    <li><hr class="dropdown-divider" /></li>
-                    <li><!--
-                        --><span sec:authorize="isAnonymous()"><a class="dropdown-item" href="/players/dcis/">Login</a></span><!--
-                        --><span sec:authorize="isAuthenticated()"><a class="dropdown-item" href="/players/logout">Logout</a></span><!--
-                    --></li>
-                </ul>
-            </li>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUser">
+                    <a class="dropdown-item" href="#!">Settings</a>
+                    <a class="dropdown-item" href="#!">Activity Log</a>
+                    <hr class="dropdown-divider" />
+                    <a sec:authorize="isAnonymous()" class="dropdown-item" href="/players/dcis/">Login</a>
+                    <a sec:authorize="isAuthenticated()" class="dropdown-item" href="/players/logout">Logout</a>
+                </div>
+            </div>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarSystemSwitch" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-chair fa-fw"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSystemSwitch">
-                    <li><a class="dropdwon-item" href="#!">Players</a></li>
-                    <li><a class="dropdwon-item" href="#!">Storm Knights</a></li>
-                    <li><a class="dropdwon-item" href="#!">Tables</a></li>
-                    <li><a class="dropdwon-item" href="#!">Games</a></li>
-                    <li><a class="dropdwon-item" href="#!">Threads</a></li>
-                </ul>
-            </li>
-        </ul>
+            <div class="nav-item dropdown">
+                <button class="nav-link dropdown-toggle" id="navbarSystemSwitch" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-chair fa-fw"></i></button>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSystemSwitch">
+                    <a class="dropdwon-item" href="#!">Players</a>
+                    <a class="dropdwon-item" href="#!">Storm Knights</a>
+                    <a class="dropdwon-item" href="#!">Tables</a>
+                    <a class="dropdwon-item" href="#!">Games</a>
+                    <a class="dropdwon-item" href="#!">Threads</a>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <div id="layoutSidenav">

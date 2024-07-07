@@ -41,21 +41,21 @@ spring:
         oauth2:
             client:
                 registration:
-                    sso:
+                    delphi-council:
+                        provider: delphi-council
                         clientId: ${SSO_CLIENT_ID}
                         clientSecret: ${SSO_CLIENT_SECRET}
-                        provider: sso
                         scope: openid,profile,roles,microprofile-jwt
                         authorizationGrantType: authorization_code
 
                 provider:
-                    sso:
+                    delphi-council:
                         issuerUri: ${SSO_URI}
                         userNameAttribute: ${SSO_USER_NAME_ATTRIBUTE:preferred_username}
             resourceserver:
                 jwt:
                     issuerUri: ${SSO_URI}
-                    jwkSetUri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+#                    jwkSetUri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 kp:
     security:

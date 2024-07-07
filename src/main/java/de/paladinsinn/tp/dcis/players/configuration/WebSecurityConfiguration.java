@@ -46,6 +46,7 @@ public class WebSecurityConfiguration {
             .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(matcher.pattern("/dcis/**")).authenticated()
                     .requestMatchers(matcher.pattern("/logout/**")).authenticated()
+                    .requestMatchers(matcher.pattern("/oauth2/authorization/sso")).permitAll()
                     .anyRequest().permitAll()
             )
             .oauth2Client(Customizer.withDefaults())

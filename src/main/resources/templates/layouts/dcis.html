@@ -150,22 +150,22 @@
                         </a>
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
-                    <!-- START dcis-players part -->
-                    <div class="small"><span th:text="#{security.logged-in-as}"></span>:</div>
-                    <span sec:authorize="isAnonymous()">---</span>
-                    <span sec:authorize="isAuthenticated()">
-                        <span sec:authentication="name"></span><br/>
-                        | <!-- remove blank
-                        --><span sec:authorize="hasRole('PLAYER')" th:text="#{roles.player} + ' | '"></span><!-- remove blank
-                        --><span sec:authorize="hasRole('GM')" th:text="#{roles.gm} + ' | '"></span><!-- remove blank
-                        --><span sec:authorize="hasRole('JUDGE')" th:text="#{roles.judge} + ' | '"></span><!-- remove blank
-                        --><span sec:authorize="hasRole('ORGA')" th:text="#{roles.orga} + ' | '"></span><!-- remove blank
-                        --><span sec:authorize="hasRole('ADMIN')" th:text="#{roles.admin} + ' | '"></span>
-                    </span>
-                    <!-- END dcis-players-part -->
+                <!-- START dcis-players part -->
+                <div sec:authorize="isAuthenticated()" class="sb-sidenav-footer">
+                    <div class="small" th:text="#{security.logged-in-as} + ':'"></div>
+                    <span sec:authentication="name"></span><br/>
+                    | <!-- remove blank
+                    --><span sec:authorize="hasRole('PLAYER')" th:text="#{roles.player} + ' | '"></span><!-- remove blank
+                    --><span sec:authorize="hasRole('GM')" th:text="#{roles.gm} + ' | '"></span><!-- remove blank
+                    --><span sec:authorize="hasRole('JUDGE')" th:text="#{roles.judge} + ' | '"></span><!-- remove blank
+                    --><span sec:authorize="hasRole('ORGA')" th:text="#{roles.orga} + ' | '"></span><!-- remove blank
+                    --><span sec:authorize="hasRole('ADMIN')" th:text="#{roles.admin} + ' | '"></span>
                 </div>
-            </nav>
+                <div sec:authorize="isAnonymous()" class="sb-sidenav-footer">
+                    <div><a href="/players/login" th:text="#{security.log-in-prompt}"></a></div>
+                </div>
+                <!-- END dcis-players-part -->
+                </nav>
         </div>
 
         <div id="layoutSidenav_content">

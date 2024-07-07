@@ -45,8 +45,6 @@ public class WebSecurityConfiguration {
 		http
             .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(matcher.pattern("/dcis/**")).authenticated()
-                    .requestMatchers(matcher.pattern("/oauth2/**")).authenticated()
-                    .requestMatchers(matcher.pattern("/login/**")).authenticated()
                     .requestMatchers(matcher.pattern("/logout/**")).authenticated()
                     .anyRequest().permitAll()
             )

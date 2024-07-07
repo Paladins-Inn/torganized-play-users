@@ -45,8 +45,8 @@ spring:
                         clientId: ${SSO_CLIENT_ID}
                         clientSecret: ${SSO_CLIENT_SECRET}
                         provider: sso
-                        authorizationGrantType: authorization_code
                         scope: openid,profile,roles,microprofile-jwt
+                        authorizationGrantType: authorization_code
 
                 provider:
                     sso:

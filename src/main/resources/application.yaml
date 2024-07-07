@@ -47,16 +47,18 @@ spring:
                         clientSecret: ${SSO_CLIENT_SECRET}
                         scope: openid,profile,roles,microprofile-jwt
                         authorizationGrantType: authorization_code
-                        clientAuthenticationMethod: client_secret_post
 
                 provider:
                     delphi-council:
                         issuerUri: ${SSO_URI}
+                        tokenUri: ${SSO_URI}/protocol/openid-connect/token
+                        jwkSetUri: ${SSO_URI}/protocol/openid-connect/certs
+                        userInfoUri: ${SSO_URI}/protocol/openid-connect/userinfo
                         userNameAttribute: ${SSO_USER_NAME_ATTRIBUTE:preferred_username}
             resourceserver:
                 jwt:
                     issuerUri: ${SSO_URI}
-#                    jwkSetUri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+                    jwkSetUri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 kp:
     security:

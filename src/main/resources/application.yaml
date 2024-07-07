@@ -47,6 +47,7 @@ spring:
                         clientSecret: ${SSO_CLIENT_SECRET}
                         scope: openid,profile,roles,microprofile-jwt
                         authorizationGrantType: authorization_code
+                        clientAuthenticationMethod: client_secret_post
 
                 provider:
                     delphi-council:
@@ -95,8 +96,8 @@ logging:
     group:
         rest: de.paladinsinn.tp.dcis.api,org.springframework.web,org.springframework.http
     level:
-        web: INFO
-        security: INFO
+        web: WARN
+        security: WARN
         rest: INFO
         liquibase: TRACE
         de:

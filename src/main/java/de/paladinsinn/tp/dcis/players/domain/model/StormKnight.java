@@ -59,7 +59,7 @@ import lombok.extern.jackson.Jacksonized;
 public class StormKnight implements HasId, HasNameSpace, HasName {
     /** The Database ID of the players account. */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "BIGINT", unique = true, nullable = false, insertable = true, updatable = false)
     @ToString.Include
     private Long id;

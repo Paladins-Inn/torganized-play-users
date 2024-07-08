@@ -57,7 +57,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Player implements HasId, HasNameSpace, HasName {
     /** The Database ID of the players account. */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "BIGINT", unique = true, nullable = false, insertable = true, updatable = false)
     @ToString.Include
     private Long id;

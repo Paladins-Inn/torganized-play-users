@@ -42,7 +42,7 @@ import lombok.extern.jackson.Jacksonized;
  */
 @Entity
 @Table(
-    name = "STORM_KNIGHTS",
+    name = "STORMKNIGHTS",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = {"ID"}),
         @UniqueConstraint(columnNames = {"UID"}),

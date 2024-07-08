@@ -12,6 +12,7 @@ import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -103,7 +104,7 @@ public class Player implements HasId, HasNameSpace, HasName {
     private String name;
 
     @Default
-    @OneToMany
+    @OneToMany(mappedBy = "player", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<StormKnight> stormKnights = new HashSet<>();
 
     /**

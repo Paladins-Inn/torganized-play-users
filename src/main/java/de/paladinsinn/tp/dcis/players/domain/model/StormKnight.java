@@ -10,6 +10,7 @@ import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -104,8 +105,8 @@ public class StormKnight implements HasId, HasNameSpace, HasName {
     @ToString.Include
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name ="PLAYER", columnDefinition = "BIGINT", unique = false, nullable = false, insertable = true, updatable = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name ="PLAYER", nullable = false)
     @Setter(AccessLevel.PROTECTED)
     private Player player;
 }

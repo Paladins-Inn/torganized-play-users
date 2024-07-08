@@ -25,7 +25,7 @@ spring:
             dialect: org.hibernate.dialect.PostgreSQLDialect
     
     liquibase:
-        enabled: false
+        enabled: true
         showSummaryOutput: console
         uiService: console
 

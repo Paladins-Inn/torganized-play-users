@@ -11,7 +11,6 @@ spring:
         url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:changeme}
         username: ${DB_USER:postgres}
         password: ${DB_PASSWORD:postgres}
-#        driverClassName: org.postgresql.Driver
 
         hikari:
             connectionTimeout: 20000
@@ -22,16 +21,11 @@ spring:
         showSql: true
         hibernate:
             ddlAuto: validate
-#            dialect: org.hibernate.dialect.PostgreSQLDialect
     
     liquibase:
         enabled: true
         showSummaryOutput: console
         uiService: console
-
-#    mvc:
-#        servlet:
-#            path: /players
 
     security:
         user:
@@ -51,14 +45,7 @@ spring:
                 provider:
                     delphi-council:
                         issuerUri: ${SSO_URI}
-                        tokenUri: ${SSO_URI}/protocol/openid-connect/token
-                        jwkSetUri: ${SSO_URI}/protocol/openid-connect/certs
-                        userInfoUri: ${SSO_URI}/protocol/openid-connect/userinfo
                         userNameAttribute: ${SSO_USER_NAME_ATTRIBUTE:preferred_username}
-            resourceserver:
-                jwt:
-                    issuerUri: ${SSO_URI}
-                    jwkSetUri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 kp:
     security:
@@ -106,7 +93,7 @@ logging:
         web: WARN
         security: WARN
         rest: INFO
-        liquibase: TRACE
+        liquibase: INFO
         de:
             paladinsinn: TRACE
         org:

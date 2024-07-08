@@ -26,6 +26,7 @@ import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
@@ -44,9 +45,10 @@ import lombok.extern.slf4j.Slf4j;
         @UniqueConstraint(columnNames = {"NAMESPACE", "NAME"})
     }
 )
-@AllArgsConstructor
 @Jacksonized
 @Builder(toBuilder = true, setterPrefix = "")
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @ToString(includeFieldNames = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(of = {"uid"})

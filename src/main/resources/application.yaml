@@ -37,6 +37,7 @@ spring:
                 registration:
                     sso:
                         provider: sso
+                        clientName: Delphi Council
                         clientId: ${SSO_CLIENT_ID}
                         clientSecret: ${SSO_CLIENT_SECRET}
                         scope: openid,profile,email,roles,microprofile-jwt,offline_access
@@ -47,7 +48,7 @@ spring:
                         userNameAttribute: ${SSO_USER_NAME_ATTRIBUTE:preferred_username}
             resourceserver:
                 jwt:
-                    issuerUri: ${SSO_URI}
+                    issuerUri: ${spring.security.oauth2.client.provider.sso.issuerUri}
                     jwkSetUri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 kp:

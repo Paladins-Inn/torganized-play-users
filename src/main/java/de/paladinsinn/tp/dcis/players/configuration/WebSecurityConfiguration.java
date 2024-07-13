@@ -57,7 +57,7 @@ public class WebSecurityConfiguration {
                 .tokenEndpoint(Customizer.withDefaults())
                 .userInfoEndpoint(Customizer.withDefaults())
             )
-            .oauth2ResourceServer(Customizer.withDefaults())
+            .oauth2ResourceServer(r -> r.disable())
             .logout(l -> l
                 .addLogoutHandler(keycloakLogoutHandler)
                 .logoutSuccessUrl("/players/")

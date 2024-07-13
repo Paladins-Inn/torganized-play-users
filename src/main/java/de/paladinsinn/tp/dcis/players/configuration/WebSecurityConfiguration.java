@@ -52,9 +52,7 @@ public class WebSecurityConfiguration {
             )
             .oauth2Client(Customizer.withDefaults())
             .oauth2Login(l -> l
-                .userInfoEndpoint(u -> u
-                    .userAuthoritiesMapper(authoritiesMapper)
-                )
+                .userInfoEndpoint(u -> u.userAuthoritiesMapper(authoritiesMapper))
                 .successHandler(successHandler)
             )
             .logout(l -> l
@@ -63,6 +61,7 @@ public class WebSecurityConfiguration {
             )
             .cors(Customizer.withDefaults())
             .csrf(Customizer.withDefaults())
+            
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
             .rememberMe(Customizer.withDefaults())
             ;

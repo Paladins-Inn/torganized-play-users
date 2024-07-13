@@ -54,6 +54,8 @@ public class WebSecurityConfiguration {
             .oauth2Login(l -> l
                 .userInfoEndpoint(u -> u.userAuthoritiesMapper(authoritiesMapper))
                 .successHandler(successHandler)
+                .tokenEndpoint(Customizer.withDefaults())
+                .userInfoEndpoint(Customizer.withDefaults())
             )
             .logout(l -> l
                 .addLogoutHandler(keycloakLogoutHandler)

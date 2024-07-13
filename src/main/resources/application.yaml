@@ -40,6 +40,7 @@ spring:
                         clientId: ${SSO_CLIENT_ID}
                         clientSecret: ${SSO_CLIENT_SECRET}
                         scope: openid,profile,email,roles,microprofile-jwt,offline_access
+                        authorizationGrantType: authorization_code
                 provider:
                     sso:
                         issuerUri: ${SSO_URI}
@@ -47,13 +48,13 @@ spring:
             resourceserver:
                 jwt:
                     issuerUri: ${SSO_URI}
-                    jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+                    jwkSetUri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 kp:
     security:
         keycloak:
-            group-authority-mapper:
-                role-attribute: groups
+            groupAuthorityMapper:
+                roleAttribute: groups
 
 server:
     error:  

@@ -94,8 +94,8 @@ logging:
         rest: de.paladinsinn.tp.dcis.api,org.springframework.web,org.springframework.http
     level:
         web: WARN
-        security: WARN
-        rest: INFO
+        security: TRACE
+        rest: TRACE
         liquibase: INFO
         de:
             paladinsinn: TRACE
@@ -104,5 +104,3 @@ logging:
                 web:
                     filter:
                         CommonsRequestLoggingFilter: DEBUG
-            apache:
-                http: DEBUG

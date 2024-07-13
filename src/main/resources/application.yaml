@@ -35,15 +35,15 @@ spring:
         oauth2:
             client:
                 registration:
-                    delphi-council:
-                        provider: delphi-council
+                    sso:
+                        provider: sso
                         clientId: ${SSO_CLIENT_ID}
                         clientSecret: ${SSO_CLIENT_SECRET}
                         scope: openid,profile,roles,microprofile-jwt
                         authorizationGrantType: authorization_code
 
                 provider:
-                    delphi-council:
+                    sso:
                         issuerUri: ${SSO_URI}
                         userNameAttribute: ${SSO_USER_NAME_ATTRIBUTE:preferred_username}
 

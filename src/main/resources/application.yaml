@@ -46,7 +46,7 @@ spring:
                     sso:
                         issuerUri: ${SSO_URI}
                         userNameAttribute: ${SSO_USER_NAME_ATTRIBUTE:preferred_username}
-            resourceserver
+            resourceserver:
                 jwt:
                     issuerUri: ${SSO_URI}
 

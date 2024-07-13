@@ -104,3 +104,5 @@ logging:
                 web:
                     filter:
                         CommonsRequestLoggingFilter: DEBUG
+            apache:
+                http: DEBUG

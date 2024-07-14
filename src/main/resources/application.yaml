@@ -8,9 +8,10 @@ spring:
         banner-mode: off
 
     datasource:
-        url: jdbc:postgresql://${PGO_pgbouncer-host:localhost}:${PGO_pgbouncer-port:5432}/${PGO_dbname:changeme}
+        url: ${PGO_pgbouncer-jdbc-uri}
         username: ${PGO_user:postgres}
-        password: ${DB_password:postgres}
+        password: ${PGO_password:postgres}
+        driverClassName: org.postgresql.Driver
 
         hikari:
             connectionTimeout: 20000
@@ -60,12 +61,13 @@ server:
     error:  
         whitelabel:
             enabled: false
+    port: ${HTTP_PORT:8080}
     servlet:
         contextPath: /players
 
 management:
     server:
-        port: 8081
+        port: ${METRICS_PORT:8081}
         contextPath: /
     ssl:
         enabled: false

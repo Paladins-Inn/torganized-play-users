@@ -8,9 +8,9 @@ spring:
         banner-mode: off
 
     datasource:
-        url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:changeme}
-        username: ${DB_USER:postgres}
-        password: ${DB_PASSWORD:postgres}
+        url: jdbc:postgresql://${PGO_pgbouncer-host:localhost}:${PGO_pgbouncer-port:5432}/${PGO_dbname:changeme}
+        username: ${PGO_user:postgres}
+        password: ${DB_password:postgres}
 
         hikari:
             connectionTimeout: 20000
@@ -37,15 +37,14 @@ spring:
                 registration:
                     sso:
                         provider: sso
-                        clientName: Delphi Council
                         clientId: ${SSO_CLIENT_ID}
                         clientSecret: ${SSO_CLIENT_SECRET}
-                        scope: openid,profile,email,roles,microprofile-jwt,offline_access
+                        scope: ${SSO_SCOPES}
                         authorizationGrantType: client_credentials
                 provider:
                     sso:
-                        issuerUri: ${SSO_URI}
-                        userNameAttribute: ${SSO_USER_NAME_ATTRIBUTE:preferred_username}
+                        issuerUri: ${SSO_ISSUER}
+                        userNameAttribute: ${SSO_USERNAME_ATTRIBUTE:preferred_username}
             resourceserver:
                 jwt:
                     issuerUri: ${spring.security.oauth2.client.provider.sso.issuerUri}

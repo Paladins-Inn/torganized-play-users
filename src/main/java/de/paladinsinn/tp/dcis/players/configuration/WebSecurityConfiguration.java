@@ -8,8 +8,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -28,8 +26,8 @@ import lombok.RequiredArgsConstructor;
 @Order(2)
 @RequiredArgsConstructor
 public class WebSecurityConfiguration {
-    @Value("${spring.security.oauth2.resourceserver.jwt.issuerUri}")
-    private String jwtIssuerUri;
+    @Value("${spring.security.oauth2.client.provider.sso.issuer-uri}")
+    private String issuerUri;
 
 
     @Bean
@@ -43,38 +41,31 @@ public class WebSecurityConfiguration {
         MvcRequestMatcher.Builder matcher = new MvcRequestMatcher.Builder(introspector);
 
 		http
-            .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(matcher.pattern("/login/**")).permitAll()
-                    .requestMatchers(matcher.pattern("/oauth2/**")).permitAll()
+            .authorizeHttpRequests(a -> a
                     .requestMatchers(matcher.pattern("/dcis/**")).authenticated()
-                    .requestMatchers(matcher.pattern("/logout/**")).authenticated()
                     .anyRequest().permitAll()
             )
-            .oauth2Client(Customizer.withDefaults())
             .oauth2Login(l -> l
-                .userInfoEndpoint(u -> u.userAuthoritiesMapper(authoritiesMapper))
-                .successHandler(successHandler)
+                .authorizationEndpoint(Customizer.withDefaults())
                 .tokenEndpoint(Customizer.withDefaults())
-                .userInfoEndpoint(Customizer.withDefaults())
+                .userInfoEndpoint(u -> u.userAuthoritiesMapper(authoritiesMapper)
+    )
             )
-            .oauth2ResourceServer(r -> r.disable())
             .logout(l -> l
                 .addLogoutHandler(keycloakLogoutHandler)
-                .logoutSuccessUrl("/players/")
+                .logoutSuccessUrl(issuerUri + "/protocol/openid-connect/logout")
             )
             .cors(Customizer.withDefaults())
             .csrf(Customizer.withDefaults())
             
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
             .rememberMe(Customizer.withDefaults())
+/*
+            
+            */
             ;
 
         return http.build();
-	}
-
-	@Bean
-	public JwtDecoder jwtDecoder() {
-		return JwtDecoders.fromOidcIssuerLocation(jwtIssuerUri);
 	}
 
     @Bean

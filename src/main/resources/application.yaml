@@ -1,5 +1,8 @@
 ---
 spring:
+    profiles:
+        active: LOCAL
+        
     application:
         name: dcis-players
         admin:
@@ -38,18 +41,13 @@ spring:
                 registration:
                     sso:
                         provider: sso
-                        clientId: ${SSO_CLIENT_ID}
-                        clientSecret: ${SSO_CLIENT_SECRET}
+                        client-id: ${SSO_CLIENT_ID}
+                        client-secret: ${SSO_CLIENT_SECRET}
                         scope: ${SSO_SCOPES}
-                        authorizationGrantType: client_credentials
+                        user-name-attribute: ${SSO_USERNAME_ATTRIBUTE}
                 provider:
                     sso:
-                        issuerUri: ${SSO_ISSUER}
-                        userNameAttribute: ${SSO_USERNAME_ATTRIBUTE:preferred_username}
-            resourceserver:
-                jwt:
-                    issuerUri: ${spring.security.oauth2.client.provider.sso.issuerUri}
-                    jwkSetUri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+                        issuer-uri: ${SSO_ISSUER}
 
 kp:
     security:
@@ -58,7 +56,7 @@ kp:
                 roleAttribute: groups
 
 server:
-    error:  
+    error:
         whitelabel:
             enabled: false
     port: ${HTTP_PORT:8080}
@@ -95,7 +93,7 @@ logging:
     group:
         rest: de.paladinsinn.tp.dcis.api,org.springframework.web,org.springframework.http
     level:
-        web: WARN
+        web: TRACE
         security: TRACE
         rest: TRACE
         liquibase: INFO
@@ -105,4 +103,4 @@ logging:
             springframework:
                 web:
                     filter:
-                        CommonsRequestLoggingFilter: DEBUG
+                        CommonsRequestLoggingFilter: TRACE

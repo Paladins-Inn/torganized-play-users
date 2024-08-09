@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import org.hibernate.envers.Audited;
+
 import de.kaiserpfalzedv.commons.api.resources.HasId;
 import de.kaiserpfalzedv.commons.api.resources.HasName;
 import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
@@ -38,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0
  */
 @Entity
+@Audited()
 @Table(
     name = "PLAYERS",
     uniqueConstraints = {

@@ -43,8 +43,8 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserMenu">
                     <div sec:authorize="isAuthenticated()">
-                        <a class="dropdown-item" href="#!">Settings</a>
-                        <a class="dropdown-item" href="#!">Activity Log</a>
+                        <a class="dropdown-item" href="#!" th:text="#{menu.player.settings}">Settings</a>
+                        <a class="dropdown-item" href="#!" th:text="#{menu.player.log}">Activity Log</a>
                         <hr class="dropdown-divider" />
                         <a class="dropdown-item" href="/players/logout" th:text="#{security.log-out-prompt}"></a>
                     </div>
@@ -61,9 +61,9 @@
                     <div class="nav">
                         <div sec:authorize="hasRole('PLAYER')">
                             <div class="sb-sidenav-menu-heading" th:text="#{roles.player}"></div>
-                            <a class="nav-link" href="/players/dcis/player-dashboard"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
-                            <a class="nav-link" href="/players/dcis/stormknights"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
-                            <a class="nav-link" href="/players/dcis/player-dashboard"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
+                            <a class="nav-link" href="/players/dcis/player-dashboard"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt fa-fw"></i></div><span th:text="#{menu.player.dashboard}">Dashboard</span></a>
+                            <a class="nav-link" href="/players/dcis/player-stormknights"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.player.storm-knights}">Storm Knights</span></a>
+                            <a class="nav-link" href="/players/dcis/player-games"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.player.games}">Games</span></a>
                         </div>
 
                         <div sec:authorize="hasRole('GM')">

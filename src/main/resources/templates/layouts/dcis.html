@@ -43,8 +43,8 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserMenu">
                     <div sec:authorize="isAuthenticated()">
-                        <a class="dropdown-item" href="#!" th:text="#{menu.player.settings}">Settings</a>
-                        <a class="dropdown-item" href="#!" th:text="#{menu.player.log}">Activity Log</a>
+                        <a class="dropdown-item" href="/players/dcis/${#authentication.name}/settings" th:text="#{menu.player.settings}">Settings</a>
+                        <a class="dropdown-item" href="/players/dcis/${#authentication.name}/log" th:text="#{menu.player.log}">Activity Log</a>
                         <hr class="dropdown-divider" />
                         <a class="dropdown-item" href="/players/logout" th:text="#{security.log-out-prompt}"></a>
                     </div>
@@ -59,38 +59,41 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark bg-torg-thunder" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
+                        <div sec:authorize="isAnonymous()">
+                            <a class="nav-link" href="/gaming/list"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.player.games}">Games</span></a>
+                            <a class="nav-link" href="/stormknights/list"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.player.storm-knights}">Storm Knights</span></a>
+                        </div>
+
                         <div sec:authorize="hasRole('PLAYER')">
                             <div class="sb-sidenav-menu-heading" th:text="#{roles.player}"></div>
-                            <a class="nav-link" href="/players/dcis/player-dashboard"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt fa-fw"></i></div><span th:text="#{menu.player.dashboard}">Dashboard</span></a>
-                            <a class="nav-link" href="/players/dcis/player-stormknights"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.player.storm-knights}">Storm Knights</span></a>
-                            <a class="nav-link" href="/players/dcis/player-games"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.player.games}">Games</span></a>
+                            <a class="nav-link" href="/players/dcis/${#authentication.name}/dashboard"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt fa-fw"></i></div><span th:text="#{menu.player.dashboard}">Dashboard</span></a>
+                            <a class="nav-link" href="/gaming/${#authentication.name}/list"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.player.games}">Games</span></a>
+                            <a class="nav-link" href="/stormknights/${#authentication.name}/list"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.player.storm-knights}">Storm Knights</span></a>
                         </div>
 
                         <div sec:authorize="hasRole('GM')">
                             <div class="sb-sidenav-menu-heading" th:text="#{roles.gm}"></div>
-                            <a class="nav-link" href="/gaming/tables"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
-                            <a class="nav-link" href="/gaming/tables"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Publish new Table</a>
+                            <a class="nav-link" href="/gaming/${#authentication.name}/list?filter=gm"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.gm.games}">My Sessions</span></a>
+                            <a class="nav-link" href="/gaming/missions/${#authentication.name}/create"><div class="sb-nav-link-icon"><i class="fas fa-plus-square-old fa-fw"></i></div><span th:text="#{menu.gm.new-mission}">Add Mission</span></a>
+                            <a class="nav-link" href="/gaming/table/${#authentication.name}/create"><div class="sb-nav-link-icon"><i class="fas fa-plus-square fa-fw"></i></div><span th:text="#{menu.gm.new-table}">Add Private Table</span></a>
                         </div>
 
                         <div sec:authorize="hasRole('ORGA')">
                             <div class="sb-sidenav-menu-heading" th:text="#{roles.orga}"></div>
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard
-                            </a>
+                            <a class="nav-link" href="/stormknights/orga/list"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.orga.storm-knights}">Storm Knights</span></a>
+                            <a class="nav-link" href="/gaming/orga/missions"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.orga.games}">Sessions</span></a>
+                            <a class="nav-link" href="/gaming/orga/tables"><div class="sb-nav-link-icon"><i class="fas fa-ticket fa-fw"></i></div><span th:text="#{menu.orga.games}">Local Tables</span></a>
                         </div>
 
                         <div sec:authorize="hasRole('JUDGE')">
                             <div class="sb-sidenav-menu-heading" th:text="#{roles.judge}"></div>
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard
-                            </a>
+                            <a class="nav-link" href="/stormknights/judge/list"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.orga.storm-knights}">Storm Knights</span></a>
+                            <a class="nav-link" href="/gaming/judge/missions"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.orga.games}">Sessions</span></a>
+                            <a class="nav-link" href="/gaming/judge/tables"><div class="sb-nav-link-icon"><i class="fas fa-ticket fa-fw"></i></div><span th:text="#{menu.orga.games}">Local Tables</span></a>
                         </div>
 
                         <div sec:authorize="hasRole('ADMIN')">
                             <div class="sb-sidenav-menu-heading" th:text="#{roles.admin}"></div>
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard
-                            </a>
                         </div>
 
 

@@ -2,11 +2,7 @@ package de.paladinsinn.tp.dcis.players.domain.model;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
-
-import org.hibernate.envers.Audited;
 
 import de.kaiserpfalzedv.commons.api.resources.HasId;
 import de.kaiserpfalzedv.commons.api.resources.HasName;
@@ -14,11 +10,9 @@ import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
@@ -27,12 +21,11 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * The player
@@ -40,7 +33,6 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0
  */
 @Entity
-@Audited()
 @Table(
     name = "PLAYERS",
     uniqueConstraints = {
@@ -53,10 +45,9 @@ import lombok.extern.slf4j.Slf4j;
 @Builder(toBuilder = true, setterPrefix = "")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Data
 @ToString(includeFieldNames = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(of = {"uid"})
-@Slf4j
 public class Player implements HasId, HasNameSpace, HasName {
     /** The Database ID of the players account. */
     @Id
@@ -105,42 +96,4 @@ public class Player implements HasId, HasNameSpace, HasName {
     @Size(min = 3, max = 100, message = "The length of the string must be between 3 and 100 characters long.") @Pattern(regexp = "^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$", message = "The string must match the pattern '^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$'")
     @ToString.Include
     private String name;
-
-    @Default
-    @OneToMany(mappedBy = "player", fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<StormKnight> stormKnights = new HashSet<>();
-
-    /**
-     * Adds a storm knight to this player.
-     * @param stormKnight The storm knight to be added to this player.
-     */
-    public void addStormKnight(StormKnight stormKnight) {
-        if (! stormKnights.contains(stormKnight)) {
-            stormKnights.add(stormKnight);
-        }
-
-        stormKnight.setPlayer(this);
-
-        log.info("Storm knight added to player. player={}, stormKnight={}", this, stormKnight);
-    }
-
-    public void removeStormKnight(StormKnight stormKnight) {
-        if (stormKnights.contains(stormKnight)) {
-            stormKnights.remove(stormKnight);
-        }
-
-        log.info("Storm knight removed from player. player={}, stormKnight={}", this, stormKnight);
-    }
-
-    public void transferStormKnight(StormKnight stormKnight, Player newPlayer) {
-        if (! stormKnights.contains(stormKnight)) {
-            log.warn("Storm knight can't be transferred. oldPlayer={}, newPlayer={}, stormKnight={}", this, newPlayer, stormKnight);
-            throw new IllegalArgumentException("The storm knight is not owned by this player.");
-        }
-
-        removeStormKnight(stormKnight);
-
-        newPlayer.addStormKnight(stormKnight);
-        log.info("Storm knight has been transferred. oldPlayer={}, newPlayer={}, stormKnight={}", this, newPlayer, stormKnight);
-    }
 }

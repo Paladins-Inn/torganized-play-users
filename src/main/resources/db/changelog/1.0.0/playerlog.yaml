@@ -1,0 +1,59 @@
+---
+databaseChangeLog:
+  - changeSet:
+      id: PLAYERS-LOG-init
+      author: rlichti
+      context: init
+      labels: "v1.0.0"
+      dbms: postgresql
+      created: 1.0.0
+      changes:
+        - createTable:
+            tableName: PLAYERLOG
+            remarks: 'This is the logfile for the player'
+            columns:
+              - name: ID
+                type: BIGINT
+                autoIncrement: true
+                startWith: 1
+                remarks: The Database internal ID
+                constraints:
+                  - primaryKey: true
+                  - primaryKeyName: PLAYERLOG_PK
+                  - nullable: false
+                  - notNullConstraintName: PLAYERLOG_ID_NN
+                  - unique: true
+                  - uniqueConstraintName: PLAYERLOG_ID_UK
+              - name: UID
+                type: UUID
+                valueComputed: uuid_generate_v4()
+                constraints:
+                  - nullable: false
+                  - notNullConstraintName: PLAYERLOG_UID_NN
+                  - unique: true
+                  - uniqueConstraintName: PLAYERLOG_UID_UK
+              - name: CREATED
+                type: TIMESTAMP WITH TIME ZONE
+                valueComputed: now()
+                constraints:
+                  - nullable: false
+                  - notNullConstraintName: PLAYERLOG_CREATED_NN
+              - name: PLAYER
+                type: BIGINT
+                remarks: 'The player referenced in this entry'
+                constraints:
+                  - nullable: false
+                  - notNullConstraintName: PLAYERLOG_PLAYER_NN
+                  - foreignKeyName: PLAYERLOG_PLAYER_FK
+                  - referencedTableName: PLAYERS
+                  - referencedColumnName: ID
+              - name: SYSTEM
+                type: VARCHAR(100)
+                constraints:
+                  - nullable: false
+                  - notNullConstraintName: PLAYERLOG_SYSTEM_NN
+              - name: ENTRY
+                type: VARCHAR(1000)
+                constraints:
+                  - nullable: false
+                  - notNullConstraintName: PLAYERLOG_ENTRY_NN

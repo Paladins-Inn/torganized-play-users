@@ -2,28 +2,27 @@ package de.paladinsinn.tp.dcis.players.domain.model;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.commons.api.resources.HasId;
 import de.kaiserpfalzedv.commons.api.resources.HasName;
 import de.kaiserpfalzedv.commons.api.resources.HasNameSpace;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 
@@ -45,7 +44,7 @@ import lombok.extern.jackson.Jacksonized;
 @Builder(toBuilder = true, setterPrefix = "")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
 @ToString(includeFieldNames = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(of = {"uid"})
 public class Player implements HasId, HasNameSpace, HasName {
@@ -85,7 +84,7 @@ public class Player implements HasId, HasNameSpace, HasName {
 
     /** The namespace this player is registered for. */
     @NotNull
-    @Column(name = "NAMESPACE", columnDefinition = "VARCHAR(100)", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "NAMESPACE", columnDefinition = "VARCHAR(100)", unique = false, nullable = false, insertable = true, updatable = false)
     @Size(min = 3, max = 100, message = "The length of the string must be between 3 and 100 characters long.") @Pattern(regexp = "^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$", message = "The string must match the pattern '^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$'")
     @ToString.Include
     private String nameSpace;
@@ -96,4 +95,14 @@ public class Player implements HasId, HasNameSpace, HasName {
     @Size(min = 3, max = 100, message = "The length of the string must be between 3 and 100 characters long.") @Pattern(regexp = "^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$", message = "The string must match the pattern '^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$'")
     @ToString.Include
     private String name;
+
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Default
+    @Setter(AccessLevel.PRIVATE)
+    @Getter(AccessLevel.PUBLIC)
+    private List<PlayerLogEntry> logs = new LinkedList<>();
+
+    public boolean addLogEntry(@NotNull final String system, @NotNull final String entry) {
+        return logs.add(PlayerLogEntry.builder().player(this).system(system).text(entry).build());
+    }
 }

@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
     public Player findByUid(UUID uid);
-    public Player findByNamespaceAndName(String namespace, String name);
+    public Player findByNameSpaceAndName(String nameSpace, String name);
     public Player findByName(String name);
     
 }

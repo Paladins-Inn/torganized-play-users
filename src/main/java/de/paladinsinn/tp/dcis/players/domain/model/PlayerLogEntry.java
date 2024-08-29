@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -69,7 +70,7 @@ public class PlayerLogEntry implements HasId {
 
     @NotNull
     @ManyToOne
-    @Column(name = "PLAYER", columnDefinition = "BIGINT", unique = false, nullable = false, insertable = true, updatable = false)
+    @JoinColumn(name = "PLAYER", columnDefinition = "BIGINT", unique = false, nullable = false, insertable = true, updatable = false)
     private Player player;
 
     @NotNull

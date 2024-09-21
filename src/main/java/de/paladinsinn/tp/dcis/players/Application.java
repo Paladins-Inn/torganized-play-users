@@ -1,5 +1,6 @@
 package de.paladinsinn.tp.dcis.players;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 
 import jakarta.servlet.DispatcherType;
+import lombok.Getter;
 
 /**
  * @author Roland T. Lichti {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -20,6 +22,10 @@ import jakarta.servlet.DispatcherType;
 @EnableJpaRepositories
 @EnableJpaAuditing
 public class Application extends SpringApplication {
+    @Value("${spring.application.name:PLAYERS}")
+    @Getter(onMethod = @__(@Bean))
+    private String applicationName;
+
     public static void main(String [] args) {
         SpringApplication.run(Application.class, args);
     }

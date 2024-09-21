@@ -48,8 +48,7 @@ public class WebSecurityConfiguration {
             .oauth2Login(l -> l
                 .authorizationEndpoint(Customizer.withDefaults())
                 .tokenEndpoint(Customizer.withDefaults())
-                .userInfoEndpoint(u -> u.userAuthoritiesMapper(authoritiesMapper)
-    )
+                .userInfoEndpoint(u -> u.userAuthoritiesMapper(authoritiesMapper))
             )
             .logout(l -> l
                 .addLogoutHandler(keycloakLogoutHandler)
@@ -60,9 +59,6 @@ public class WebSecurityConfiguration {
             
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
             .rememberMe(Customizer.withDefaults())
-/*
-            
-            */
             ;
 
         return http.build();

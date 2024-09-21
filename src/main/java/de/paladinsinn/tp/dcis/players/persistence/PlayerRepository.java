@@ -15,10 +15,13 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.paladinsinn.tp.dcis.players.domain.model;
+package de.paladinsinn.tp.dcis.players.persistence;
 
+import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -29,9 +32,13 @@ import org.springframework.stereotype.Repository;
  * @since 2024-08-18
  */
 @Repository
-public interface PlayerRepository extends JpaRepository<Player, Long> {
-    public Player findByUid(UUID uid);
-    public Player findByNameSpaceAndName(String nameSpace, String name);
-    public Player findByName(String name);
-    
+public interface PlayerRepository extends JpaRepository<PlayerJPA, Long> {
+    public PlayerJPA findByUid(UUID uid);
+    public PlayerJPA findByNameSpaceAndName(String nameSpace, String name);
+
+    public List<PlayerJPA> findByName(String name);
+    public Page<PlayerJPA> findByName(String name, Pageable pageable);
+
+    public List<PlayerJPA> findByNameSpace(String nameSpace);
+    public Page<PlayerJPA> findByNameSpace(String nameSpace, Pageable pageable);
 }

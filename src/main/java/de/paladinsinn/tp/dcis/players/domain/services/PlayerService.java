@@ -37,7 +37,7 @@ public class PlayerService {
     public Player createPlayer(Player player) {
         player = playerRepository.save(toPlayerJPA.apply(player));
 
-        logService.log(player.getUid(), applicationName, "player.created");
+        logService.log(player.getId(), applicationName, "player.created");
 
         log.info("Created player in database. player={}", player);
         return player;
@@ -45,7 +45,7 @@ public class PlayerService {
 
     public Player createPlayer(final UUID uid, final String nameSpace, final String name) {
         return createPlayer(PlayerImpl.builder()
-                .uid(uid)
+                .id(uid)
                 .nameSpace(nameSpace)
                 .name(name)
                 .build()
@@ -53,10 +53,10 @@ public class PlayerService {
     }
 
     public Optional<Player> retrievePlayer(final UUID uid) {
-        Player result = playerRepository.findByUid(uid);
+        Optional<PlayerJPA> result = playerRepository.findById(uid);
 
-        log.debug("Loaded player from database. uid={}, player={}", uid, result);
-        return Optional.ofNullable(result);
+        log.debug("Loaded player from database. uid={}, player={}", uid, result.isPresent() ? result.get() : "***none***");
+        return Optional.ofNullable(result.isPresent() ? toPlayer.apply(result.get()) : null);
     }
 
     public List<Player> retrievePlayers(final String nameSpace) {

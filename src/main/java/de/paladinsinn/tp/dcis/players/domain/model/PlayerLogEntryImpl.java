@@ -17,9 +17,9 @@ import lombok.extern.jackson.Jacksonized;
 @NoArgsConstructor
 @Getter
 @ToString(includeFieldNames = true)
-@EqualsAndHashCode(of = {"uid"})
+@EqualsAndHashCode(of = {"id"})
 public class PlayerLogEntryImpl implements PlayerLogEntry {
-    private UUID uid;
+    private UUID id;
     private OffsetDateTime created;
     private Player player;
 

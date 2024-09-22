@@ -7,7 +7,7 @@
     <parent>
         <artifactId>kp-spring-boot-parent</artifactId>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
-        <version>3.3.3-3</version>
+        <version>4.0.1-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
@@ -20,6 +20,7 @@
     </description>
 
     <properties>
+        <kp-commons.version>4.0.1-SNAPSHOT</kp-commons.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -50,7 +51,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.3.3</version>
+                <version>3.3.4</version>
                 <executions>
                     <execution>
                         <id>springify</id>
@@ -99,7 +100,7 @@
             <dependency>
                 <groupId>de.kaiserpfalz-edv.commons</groupId>
                 <artifactId>kp-commons-bom</artifactId>
-                <version>3.3.3-3</version>
+                <version>${kp-commons.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -109,11 +110,11 @@
     <dependencies>
         <!-- Communication -->
         <dependency>
-            <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
+            <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-rest</artifactId>
         </dependency>
         <dependency>
-            <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
+            <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-spring</artifactId>
         </dependency>
 
@@ -254,7 +255,7 @@
 
         <!-- Persistence -->
         <dependency>
-            <groupId>de.kaiserpfalz-edv.commons.modules</groupId>
+            <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-jpa</artifactId>
         </dependency>
         <dependency>

@@ -11,11 +11,16 @@ import de.paladinsinn.tp.dcis.players.domain.model.PlayerLogEntry;
 
 @Mapper
 public interface PlayerToJpa extends Function<Player, PlayerJPA> {
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "version", ignore = true)
+    @Mapping(target = "revId", ignore = true)
+    @Mapping(target = "modified", ignore = true)
+    @Mapping(target = "revisioned", ignore = true)
     @Mapping(target = "deleted", ignore = true)
     PlayerJPA apply(Player orig);
 
     List<PlayerLogEntryJPA> apply(List<PlayerLogEntry> orig);
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "version", ignore = true)
+    @Mapping(target = "modified", ignore = true)
+    @Mapping(target = "deleted", ignore = true)
     PlayerLogEntryJPA apply(PlayerLogEntry orig);
 }

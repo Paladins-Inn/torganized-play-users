@@ -17,9 +17,9 @@ import lombok.extern.jackson.Jacksonized;
 @NoArgsConstructor
 @Data
 @ToString(includeFieldNames = true)
-@EqualsAndHashCode(of = {"uid"})
+@EqualsAndHashCode(of = {"id"})
 public class PlayerImpl implements Player {
-    private UUID uid;
+    private UUID id;
     private OffsetDateTime created;
     private OffsetDateTime modified;
 

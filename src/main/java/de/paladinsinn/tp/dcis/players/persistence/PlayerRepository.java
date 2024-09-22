@@ -32,8 +32,7 @@ import org.springframework.stereotype.Repository;
  * @since 2024-08-18
  */
 @Repository
-public interface PlayerRepository extends JpaRepository<PlayerJPA, Long> {
-    public PlayerJPA findByUid(UUID uid);
+public interface PlayerRepository extends JpaRepository<PlayerJPA, UUID> {
     public PlayerJPA findByNameSpaceAndName(String nameSpace, String name);
 
     public List<PlayerJPA> findByName(String name);

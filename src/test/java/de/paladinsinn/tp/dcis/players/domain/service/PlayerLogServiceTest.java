@@ -1,6 +1,6 @@
 package de.paladinsinn.tp.dcis.players.domain.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.time.OffsetDateTime;
@@ -76,7 +76,7 @@ public class PlayerLogServiceTest {
         PlayerLogEntry result = sut.log(PLAYER.getId(), "test", "playerlog.test");
         log.debug("Logged message. entry={}", result);
         
-        assertThat(result.getPlayer()).isEqualTo(PLAYER);
+        assertEquals(PLAYER, result.getPlayer());
     }
 
     @Test(expected = IllegalArgumentException.class)

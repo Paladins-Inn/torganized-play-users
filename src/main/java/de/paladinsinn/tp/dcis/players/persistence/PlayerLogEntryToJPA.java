@@ -1,6 +1,5 @@
 package de.paladinsinn.tp.dcis.players.persistence;
 
-import java.util.List;
 import java.util.function.Function;
 
 import org.mapstruct.Mapper;
@@ -15,12 +14,9 @@ public interface PlayerLogEntryToJPA extends Function<PlayerLogEntry, PlayerLogE
     @Mapping(target = "modified", ignore = true)
     @Mapping(target = "deleted", ignore = true)
     PlayerLogEntryJPA apply(PlayerLogEntry orig);
-    List<PlayerLogEntryJPA> apply(List<? extends PlayerLogEntry> orig);
 
     @Mapping(target = "version", ignore = true)
-    @Mapping(target = "revId", ignore = true)
-    @Mapping(target = "modified", ignore = true)
     @Mapping(target = "revisioned", ignore = true)
-    @Mapping(target = "deleted", ignore = true)
-    PlayerJPA apply(Player orig);
+    @Mapping(target = "revId", ignore = true)
+    PlayerJPA map(Player orig);
 }

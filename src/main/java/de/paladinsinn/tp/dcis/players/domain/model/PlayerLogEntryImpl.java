@@ -21,6 +21,9 @@ import lombok.extern.jackson.Jacksonized;
 public class PlayerLogEntryImpl implements PlayerLogEntry {
     private UUID id;
     private OffsetDateTime created;
+    private OffsetDateTime modified;
+    private OffsetDateTime deleted;
+    
     private Player player;
 
     private String system;

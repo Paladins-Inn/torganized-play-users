@@ -22,6 +22,7 @@ public class PlayerImpl implements Player {
     private UUID id;
     private OffsetDateTime created;
     private OffsetDateTime modified;
+    private OffsetDateTime deleted;
 
     private String nameSpace;
     private String name;

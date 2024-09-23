@@ -33,28 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @RunWith(SpringRunner.class)
 @Slf4j
 public class PlayerLogServiceTest {
-    @Configuration
-    static class TestConfiguration {
-        @MockBean
-        @Getter(onMethod = @__(@Bean))
-        private PlayerLogRepository logRepository;
-    
-        @MockBean
-        @Getter(onMethod = @__(@Bean))
-        private PlayerRepository playerRepository;
-        
-        @Bean 
-        public PlayerLogEntryToImpl toPlayerLogEntry() {
-            return new PlayerLogEntryToImplImpl();
-        }
-
-        @Bean
-        public PlayerLogService sut() {
-            return new PlayerLogService(logRepository, playerRepository, toPlayerLogEntry());
-        }
-    }
-
-    private static final PlayerJPA player = PlayerJPA.builder()
+    private static final PlayerJPA PLAYER = PlayerJPA.builder()
         .id(UUID.randomUUID())
         .nameSpace("namespace")
         .name("name")
@@ -62,9 +41,9 @@ public class PlayerLogServiceTest {
         .revisioned(OffsetDateTime.now(ZoneOffset.UTC))
         .build();
 
-    private static final PlayerLogEntryJPA entry = PlayerLogEntryJPA.builder()
+    private static final PlayerLogEntryJPA LOG_ENTRY = PlayerLogEntryJPA.builder()
         .id(UUID.randomUUID())
-        .player(player)
+        .player(PLAYER)
         .created(OffsetDateTime.now(ZoneOffset.UTC))
         .system("system")
         .text("test.text")
@@ -91,19 +70,40 @@ public class PlayerLogServiceTest {
 
     @Test
     public void shouldLogANewLogentryWhenAnExistingPlayerIsUsed() {
-        when(playerRepository.findById(player.getId())).thenReturn(Optional.of(player));
-        when(logRepository.save(logEntry.capture())).thenReturn(entry);
+        when(playerRepository.findById(PLAYER.getId())).thenReturn(Optional.of(PLAYER));
+        when(logRepository.save(logEntry.capture())).thenReturn(LOG_ENTRY);
 
-        PlayerLogEntry result = sut.log(player.getId(), "test", "playerlog.test");
+        PlayerLogEntry result = sut.log(PLAYER.getId(), "test", "playerlog.test");
         log.debug("Logged message. entry={}", result);
         
-        assertThat(result.getPlayer()).isEqualTo(player);
+        assertThat(result.getPlayer()).isEqualTo(PLAYER);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldFailWhenThePlayerDoesNotExist() {
-        when(playerRepository.findById(player.getId())).thenThrow(new IllegalArgumentException());
+        when(playerRepository.findById(PLAYER.getId())).thenThrow(new IllegalArgumentException());
 
-        sut.log(player.getId(), "test", "playerlog.failure");
+        sut.log(PLAYER.getId(), "test", "playerlog.failure");
+    }
+
+    @Configuration
+    static class TestConfiguration {
+        @MockBean
+        @Getter(onMethod = @__(@Bean))
+        private PlayerLogRepository logRepository;
+    
+        @MockBean
+        @Getter(onMethod = @__(@Bean))
+        private PlayerRepository playerRepository;
+        
+        @Bean 
+        public PlayerLogEntryToImpl toPlayerLogEntry() {
+            return new PlayerLogEntryToImplImpl();
+        }
+
+        @Bean
+        public PlayerLogService sut() {
+            return new PlayerLogService(logRepository, playerRepository, toPlayerLogEntry());
+        }
     }
 }

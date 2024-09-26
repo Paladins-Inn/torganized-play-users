@@ -11,6 +11,7 @@ import jakarta.annotation.security.RolesAllowed;
 @Controller
 @RequestMapping("/dcis")
 public class LogController {
+    
     @GetMapping(path = "/log")
     @RolesAllowed("PLAYER")
     public String getMethodName(Model model) {

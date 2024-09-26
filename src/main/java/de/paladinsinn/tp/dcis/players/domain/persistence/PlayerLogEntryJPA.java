@@ -1,4 +1,4 @@
-package de.paladinsinn.tp.dcis.players.persistence;
+package de.paladinsinn.tp.dcis.players.domain.persistence;
 
 import java.util.UUID;
 

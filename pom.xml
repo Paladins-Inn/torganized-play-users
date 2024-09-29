@@ -7,7 +7,7 @@
     <parent>
         <artifactId>kp-spring-boot-parent</artifactId>
         <groupId>de.kaiserpfalz-edv.commons</groupId>
-        <version>4.0.1-SNAPSHOT</version>
+        <version>4.0.1</version>
         <relativePath/>
     </parent>
 
@@ -20,7 +20,7 @@
     </description>
 
     <properties>
-        <kp-commons.version>4.0.1-SNAPSHOT</kp-commons.version>
+        <kp-commons.version>4.0.1</kp-commons.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

@@ -29,7 +29,6 @@ import lombok.extern.jackson.Jacksonized;
     name = "PLAYERS",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = {"ID"}),
-        @UniqueConstraint(columnNames = {"UID"}),
         @UniqueConstraint(columnNames = {"NAMESPACE", "NAME"})
     }
 )

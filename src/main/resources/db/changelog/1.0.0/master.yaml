@@ -1,7 +1,7 @@
 ---
 databaseChangeLog:
   - include:
-      file: players.yaml
+      file: users.yaml
       relativeToChangelogFile: true
       context: init
       labels: 'v1.0.0'

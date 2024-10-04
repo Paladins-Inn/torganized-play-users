@@ -43,7 +43,7 @@ public class UserLogServiceTest {
 
     private static final UserLogEntryJPA LOG_ENTRY = UserLogEntryJPA.builder()
         .id(UUID.randomUUID())
-        .player(PLAYER)
+        .user(PLAYER)
         .created(OffsetDateTime.now(ZoneOffset.UTC))
         .system("system")
         .text("test.text")
@@ -69,11 +69,11 @@ public class UserLogServiceTest {
 
 
     @Test
-    public void shouldLogANewLogentryWhenAnExistingUserIsUsed() {
+    public void shouldLogANewLogEntryWhenAnExistingUserIsUsed() {
         when(playerRepository.findById(PLAYER.getId())).thenReturn(Optional.of(PLAYER));
         when(logRepository.save(logEntry.capture())).thenReturn(LOG_ENTRY);
 
-        UserLogEntry result = sut.log(PLAYER.getId(), "test", "playerlog.test");
+        UserLogEntry result = sut.log(PLAYER.getId(), "test", "playerLog.test");
         log.debug("Logged message. entry={}", result);
         
         assertEquals(PLAYER, result.getUser());
@@ -83,7 +83,7 @@ public class UserLogServiceTest {
     public void shouldFailWhenTheUserDoesNotExist() {
         when(playerRepository.findById(PLAYER.getId())).thenThrow(new IllegalArgumentException());
 
-        sut.log(PLAYER.getId(), "test", "playerlog.failure");
+        sut.log(PLAYER.getId(), "test", "playerLog.failure");
     }
 
     @Configuration

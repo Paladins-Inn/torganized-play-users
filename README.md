@@ -12,6 +12,17 @@ TBD
 
 The license for the software is LGPL 3.0 or newer.
 
+## Structure
+
+The SCS is a maven multiproject build.
+
+Module | Description | Deployment
+----|----|----
+dcis-users-amqp | The asynchronous part of the dcis-users SCS. It listens to AMQP for it's actions. | Java Library
+dcis-users | The synchronous part of the dcis-users. The web ui and the APIs provided resides in this deployment. | Java Library
+torganized-play-users-api | The model for the users part. It depends on spring but not on spring-boot. | OCI Container
+torganized-play-users-persistence | The persistence layer. It depends on spring-data-jpa. | OCI Container
+
 ## Architecture
 
 tl;dr (ok, only the bullshit bingo words):
@@ -34,3 +45,4 @@ And be prepared for some basic discussions about the architecture or software de
 
 ---
 Berlin, 2024-06-01
+Bensheim, 2024-10-06

@@ -6,8 +6,8 @@ import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
@@ -16,7 +16,7 @@ import lombok.extern.jackson.Jacksonized;
 @Builder(toBuilder = true, setterPrefix = "")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-@Data
+@Getter
 @ToString(includeFieldNames = true)
 @EqualsAndHashCode(of = {"id"})
 public class UserImpl implements User {

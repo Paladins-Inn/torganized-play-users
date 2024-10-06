@@ -24,7 +24,7 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
-    - name: Publish to GitHub Packages
-      run: mvn --batch-mode --no-transfer-progress deploy
+    - name: Build and Publish to GitHub Packages
+      run: for dir in api persistence ; do cd $dir ; mvn --batch-mode --no-transfer-progress deploy ; cd .. ; done
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

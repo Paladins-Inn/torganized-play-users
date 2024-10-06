@@ -33,12 +33,12 @@
 
     <distributionManagement>
         <repository>
-            <id>torganized-play-users</id>
-            <name>GitHub Packages for torganized-play-users</name>
+            <id>github</id>
+            <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/Paladins-Inn/torganized-play-users</url>
         </repository>
     </distributionManagement>
-
+    
 
     <build>
         <plugins>

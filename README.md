@@ -14,7 +14,7 @@ The license for the software is LGPL 3.0 or newer.
 
 ## Structure
 
-The SCS is a maven multiproject build.
+The SCS is a maven multi module build.
 
 Module | Description | Deployment
 ----|----|----
@@ -32,7 +32,7 @@ tl;dr (ok, only the bullshit bingo words):
 * 100 % test coverage of human generated code
 * Every line of code not written is bug free!
 
-Code test coverage for human generated code should be 100%, machine generated code is considered bugfree until proven wrong.
+Code test coverage for human generated code should be 100%, machine generated code is considered bug free until proven wrong.
 But every line that needs not be written is a bug free line without need to test it. So aim for not writing code.
 
 ## A note from the author

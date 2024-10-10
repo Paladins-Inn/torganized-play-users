@@ -44,6 +44,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          file: http/Dockerfile
           platforms: linux/amd64
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ env.RELEASE_VERSION }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}-http:${{ github.ref_name }}
@@ -54,6 +55,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          file: amqp/Dockerfile
           platforms: linux/amd64
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}:${{ env.RELEASE_VERSION }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}-amqp:${{ github.ref_name }}

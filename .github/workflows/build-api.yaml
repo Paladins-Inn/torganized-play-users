@@ -7,7 +7,6 @@ on:
     branches: ['main','develop']
     paths:
     - 'api/**'
-    - 'persistence/**'
   workflow_dispatch:
 
 # There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.

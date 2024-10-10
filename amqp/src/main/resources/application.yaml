@@ -1,4 +1,11 @@
 ---
+keycloak:
+    initializeOnStartup: true
+    realm: delphi-council
+    url: https://sso.kaiserpfalz-edv.de/admin/master/console/#/delphi-council
+    client-id: 
+    client-secret:
+
 spring:
     profiles:
         active: LOCAL

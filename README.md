@@ -4,9 +4,16 @@
 >
 > -- Balian, Kingdom of Heaven
 
+[![Build Containers](https://github.com/Paladins-Inn/torganized-play-users/actions/workflows/build-containers.yaml/badge.svg)](https://github.com/Paladins-Inn/torganized-play-users/actions/workflows/build-containers.yaml)
+
 ## Abstract
 
-TBD
+This SCS manages all user centric data and actions.
+Users need to register to the SSO provider configured in the applications.
+So no direct user credentials are managed here.
+But the user action log and the ratings of players and GMs are stored within this SCS.
+
+It provides a  WebUI and Components and an AMQP sink for asynchronous work.
 
 ## License
 
@@ -18,15 +25,17 @@ The SCS is a maven multi module build.
 
 Module | Description | Deployment
 ----|----|----
-dcis-users-amqp | The asynchronous part of the dcis-users SCS. It listens to AMQP for it's actions. | Java Library
-dcis-users | The synchronous part of the dcis-users. The web ui and the APIs provided resides in this deployment. | Java Library
-torganized-play-users-api | The model for the users part. It depends on spring but not on spring-boot. | OCI Container
-torganized-play-users-persistence | The persistence layer. It depends on spring-data-jpa. | OCI Container
+dcis-users-amqp | The asynchronous part of the dcis-users SCS. It listens to AMQP for it's actions. | OCI Container
+dcis-users-http | The synchronous part of the dcis-users. The web ui and the APIs provided resides in this deployment. | OCI Container
+torganized-play-users-api | The model for the users part. It depends on spring but not on spring-boot. | Public Library
+torganized-play-users-persistence | The persistence layer. It depends on spring-data-jpa. It is shared between both containers. | Private Library
 
 ## Architecture
 
 tl;dr (ok, only the bullshit bingo words):
 
+* Self Contained Systems
+* Event Driven
 * Immutable Objects
 * Relying heavily on generated code
 * 100 % test coverage of human generated code

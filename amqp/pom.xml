@@ -120,12 +120,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>de.paladins-inn.torganized-play</groupId>
-            <artifactId>torganized-play-users-persistence</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <!-- Communication -->
         <dependency>
             <groupId>de.kaiserpfalz-edv.commons</groupId>

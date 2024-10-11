@@ -22,6 +22,7 @@ package de.paladinsinn.tp.dcis.users.keycloak;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -33,18 +34,10 @@ import lombok.ToString;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class UserNotFoundException extends KeycloakException {
-    private final String user;
-
-    public UserNotFoundException(final String user) {
-        super("User not found");
-
-        this.user = user;
+@Slf4j
+public class KeycloakGroupAmbiguousException extends KeycloakGroupNotFoundException {
+    public KeycloakGroupAmbiguousException(final String group) {
+        super(group, "The group name is ambiguous");
     }
-
-    public UserNotFoundException(final String user, final String message) {
-        super(message);
-
-        this.user = user;
-    }
+    
 }

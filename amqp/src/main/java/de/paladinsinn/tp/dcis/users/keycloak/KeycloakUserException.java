@@ -18,11 +18,10 @@
 package de.paladinsinn.tp.dcis.users.keycloak;
 
 
-
+import de.kaiserpfalzedv.commons.api.resources.HasName;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -34,10 +33,24 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-@Slf4j
-public class KeycloakUserAmbiguousException extends KeycloakUserNotFoundException {
-    public KeycloakUserAmbiguousException(final String user) {
-        super(user, "The username is ambiguous");
+public class KeycloakUserException extends KeycloakException implements HasName {
+    private String name;
+
+    public KeycloakUserException(final String userName) {
+        super("Programmer is lazy and does not give any information about the problem with user '" + userName + "'.");
+
+        this.name = userName;
     }
-    
+
+    public KeycloakUserException(final String userName, final String message) {
+        super(message);
+
+        this.name = userName;
+    }
+
+    public KeycloakUserException(final String userName, final String message, final Throwable cause) {
+        super(message, cause);
+
+        this.name = userName;
+    }
 }

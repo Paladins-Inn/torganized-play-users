@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class KeycloakGroupAmbiguousException extends KeycloakGroupNotFoundException {
     public KeycloakGroupAmbiguousException(final String group) {
-        super(group, "The group name is ambiguous");
+        super(group, "The group name '" + group + "' is ambiguous");
     }
     
 }

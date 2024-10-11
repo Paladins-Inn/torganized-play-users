@@ -35,7 +35,7 @@ import lombok.ToString;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class KeycloakUserNotFoundException extends KeycloakUserException {
     public KeycloakUserNotFoundException(final String user) {
-        super(user, "User not found");
+        super(user, "User '" + user + "' not found");
     }
 
     public KeycloakUserNotFoundException(final String user, final String message) {

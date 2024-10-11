@@ -34,7 +34,7 @@ import lombok.ToString;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class KeycloakGroupNotFoundException extends KeycloakGroupException {
     public KeycloakGroupNotFoundException(final String group) {
-        super(group, "Group not found");
+        super(group, "Group '" + group + "' not found");
     }
 
     public KeycloakGroupNotFoundException(final String group, final String message) {

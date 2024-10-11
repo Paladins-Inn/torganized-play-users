@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class KeycloakUserAmbiguousException extends KeycloakUserNotFoundException {
     public KeycloakUserAmbiguousException(final String user) {
-        super(user, "The username is ambiguous");
+        super(user, "The username '" + user + "' is ambiguous");
     }
     
 }

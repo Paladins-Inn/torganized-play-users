@@ -35,7 +35,7 @@
 
     <modules>
         <module>api</module>
-        <module>persistence</module>
+        <module>commons</module>
         <module>http</module>
         <module>amqp</module>
     </modules>

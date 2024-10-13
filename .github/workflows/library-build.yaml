@@ -4,6 +4,12 @@ name: Build Libraries
 on:
   release:
     types: [created]
+  push:
+    branches: ['develop']
+    paths:
+    - 'api/**'
+    - 'commons/**'
+  workflow_dispatch:
 
 jobs:
   publish-api:
@@ -19,6 +25,8 @@ jobs:
         distribution: 'temurin'
     - name: Publish API
       run: cd api && mvn --batch-mode --no-transfer-progress deploy
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
   publish-commons:
@@ -34,3 +42,6 @@ jobs:
         distribution: 'temurin'
     - name: Publish commons
       run: cd commons && mvn --batch-mode --no-transfer-progress deploy
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

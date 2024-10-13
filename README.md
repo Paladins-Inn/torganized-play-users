@@ -4,7 +4,7 @@
 >
 > -- Balian, Kingdom of Heaven
 
-[![Build Containers](https://github.com/Paladins-Inn/torganized-play-users/actions/workflows/build-containers.yaml/badge.svg)](https://github.com/Paladins-Inn/torganized-play-users/actions/workflows/build-containers.yaml)
+[![Build Containers](https://github.com/Paladins-Inn/torganized-play-users/actions/workflows/build-artifacts.yaml/badge.svg)](https://github.com/Paladins-Inn/torganized-play-users/actions/workflows/build-artifacts.yaml)
 
 ## Abstract
 

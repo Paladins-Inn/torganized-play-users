@@ -9,7 +9,7 @@ spec:
   sources:
   - repoURL: quay.io/Kaiserpfalzedv/helm
     chart: microservice
-    targetRevision: 2.1.1
+    targetRevision: 2.1.2
     helm:
       valueFiles:
       - $values/torganized-play-dev/dcis-users.yaml

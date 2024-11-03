@@ -18,18 +18,12 @@ spring:
         banner-mode: off
 
     datasource:
-        url: ${PGO_pgbouncer-jdbc-uri}
-        username: ${PGO_user:postgres}
-        password: ${PGO_password:postgres}
-        driverClassName: org.postgresql.Driver
-
         hikari:
             connectionTimeout: 20000
             maximumPoolSize: 5
 
     jpa:
-        database: POSTGRESQL
-        showSql: true
+        showSql: false
         hibernate:
             ddlAuto: validate
     

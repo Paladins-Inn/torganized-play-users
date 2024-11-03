@@ -13,7 +13,7 @@
 
     <groupId>de.paladins-inn.torganized-play</groupId>
     <artifactId>torganized-play-users</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <description>
         Torganized Play - Delphi Council Information System. This is the player management part.

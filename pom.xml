@@ -41,6 +41,7 @@
     
 
     <build>
+        <finalName>app</finalName>
         <plugins>
             <plugin>
                 <groupId>org.projectlombok</groupId>

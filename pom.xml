@@ -108,19 +108,16 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- Communication -->
         <dependency>
             <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-spring</artifactId>
         </dependency>
 
+        <!-- Communication -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-
-        <!-- Messaging -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
@@ -250,35 +247,6 @@
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
 
-
-        <!-- Communication -->
-        <dependency>
-            <groupId>de.kaiserpfalz-edv.commons</groupId>
-            <artifactId>kp-commons-spring</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>1.6.2</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
-            <version>1.1.4</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.18.0</version>
-        </dependency>
 
         <!-- Observability -->
         <dependency>

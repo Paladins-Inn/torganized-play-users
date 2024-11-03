@@ -7,6 +7,7 @@
         "Dexpression",
         "Dforce",
         "PLAYERLOG",
+        "rabbitmq",
         "temurin"
     ]
 }

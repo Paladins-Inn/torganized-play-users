@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 RUN mvn --batch-mode --no-transfer-progress --file /usr/src/app/pom.xml clean package \
-    && cp ${SERVICE}/target/app.jar /
+    && cp target/app.jar /
 
 FROM quay.io/kaiserpfalzedv/java-runner:21-latest AS runner
 

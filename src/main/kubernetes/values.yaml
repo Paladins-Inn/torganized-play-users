@@ -1,0 +1,78 @@
+nameOverride: ""
+fullnameOverride: ""
+partOf: &partOf "torganized-play"
+version: "1.0.0-SNAPSHOT"
+
+image:
+  repository: quay.io/paladinsinn/dcis/dcis-users
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: *version
+
+imagePullSecrets: []
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  automount: false
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+tmpSize: 500Mi
+
+mounts: {}
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 8080
+  containerPort: 8080
+
+ingress:
+  enabled: false
+
+postgresql:
+  enabled: true
+
+sso:
+  enabled: false
+
+rabbitmq:
+  enabled: true
+  create: false
+  broker: &broker dcis-broker 
+  queues:
+  - name: dcis-users-log
+    spec:
+      name: "dcis.users.log"
+      type: stream
+      durable: true
+      arguments:
+        x-max-length-bytes: 1000000
+      rabbitmqClusterReference:
+        name: *broker
+  - name: dcis-users-register
+    spec:
+      name: "dcis.users.register"
+      type: stream
+      durable: true
+      arguments:
+        x-max-length-bytes: 1000000
+      rabbitmqClusterReference:
+        name: *broker
+
+applicationConfig:
+  enabled: false
+  type: yaml
+  data:
+    application:
+      name: changeme

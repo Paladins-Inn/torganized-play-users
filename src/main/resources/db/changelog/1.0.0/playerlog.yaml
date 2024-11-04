@@ -47,9 +47,9 @@ databaseChangeLog:
                   remarks: 'The player referenced in this entry'
                 constraints:
                   - nullable: false
-                  - notNullConstraintName: PLAYERLOG_PLAYER_NN
-                  - foreignKeyName: PLAYERLOG_PLAYER_FK
-                  - referencedTableName: PLAYERS
+                  - notNullConstraintName: PLAYERLOG_USER_NN
+                  - foreignKeyName: PLAYERLOG_USERS_FK
+                  - referencedTableName: USERS
                   - referencedColumnName: ID
               - column:
                   name: SYSTEM

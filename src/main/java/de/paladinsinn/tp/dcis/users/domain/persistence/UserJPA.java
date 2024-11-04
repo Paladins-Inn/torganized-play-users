@@ -27,7 +27,7 @@ import lombok.extern.jackson.Jacksonized;
  */
 @Entity
 @Table(
-    name = "PLAYERS",
+    name = "USERS",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = {"ID"}),
         @UniqueConstraint(columnNames = {"NAMESPACE", "NAME"})

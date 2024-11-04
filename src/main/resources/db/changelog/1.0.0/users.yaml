@@ -1,15 +1,15 @@
 ---
 databaseChangeLog:
   - changeSet:
-      id: PLAYERS-init
+      id: USERS-init
       author: rlichti
       context: init
-      labels: 'v1.0.0,player'
+      labels: 'v1.0.0,user'
       dbms: postgresql
       created: '1.0.0'
       changes:
         - createTable:
-            tableName: PLAYERS
+            tableName: USERS
             remarks: The player connected to the torganized play
             columns:
               - column:
@@ -20,34 +20,34 @@ databaseChangeLog:
                   remarks: The Database internal ID
                 constraints:
                   - primaryKey: true
-                  - primaryKeyName: PLAYERS_PK
+                  - primaryKeyName: USERS_PK
                   - nullable: false
-                  - notNullConstraintName: PLAYERS_ID_NN
+                  - notNullConstraintName: USERS_ID_NN
                   - unique: true
-                  - uniqueConstraintName: PLAYERS_ID_UK
+                  - uniqueConstraintName: USERS_ID_UK
               - column:
                   name: UID
                   type: UUID
                   valueComputed: uuid_generate_v4()
                 constraints:
                   - nullable: false
-                  - notNullConstraintName: PLAYERS_UID_NN
+                  - notNullConstraintName: USERS_UID_NN
                   - unique: true
-                  - uniqueConstraintName: PLAYERS_UID_UK
+                  - uniqueConstraintName: USERS_UID_UK
               - column:
                   name: CREATED
                   type: TIMESTAMP WITH TIME ZONE
                   valueComputed: now()
                 constraints:
                   - nullable: false
-                  - notNullConstraintName: PLAYERS_CREATED_NN
+                  - notNullConstraintName: USERS_CREATED_NN
               - column:
                   name: MODIFIED
                   type: TIMESTAMP WITH TIME ZONE
                   valueComputed: now()
                 constraints:
                   - nullable: false
-                  - notNullConstraintName: PLAYERS_MODIFIED_NN
+                  - notNullConstraintName: USERS_MODIFIED_NN
               - column:
                   name: DELETED
                   type: TIMESTAMP WITH TIME ZONE
@@ -57,15 +57,15 @@ databaseChangeLog:
                   defaultValue: './.'
                 constraints:
                   - nullable: false
-                  - notNullConstraintName: PLAYERS_NAMESPACE_NN
+                  - notNullConstraintName: USERS_NAMESPACE_NN
               - column:
                   name: NAME
                   type: VARCHAR(100)
                 constraints:
                   - nullable: false
-                  - notNullConstraintName: PLAYERS_NAME_NN
+                  - notNullConstraintName: USERS_NAME_NN
         - addUniqueConstraint:
-            constraintName: PLAYERS_NAME_UK
-            tableName: PLAYERS
+            constraintName: USERS_NAME_UK
+            tableName: USERS
             columnNames: 'NAMESPACE,NAME'
         

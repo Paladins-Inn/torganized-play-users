@@ -120,3 +120,22 @@ databaseChangeLog:
           constraints:
           - nullable: false
           - notNullConstraintName: USERS_NAMESPACE_NN
+
+- changeSet:
+    id: PLAYERLOG-add-version
+    author: rlichti
+    context: init
+    labels: 'v1.0.4,user'
+    dbms: postgresql
+    created: '1.0.4'
+    changes:
+    - addColumn:
+        tableName: PLAYERLOG
+        columns:
+        - column:
+            name: VERSION
+            type: BIGINT
+            defaultValueNumeric: 0
+          constraints:
+          - nullable: false
+          - notNullConstraintName: PLAYERLOG_VERSION_NN

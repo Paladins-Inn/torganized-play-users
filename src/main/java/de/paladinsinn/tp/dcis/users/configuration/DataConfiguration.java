@@ -17,22 +17,22 @@
  */
 package de.paladinsinn.tp.dcis.users.configuration;
 
-
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.envers.repository.config.EnableEnversRepositories;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
 /**
+ * Configures the data persistence layer for this app.
  * 
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2024-08-09
  */
 @Configuration
-@EnableJpaRepositories(basePackages = "de.paladinsinn.tp.dcis.users.persistence")
+@EnableJpaRepositories(basePackages = "de.paladinsinn.tp.dcis.users.domain.persistence")
+@EnableJpaAuditing
 @EnableEnversRepositories
 @EnableTransactionManagement
 public class DataConfiguration {

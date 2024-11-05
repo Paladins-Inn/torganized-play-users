@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 
 import jakarta.servlet.DispatcherType;
@@ -19,8 +17,6 @@ import lombok.Getter;
  * @since 2024-06-09
  */
 @SpringBootApplication
-@EnableJpaRepositories
-@EnableJpaAuditing
 public class Application extends SpringApplication {
     @Value("${spring.application.name:PLAYERS}")
     @Getter(onMethod = @__(@Bean))

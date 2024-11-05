@@ -30,10 +30,6 @@ databaseChangeLog:
           constraints:
           - primaryKey: true
           - primaryKeyName: USERS_PK
-          - nullable: false
-          - notNullConstraintName: USERS_ID_NN
-          - unique: true
-          - uniqueConstraintName: USERS_ID_UK
 
     - addColumn:
         tableName: PLAYERLOG
@@ -46,10 +42,6 @@ databaseChangeLog:
           constraints:
           - primaryKey: true
           - primaryKeyName: PLAYERLOG_PK
-          - nullable: false
-          - notNullConstraintName: PLAYERLOG_ID_NN
-          - unique: true
-          - uniqueConstraintName: PLAYERLOG_ID_UK
 
     - addColumn:
         tableName: PLAYERLOG
@@ -59,11 +51,35 @@ databaseChangeLog:
             type: UUID
             remarks: 'The player referenced in this entry'
           constraints:
-            - nullable: false
-            - notNullConstraintName: PLAYERLOG_PLAYERS_NN
-            - foreignKeyName: PLAYERLOG_PLAYERS_FK
-            - referencedTableName: USERS
-            - referencedColumnName: ID
+          - nullable: false
+          - notNullConstraintName: PLAYERLOG_PLAYERS_NN
+          - foreignKeyName: PLAYERLOG_PLAYERS_FK
+          - referencedTableName: USERS
+          - referencedColumnName: ID
+
+    - addNotNullConstraint:
+        tableName: USERS
+        columnName: ID
+        defaultNullValue: gen_random_uuid()
+        columnDataType: UUID
+        constraintName: USERS_ID_UK
+
+    - addNotNullConstraint:
+        tableName: PLAYERLOG
+        columnName: ID
+        defaultNullValue: gen_random_uuid()
+        columnDataType: UUID
+        constraintName: PLAYERLOG_ID_UK
+
+    - addUniqueConstraint:
+        tableName: USERS
+        columnNames: ID
+        constraintName: USERS_ID_UK
+
+    - addUniqueConstraint:
+        tableName: PLAYERLOG
+        columnNames: ID
+        constraintName: PLAYERLOG_ID_UK
 
     - addForeignKeyConstraint:
         baseTableName: PLAYERLOG
@@ -71,3 +87,5 @@ databaseChangeLog:
         constraintName: PLAYERLOG_USER_FK
         referencedTableName: USERS
         referencedColumnNames: ID
+        referencesUniqueColumn: true
+

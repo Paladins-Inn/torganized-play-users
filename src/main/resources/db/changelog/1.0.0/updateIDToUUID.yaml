@@ -9,16 +9,6 @@ databaseChangeLog:
     dbms: postgresql
     created: '1.0.4'
     changes:    
-    - dropForeignKeyConstraint:
-        baseTableName: PLAYERLOG
-        constraintName: PLAYERLOG_USERS_FK    
-    - dropUniqueConstraint:
-        tableName: USERS
-        constraintName: USERS_UID_UK
-    - dropUniqueConstraint:
-        tableName: PLAYERLOG
-        constraintName: PLAYERLOG_ID_UK
-
     - dropColumn:
         tableName: USERS
         columnName: ID

@@ -45,7 +45,7 @@ import lombok.extern.jackson.Jacksonized;
 public class UserLogEntryJPA extends AbstractJPAEntity<UUID> implements UserLogEntry {
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "PLAYER", columnDefinition = "BIGINT", unique = false, nullable = false, insertable = true, updatable = false)
+    @JoinColumn(name = "PLAYER", columnDefinition = "UUID", unique = false, nullable = false, insertable = true, updatable = false)
     @ToString.Include
     private UserJPA user;
 

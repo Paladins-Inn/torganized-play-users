@@ -181,3 +181,22 @@ databaseChangeLog:
           constraints:
           - nullable: false
           - notNullConstraintName: USERS_REV_ID_NN
+
+- changeSet:
+    id: USERS-add-revisioned
+    author: rlichti
+    context: init
+    labels: 'v1.0.4,user'
+    dbms: postgresql
+    created: '1.0.4'
+    changes:
+    - addColumn:
+        tableName: USERS
+        columns:
+        - column:
+            name: REVISIONED
+            type: TIMESTAMP WITH TIME ZONE
+            valueComputed: now()
+          constraints:
+          - nullable: false
+          - notNullConstraintName: USERS_REVISIONED_NN

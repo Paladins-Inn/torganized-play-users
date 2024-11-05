@@ -148,6 +148,12 @@
         <dependency>
             <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-spring</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.datatype</groupId>
+                    <artifactId>jackson-datatype-jakarta-jsonp</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Communication -->
@@ -180,11 +186,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.18.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jakarta-jsonp</artifactId>
             <version>2.18.1</version>
         </dependency>
         <dependency>
@@ -268,6 +269,12 @@
         <dependency>
             <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-jpa</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.datatype</groupId>
+                    <artifactId>jackson-datatype-jakarta-jsonp</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -377,12 +384,6 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.5.6</version>
             <scope>test</scope>
         </dependency>
 

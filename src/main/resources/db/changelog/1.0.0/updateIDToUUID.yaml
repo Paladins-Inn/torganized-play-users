@@ -8,25 +8,73 @@ databaseChangeLog:
     labels: 'v1.0.4,user'
     dbms: postgresql
     created: '1.0.4'
-    changes:
-    - modifyDataType:
-        tableName: USERS
-        columnName: ID
-        newDataType: UUID
-    - dropUniqueConstraint:
-        tableName: USERS
-        constraintName: USERS_UID_UK
-    - dropColumn:
-        tableName: USERS
-        columnName: UID
-    
+    changes:    
     - dropForeignKeyConstraint:
         baseTableName: PLAYERLOG
         constraintName: PLAYERLOG_USER_FK    
-    - modifyDataType:
+    - dropUniqueConstraint:
+        tableName: USERS
+        constraintName: USERS_UID_UK
+    - dropUniqueConstraint:
+        tableName: PLAYERLOG
+        constraintName: PLAYERLOG_ID_UK
+
+    - dropColumn:
+        tableName: USERS
+        columnName: ID
+    - dropColumn:
+        tableName: PLAYERLOG
+        columnName: ID
+    - dropColumn:
         tableName: PLAYERLOG
         columnName: PLAYER
-        newDataType: UUID
+
+    - addColumn:
+        tableName: USERS
+        columns:
+        - column:
+            name: ID
+            type: UUID
+            remarks: The Database internal ID
+            valueComputed: uuid_generate_v4()
+          constraints:
+          - primaryKey: true
+          - primaryKeyName: USERS_PK
+          - nullable: false
+          - notNullConstraintName: USERS_ID_NN
+          - unique: true
+          - uniqueConstraintName: USERS_ID_UK
+
+    - addColumn:
+        tableName: PLAYERLOG
+        columns:
+        - column:
+            name: ID
+            type: UUID
+            remarks: The Database internal ID
+            valueComputed: uuid_generate_v4()
+          constraints:
+          - primaryKey: true
+          - primaryKeyName: PLAYERLOG_PK
+          - nullable: false
+          - notNullConstraintName: PLAYERLOG_ID_NN
+          - unique: true
+          - uniqueConstraintName: PLAYERLOG_ID_UK
+
+    - addColumn:
+        tableName: PLAYERLOG
+        columns:
+        - column:
+            name: PLAYER
+            type: UUID
+            remarks: 'The player referenced in this entry'
+          constraints:
+            - nullable: false
+            - notNullConstraintName: PLAYERLOG_USER_NN
+            - foreignKeyName: PLAYERLOG_USERS_FK
+            - referencedTableName: USERS
+            - referencedColumnName: ID
+
     - addForeignKeyConstraint:
         baseTableName: PLAYERLOG
         baseColumnNames: PLAYER

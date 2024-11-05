@@ -1,11 +1,6 @@
 ---
 databaseChangeLog:
   - include:
-      file: initialize-db.yaml
-      relativeToChangelogFile: true
-      context: init
-      labels: 'v1.0.0'
-  - include:
       file: 1.0.0/master.yaml
       relativeToChangelogFile: true
       context: init

@@ -26,7 +26,7 @@ databaseChangeLog:
             name: ID
             type: UUID
             remarks: The Database internal ID
-            valueComputed: uuid_generate_v4()
+            valueComputed: gen_random_uuid()
           constraints:
           - primaryKey: true
           - primaryKeyName: USERS_PK
@@ -42,7 +42,7 @@ databaseChangeLog:
             name: ID
             type: UUID
             remarks: The Database internal ID
-            valueComputed: uuid_generate_v4()
+            valueComputed: gen_random_uuid()
           constraints:
           - primaryKey: true
           - primaryKeyName: PLAYERLOG_PK

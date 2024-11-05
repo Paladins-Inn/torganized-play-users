@@ -1,0 +1,40 @@
+---
+databaseChangeLog:
+
+- changeSet:
+    id: USERS-change-id
+    author: rlichti
+    context: init
+    labels: 'v1.0.4,user'
+    dbms: postgresql
+    created: '1.0.4'
+    changes:
+    - modifyDataType:
+        tableName: USERS
+        columnName: ID
+        newDataType: UUID
+    - dropUniqueConstraint:
+        tableName: USERS
+        constraintName: USERS_UID_UK
+    - dropColumn:
+        tableName: USERS
+        columnName: UID
+    
+    - dropForeignKeyConstraint:
+        baseTableName: PLAYERLOG
+        constraintName: PLAYERLOG_USER_FK    
+    - modifyDataType:
+        tableName: PLAYERLOG
+        columnName: PLAYER
+        newDataType: UUID
+    - addForeignKeyConstraint:
+        baseTableName: PLAYERLOG
+        baseColumnNames: PLAYER
+        constraintName: PLAYERLOG_USER_FK
+        referencedTableName: USERS
+        referencedColumnNames: ID
+        deferrable: false
+        initiallyDeferred: false
+        deleteCascade: false
+        referencesUniqueColumn: true
+        validate: true

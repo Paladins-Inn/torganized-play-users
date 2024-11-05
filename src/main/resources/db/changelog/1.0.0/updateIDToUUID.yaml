@@ -60,8 +60,8 @@ databaseChangeLog:
             remarks: 'The player referenced in this entry'
           constraints:
             - nullable: false
-            - notNullConstraintName: PLAYERLOG_USER_NN
-            - foreignKeyName: PLAYERLOG_USERS_FK
+            - notNullConstraintName: PLAYERLOG_PLAYERS_NN
+            - foreignKeyName: PLAYERLOG_PLAYERS_FK
             - referencedTableName: USERS
             - referencedColumnName: ID
 
@@ -71,8 +71,3 @@ databaseChangeLog:
         constraintName: PLAYERLOG_USER_FK
         referencedTableName: USERS
         referencedColumnNames: ID
-        deferrable: false
-        initiallyDeferred: false
-        deleteCascade: false
-        referencesUniqueColumn: true
-        validate: true

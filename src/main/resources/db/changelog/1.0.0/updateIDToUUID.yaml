@@ -60,14 +60,14 @@ databaseChangeLog:
     - addNotNullConstraint:
         tableName: USERS
         columnName: ID
-        defaultNullValue: gen_random_uuid()
+        defaultValueComputed: gen_random_uuid()
         columnDataType: UUID
         constraintName: USERS_ID_UK
 
     - addNotNullConstraint:
         tableName: PLAYERLOG
         columnName: ID
-        defaultNullValue: gen_random_uuid()
+        defaultValueComputed: gen_random_uuid()
         columnDataType: UUID
         constraintName: PLAYERLOG_ID_UK
 

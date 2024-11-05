@@ -11,7 +11,7 @@ databaseChangeLog:
     changes:    
     - dropForeignKeyConstraint:
         baseTableName: PLAYERLOG
-        constraintName: PLAYERLOG_USER_FK    
+        constraintName: PLAYERLOG_USERS_FK    
     - dropUniqueConstraint:
         tableName: USERS
         constraintName: USERS_UID_UK

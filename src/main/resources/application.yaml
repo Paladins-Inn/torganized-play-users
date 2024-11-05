@@ -87,6 +87,7 @@ management:
     configprops:
       enabled: true
   endpoints:
+    enabled-by-default: true
     web:
       exposure:
         include: health,info,env,prometheus,httptrace,*

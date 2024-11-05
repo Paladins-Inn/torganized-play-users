@@ -24,6 +24,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+import de.paladinsinn.tp.dcis.users.domain.model.User;
 import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,9 +49,14 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Slf4j
-public class UserLoggingController {
-  @RabbitListener(queues = {"dcis.users.logging"}, autoStartup = "true")
+public class UserLogEntryAmqpController {
+  @RabbitListener(queues = {"dcis.users.log"}, autoStartup = "true")
   public void receiveLoggingEvent(@Payload UserLogEntry entry, @Header("amqp_consumerQueue") String queue) {
+    log.debug("Received a message. queue='{}', message={}", queue, entry);
+  }
+
+  @RabbitListener(queues = {"dcis.users.register"}, autoStartup = "true")
+  public void receiveLoggingEvent(@Payload User entry, @Header("amqp_consumerQueue") String queue) {
     log.debug("Received a message. queue='{}', message={}", queue, entry);
   }
 }

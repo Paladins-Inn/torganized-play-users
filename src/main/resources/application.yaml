@@ -67,8 +67,8 @@ management:
   server:
     port: ${METRICS_PORT:8081}
     contextPath: /
-  ssl:
-    enabled: false
+    ssl:
+      enabled: false
   tracing:
     sampling:
       probability: 1

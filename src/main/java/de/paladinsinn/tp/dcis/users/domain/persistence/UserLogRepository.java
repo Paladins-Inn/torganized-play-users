@@ -13,9 +13,6 @@ public interface UserLogRepository extends JpaRepository<UserLogEntryJPA, UUID> 
     List<UserLogEntryJPA> findByUser(UserJPA player);
     Page<UserLogEntryJPA> findByUser(UserJPA player, Pageable pageable);
 
-    List<UserLogEntryJPA> findByUser_NameSpaceAndName(final String nameSpace, final String name);
-    Page<UserLogEntryJPA> findByUser_NameSpaceAndName(final String nameSpace, final String name, Pageable pageable);
-    
     List<UserLogEntryJPA> findByUser_Id(final UUID uid);
     Page<UserLogEntryJPA> findByUser_Id(final UUID uid, Pageable pageable);
 }

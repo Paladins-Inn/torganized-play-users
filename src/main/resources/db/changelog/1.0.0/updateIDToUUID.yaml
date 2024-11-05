@@ -139,3 +139,26 @@ databaseChangeLog:
           constraints:
           - nullable: false
           - notNullConstraintName: PLAYERLOG_VERSION_NN
+
+- changeSet:
+    id: PLAYERLOG-change-version-type
+    author: rlichti
+    context: init
+    labels: 'v1.0.4,user'
+    dbms: postgresql
+    created: '1.0.4'
+    changes:
+    - modifyDataType:
+        tableName: PLAYERLOG
+        columnName: VERSION
+        newDataType: INT
+    - addColumn:
+        tableName: USERS
+        columns:
+        - column:
+            name: VERSION
+            type: INT
+            defaultValueNumeric: 0
+          constraints:
+          - nullable: false
+          - notNullConstraintName: USERS_VERSION_NN

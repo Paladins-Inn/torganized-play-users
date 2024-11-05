@@ -146,6 +146,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>de.paladins-inn.torganized-play</groupId>
+            <artifactId>torganized-play-commons</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>de.kaiserpfalz-edv.commons</groupId>
             <artifactId>kp-commons-spring</artifactId>
             <exclusions>

@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>de.paladins-inn.torganized-play</groupId>
-    <artifactId>torganized-play-users</artifactId>
+    <artifactId>dcis-users</artifactId>
     <version>1.0.4</version>
 
     <description>
@@ -147,7 +147,7 @@
     <dependencies>
         <dependency>
             <groupId>de.paladins-inn.torganized-play</groupId>
-            <artifactId>torganized-play-commons</artifactId>
+            <artifactId>dcis-commons</artifactId>
             <version>1.0.1</version>
         </dependency>
 

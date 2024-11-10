@@ -39,7 +39,7 @@ import lombok.RequiredArgsConstructor;
 
 
 @Configuration
-@EnableWebSecurity(debug = false)
+@EnableWebSecurity()
 @EnableKeycloakSecurityIntegration
 @Order(2)
 @RequiredArgsConstructor

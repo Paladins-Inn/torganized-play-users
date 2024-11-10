@@ -9,6 +9,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -42,9 +43,9 @@ public class ActuatorSecurityConfiguration {
                 
             )
             .httpBasic(h -> h.realmName("Observability"))
-            .cors(c -> c.disable())
-            .csrf(c -> c.disable())
-            .sessionManagement(s -> s.disable())
+            .cors(AbstractHttpConfigurer::disable)
+            .csrf(AbstractHttpConfigurer::disable)
+            .sessionManagement(AbstractHttpConfigurer::disable)
             ;
 
         return http.build();

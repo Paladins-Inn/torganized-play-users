@@ -65,7 +65,7 @@ jobs:
         run: |
           mkdir -p java-artifacts/target
           cp -a target/app.jar java-artifacts/target/
-          cp -a pom.xml java-artifacts
+          cp -a Dockerfile .dockerignore pom.xml java-artifacts
 
       - name: Store result
         uses: actions/upload-artifact@master

@@ -26,6 +26,7 @@ env:
 
 jobs:
   build-app:
+    name: Build spring-boot app
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -73,6 +74,7 @@ jobs:
           path: java-artifacts
 
   publish-quay:
+    name: Create and Publish OCI Container
     runs-on: ubuntu-latest
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
     permissions:
@@ -80,6 +82,7 @@ jobs:
       packages: write
       attestations: write
       id-token: write
+    needs: build-app
     steps:
       - name: Login to Quay.io
         uses: docker/login-action@v3

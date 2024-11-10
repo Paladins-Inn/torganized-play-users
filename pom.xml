@@ -34,14 +34,19 @@
     <distributionManagement>
         <repository>
             <id>github</id>
-            <name>GitHub Packages for torganized-play-commons</name>
-            <url>https://maven.pkg.github.com/Paladins-Inn/torganized-play-commons</url>
+            <name>GitHub Packages for torganized-play-users</name>
+            <url>https://maven.pkg.github.com/Paladins-Inn/torganized-play-users</url>
         </repository>
     </distributionManagement>
 
     <repositories>
         <repository>
             <id>github</id>
+            <name>GitHub Packages for torganized-play-users</name>
+            <url>https://maven.pkg.github.com/Paladins-Inn/torganized-play-users</url>
+        </repository>
+        <repository>
+            <id>torganized-play-commons</id>
             <name>GitHub Packages for torganized-play-commons</name>
             <url>https://maven.pkg.github.com/Paladins-Inn/torganized-play-commons</url>
         </repository>

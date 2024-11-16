@@ -33,5 +33,10 @@ registries:
 updates:
   - package-ecosystem: "maven" # See documentation for possible values
     directory: "/" # Location of package manifests
+    registries:
+      - torganized-play-commons
+      - torganized-play-operatives
+      - torganized-play-gaming
+      - torganized-play-threats
     schedule:
       interval: "weekly"

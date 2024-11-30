@@ -14,6 +14,8 @@
     <groupId>de.paladins-inn.torganized-play</groupId>
     <artifactId>dcis-users</artifactId>
     <version>1.0.4</version>
+    <name>de.paladins-inn.torganized-play:dcis-users</name>
+
 
     <description>
         Torganized Play - Delphi Council Information System. This is the player management part.
@@ -431,5 +433,4 @@
             <scope>test</scope>
         </dependency>        
     </dependencies>
-
 </project>

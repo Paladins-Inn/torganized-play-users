@@ -28,6 +28,7 @@ import lombok.extern.jackson.Jacksonized;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(
     name = "PLAYERLOG",
@@ -36,27 +37,27 @@ import lombok.extern.jackson.Jacksonized;
     }
 )
 @Jacksonized
-@SuperBuilder(toBuilder = true, setterPrefix = "")
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
-@ToString(callSuper = true, includeFieldNames = true, onlyExplicitlyIncluded = true)
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true)
 public class UserLogEntryJPA extends AbstractJPAEntity<UUID> implements UserLogEntry {
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "PLAYER", columnDefinition = "UUID", unique = false, nullable = false, insertable = true, updatable = false)
+    @JoinColumn(name = "PLAYER", columnDefinition = "UUID", nullable = false, updatable = false)
     @ToString.Include
     private UserJPA user;
 
     @NotNull
-    @Column(name = "SYSTEM", columnDefinition = "VARCHAR(100)", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "SYSTEM", columnDefinition = "VARCHAR(100)", nullable = false)
     @Size(min = 3, max = 100, message = "The length of the string must be between 3 and 100 characters long.") 
     @Pattern(regexp = "^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$", message = "The string must match the pattern '^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$'")
     private String system;
 
     @NotNull
-    @Column(name = "ENTRY", columnDefinition = "VARCHAR(1000)", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "ENTRY", columnDefinition = "VARCHAR(1000)", nullable = false)
     @Size(min = 3, max = 1000, message = "The length of the string must be between 3 and 100 characters long.") 
     private String text;
 

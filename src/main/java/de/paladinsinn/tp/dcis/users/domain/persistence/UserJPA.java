@@ -25,6 +25,7 @@ import lombok.extern.jackson.Jacksonized;
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 1.0.0
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(
     name = "USERS",
@@ -34,23 +35,23 @@ import lombok.extern.jackson.Jacksonized;
     }
 )
 @Jacksonized
-@SuperBuilder(toBuilder = true, setterPrefix = "")
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@ToString(callSuper = true, includeFieldNames = true, onlyExplicitlyIncluded = true)
+@ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true)
 public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
     /** The namespace this player is registered for. */
     @NotNull
-    @Column(name = "NAMESPACE", columnDefinition = "VARCHAR(100)", unique = false, nullable = false, insertable = true, updatable = false)
+    @Column(name = "NAMESPACE", columnDefinition = "VARCHAR(100)", nullable = false, updatable = false)
     @Size(min = 3, max = 100, message = "The length of the string must be between 3 and 100 characters long.") @Pattern(regexp = "^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$", message = "The string must match the pattern '^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$'")
     @ToString.Include
     private String nameSpace;
 
     /** The name of the player. Needs to be unique within the namespace. */
     @NotNull
-    @Column(name = "NAME", columnDefinition = "VARCHAR(100)", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "NAME", columnDefinition = "VARCHAR(100)", nullable = false)
     @Size(min = 3, max = 100, message = "The length of the string must be between 3 and 100 characters long.") @Pattern(regexp = "^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$", message = "The string must match the pattern '^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$'")
     @ToString.Include
     private String name;

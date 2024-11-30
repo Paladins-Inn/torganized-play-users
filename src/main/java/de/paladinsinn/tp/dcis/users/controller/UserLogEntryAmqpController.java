@@ -21,15 +21,13 @@ package de.paladinsinn.tp.dcis.users.controller;
 
 import de.paladinsinn.tp.dcis.users.domain.services.UserLogService;
 import lombok.*;
+import lombok.extern.slf4j.XSlf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import de.paladinsinn.tp.dcis.users.domain.model.User;
 import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntry;
-import lombok.extern.jackson.Jacksonized;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -44,15 +42,17 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Slf4j
+@XSlf4j
 public class UserLogEntryAmqpController {
   private final UserLogService service;
 
 
   @RabbitListener(queues = {"dcis.users.log"}, autoStartup = "true")
   public void receiveLoggingEvent(@Payload UserLogEntry entry, @Header("amqp_consumerQueue") String queue) {
-    log.debug("Received a message. queue='{}', message={}", queue, entry);
+    log.entry(entry, queue);
 
     service.log(entry.getUser(), entry.getSystem(), entry.getText());
+
+    log.exit();
   }
 }

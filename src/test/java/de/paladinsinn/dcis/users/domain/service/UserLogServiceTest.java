@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -30,6 +29,7 @@ import jakarta.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+@SuppressWarnings("CdiInjectionPointsInspection")
 @RunWith(SpringRunner.class)
 @Slf4j
 public class UserLogServiceTest {

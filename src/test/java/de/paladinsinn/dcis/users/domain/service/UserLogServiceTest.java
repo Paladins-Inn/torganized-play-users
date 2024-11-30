@@ -61,13 +61,7 @@ public class UserLogServiceTest {
 
     @Captor
     private ArgumentCaptor<UserLogEntryJPA> logEntry;
-
-    @BeforeAll
-    void setUp() {
-        log.info("Set up service under test. sut={}", sut);
-    }
-
-
+    
     @Test
     public void shouldLogANewLogEntryWhenAnExistingUserIsUsed() {
         when(playerRepository.findById(PLAYER.getId())).thenReturn(Optional.of(PLAYER));

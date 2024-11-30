@@ -36,7 +36,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true, setterPrefix = "")
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString(callSuper = true, includeFieldNames = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true)

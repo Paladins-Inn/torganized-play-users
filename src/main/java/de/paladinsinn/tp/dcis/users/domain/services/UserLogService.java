@@ -47,8 +47,7 @@ public class UserLogService {
                 .build());
 
         log.info("Created log entry for player. entry={}", result);
-        log.exit(result);
-        return result;
+        return log.exit(result);
     }
 
     public List<UserLogEntry> load(final UUID uid) {
@@ -58,8 +57,7 @@ public class UserLogService {
 
         log.debug("Loaded log file for player. uid={}, log={}", uid, result);
 
-        log.exit(result);
-        return result;
+        return log.exit(result);
     }
 
     public Page<UserLogEntry> load(final UUID uid, Pageable pageable) {
@@ -71,8 +69,7 @@ public class UserLogService {
         log.debug("Loaded log page for player. uid={}, page={}/{}, log={}", uid,
                 result.getPageable().getPageNumber(), result.getTotalPages(), result.getContent());
 
-        log.exit(result);
-        return result;
+        return log.exit(result);
     }
 
     private UserJPA loadUser(final UUID uid) {
@@ -85,7 +82,6 @@ public class UserLogService {
         }
 
         //noinspection OptionalGetWithoutIsPresent
-        log.exit(result.get());
-        return result.get();
+        return log.exit(result.get());
     }
 }

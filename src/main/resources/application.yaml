@@ -13,6 +13,8 @@ kp:
         roleAttribute: groups
 
 spring:
+  profiles:
+    active: LOCAL
   application:
     name: dcis-users
     admin:
@@ -66,9 +68,9 @@ server:
 management:
   server:
     port: ${METRICS_PORT:8081}
-    contextPath: /
     ssl:
       enabled: false
+    base-path: /
   tracing:
     sampling:
       probability: 0.5

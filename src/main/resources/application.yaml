@@ -88,6 +88,9 @@ management:
       access: read_only
     configprops:
       access: read_only
+    rabbit:
+      enabled: false
+      access: none
   endpoints:
     access:
       default: read_only

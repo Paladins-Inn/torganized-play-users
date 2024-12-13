@@ -10,13 +10,13 @@ import jakarta.annotation.security.RolesAllowed;
 
 
 @Controller
-@RequestMapping("/dcis/")
+@RequestMapping("/")
 @XSlf4j
 public class PrivateMainController {
 
     @GetMapping
     @RolesAllowed({"ADMIN", "ORGA", "JUDGE", "GM", "PLAYER"})
-    public String getMethodName(Model model) {
+    public String index(Model model) {
         log.entry(model);
 
         model.addAttribute("access_level", "Spieler");
@@ -25,5 +25,17 @@ public class PrivateMainController {
         log.exit(result);
         return result;
     }
-    
+
+    @GetMapping(path = "/settings")
+    @RolesAllowed("PLAYER")
+    public String settings(Model model) {
+        log.entry(model);
+
+        model.addAttribute("access_level", "Spieler");
+
+        String result = "not-implemented-yet";
+        log.exit(result);
+        return result;
+    }
+
 }

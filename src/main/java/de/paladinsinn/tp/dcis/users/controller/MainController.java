@@ -10,7 +10,7 @@ import jakarta.annotation.security.PermitAll;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/public/")
 @XSlf4j
 public class MainController {
     @GetMapping

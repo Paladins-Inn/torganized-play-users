@@ -71,7 +71,7 @@ management:
       enabled: false
   tracing:
     sampling:
-      probability: 1
+      probability: 0.5
   endpoint:
     health:
       probes:
@@ -79,18 +79,19 @@ management:
     httptrace:
       enabled: true
     liquibase:
-      enabled: true
+      access: read_only
     scheduledtasks:
-      enabled: true
+      access: read_only
     metrics:
-      enabled: true
+      access: read_only
     configprops:
-      enabled: true
+      access: read_only
   endpoints:
-    enabled-by-default: true
+    access:
+      default: read_only
     web:
       exposure:
-        include: health,info,env,prometheus,httptrace,*
+        include: health,info,env,prometheus,httptrace,liquibase,scheduledtasks,metrics,configprops
   health:
     livenessState:
       enabled: true
@@ -104,14 +105,14 @@ logging:
   group:
       rest: de.paladinsinn.tp.dcis.api,org.springframework.web,org.springframework.http
   level:
-    web: TRACE
-    security: TRACE
-    rest: TRACE
-    liquibase: INFO
+    web: WARN
+    security: WARN
+    rest: WARN
+    liquibase: WARN
     de:
-      paladinsinn: TRACE
+      paladinsinn: INFO
     org:
       springframework:
         web:
           filter:
-            CommonsRequestLoggingFilter: TRACE
+            CommonsRequestLoggingFilter: INFO

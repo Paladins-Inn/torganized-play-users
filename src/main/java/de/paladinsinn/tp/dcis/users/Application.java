@@ -1,7 +1,8 @@
 package de.paladinsinn.tp.dcis.users;
 
-import de.paladinsinn.tp.dcis.commons.configuration.EnableDefaultConfiguration;
-import de.paladinsinn.tp.dcis.commons.configuration.EnableMessagingConfiguration;
+import de.paladinsinn.tp.dcis.commons.events.EnableEventBus;
+import de.paladinsinn.tp.dcis.commons.messaging.EnableMessagingConfiguration;
+import de.paladinsinn.tp.dcis.commons.rest.EnableRestConfiguration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +16,8 @@ import lombok.Getter;
  * @since 2024-06-09
  */
 @SpringBootApplication
-@EnableDefaultConfiguration
+@EnableEventBus
+@EnableRestConfiguration
 @EnableMessagingConfiguration
 public class Application extends SpringApplication {
     @Value("${spring.application.name:PLAYERS}")
@@ -25,5 +27,4 @@ public class Application extends SpringApplication {
     public static void main(String [] args) {
         SpringApplication.run(Application.class, args);
     }
-
 }

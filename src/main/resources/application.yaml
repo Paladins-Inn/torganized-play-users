@@ -76,6 +76,7 @@ server:
   port: ${HTTP_PORT:8080}
   servlet:
     contextPath: /users
+  forward-headers-strategy: framework
 
 management:
   server:

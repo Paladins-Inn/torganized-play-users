@@ -9,8 +9,8 @@ keycloak:
 kp:
   security:
     keycloak:
-      groupAuthorityMapper:
-        roleAttribute: groups
+      group-authority-mapper:
+        role-attribute: groups
 
 spring:
   profiles:

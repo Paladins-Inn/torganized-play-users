@@ -11,6 +11,8 @@ kp:
     keycloak:
       group-authority-mapper:
         role-attribute: groups
+      groupAuthorityMapper:
+        roleAttribute: groups
 
 spring:
   profiles:

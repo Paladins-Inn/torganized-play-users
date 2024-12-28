@@ -1,6 +1,7 @@
 package de.paladinsinn.tp.dcis.users.controller;
 
 import lombok.extern.slf4j.XSlf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,9 @@ import jakarta.annotation.security.RolesAllowed;
 @XSlf4j
 public class MainController {
 
+    @Value("${server.servlet.contextPath}:/users")
+    private String contextPath;
+
     @GetMapping
     @RolesAllowed({"ADMIN", "ORGA", "JUDGE", "GM", "PLAYER"})
     public String index(final Authentication authentication, Model model) {
@@ -23,6 +27,7 @@ public class MainController {
         logAuthorities(authentication);
 
         model.addAttribute("access_level", "Spieler");
+        model.addAttribute("contextPath", contextPath);
 
         String result = "main";
         return log.exit(result);

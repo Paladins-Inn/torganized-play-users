@@ -26,6 +26,7 @@ public class Application extends SpringApplication {
     @Getter(onMethod = @__(@Bean))
     private String applicationName;
 
+    @SuppressWarnings("unused") // only to start the AMQP listener up
     @Autowired
     private UserLogEntryAmqpController userLogEntryAmqpController;
 

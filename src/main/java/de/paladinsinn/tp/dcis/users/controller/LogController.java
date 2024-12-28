@@ -10,7 +10,7 @@ import jakarta.annotation.security.RolesAllowed;
 
 
 @Controller
-@RequestMapping("/dcis")
+@RequestMapping("/")
 @XSlf4j
 public class LogController {
     

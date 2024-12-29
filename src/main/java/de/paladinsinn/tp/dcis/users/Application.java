@@ -22,7 +22,6 @@ import lombok.Getter;
 @EnableEventBus
 @EnableRestConfiguration
 @EnableMessagingConfiguration
-@AllArgsConstructor
 public class Application extends SpringApplication {
     @Value("${spring.application.name:PLAYERS}")
     @Getter(onMethod = @__(@Bean))

@@ -190,8 +190,6 @@
             <artifactId>commons-pool2</artifactId>
         </dependency>
 
-
-
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>

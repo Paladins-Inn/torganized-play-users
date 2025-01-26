@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dcis.html}" th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+    <title>Not yet imlemented</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <h1 class="torg-header"><span th:text="#{app.title}">Delphi Council IS</span></h1>
+
+    <p>Datumsfeld:</p>
+    <p class="torg-header-indent" th:text="${#temporals.formatISO(date)}"/>
+
+</section>
+</body>
+</html>

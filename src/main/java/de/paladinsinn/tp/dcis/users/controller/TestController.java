@@ -14,11 +14,11 @@ import java.time.OffsetDateTime;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/test")
 @XSlf4j
 public class TestController {
 
-    @Value("${server.servlet.contextPath}:/test")
+    @Value("${server.servlet.contextPath}:/users")
     private String contextPath;
 
     @GetMapping

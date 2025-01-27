@@ -231,7 +231,7 @@
         <dependency><!-- GHSA-cfgp-2977-2fmm, GHSA-6628-q6j9-w8vg -->
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
-            <version>1.69.1</version>
+            <version>1.70.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.google.guava</groupId>

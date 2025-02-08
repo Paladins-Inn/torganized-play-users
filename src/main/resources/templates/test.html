@@ -12,6 +12,10 @@
     <p>Datumsfeld:</p>
     <p class="torg-header-indent" th:text="${#temporals.formatISO(date)}"/>
 
+    <p class="torg-header-indent" th:text="${date}"/>
+
+    <p class="torg-header-indent" th:text="${operative.created}"/>
+
     <form class="row g-3 form-floating needs-validation" novalidate action="#" th:action="@{/}" th:object="${operative}"
           method="post">
         <input type="hidden" th:field="*{nameSpace}"/>

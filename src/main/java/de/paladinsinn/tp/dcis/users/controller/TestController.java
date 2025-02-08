@@ -1,9 +1,11 @@
 package de.paladinsinn.tp.dcis.users.controller;
 
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
+import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +32,17 @@ public class TestController {
 
         model.addAttribute("date", OffsetDateTime.now());
         model.addAttribute("contextPath", contextPath);
-
+        
+        User user = new User();
+        model.addAttribute("user", user);
+        
         return log.exit("test");
+    }
+    
+    @Data
+    public static class User {
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+        OffsetDateTime date = OffsetDateTime.now();
     }
 
     private void logAuthorities(Authentication authentication) {

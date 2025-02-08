@@ -4,8 +4,7 @@
 <head>
     <title>Not yet imlemented</title>
 </head>
-<body>
-<section layout:fragment="content">
+<body><section layout:fragment="content">
 
     <h1 class="torg-header"><span th:text="#{app.title}">Delphi Council IS</span></h1>
 
@@ -14,6 +13,26 @@
 
     <p class="torg-header-indent" th:text="${date}"/>
 
-</section>
-</body>
+    <form class="row g-3 form-floating needs-validation"
+          novalidate
+          action="#"
+          th:action="@{/}"
+          th:object="${user}"
+          method="post">
+
+        <div class="col-3 form-floating input-group has-validation">
+            <input type="text" class="form-control" id="xp" th:field="*{date}" maxlength="4" size="4"
+                   th:placeholder="#{form.edit-operative.xp.placeholder}" data-toggle="tootltip"
+                   data-placement="top" th:title="#{form.edit-operative.xp.help}" aria-describedby="helpXp">
+            <label for="xp" th:text="#{form.edit-operative.xp.title}">Date</label>
+            <div class="input-group has-validation" id="helpXp" th:text="#{form.edit-operative.xp.help}">Hilfe</div>
+            <div class="input-group has-validation" th:if="${#fields.hasErrors('date')}">
+                <ul class="invalid-feedback" id="validationXp">
+                    <li th:each="err : ${#fields.errors('date')}" th:text="${err}">error</li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
+</section></body>
 </html>

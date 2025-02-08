@@ -14,28 +14,6 @@
 
     <p class="torg-header-indent" th:text="${date}"/>
 
-    <form class="row g-3 form-floating needs-validation" novalidate action="#" th:action="@{/}" th:object="${operative}"
-          method="post">
-        <input type="hidden" th:field="*{nameSpace}"/>
-        <input type="hidden" id="created" th:field="*{created}" th:value="${#temporals.formatISO(operative.created)}"/>
-
-        <div class="col-12">
-            <div class="form-floating">
-                <div class="input-group has-validation" th:unless="${#fields.hasErrors('created')}">
-                    <input type="hidden" id="created" th:field="*{created}" th:value="${#temporals.formatISO(operative.created)}"/>
-                </div>
-                <div class="input-group has-validation" th:if="${#fields.hasErrors('created')}">
-                    <input type="hidden" id="created" th:field="*{created}" th:value="${#temporals.formatISO(operative.created)}"/>
-                    <div class="input-group has-validation" th:if="${#fields.hasErrors('created')}">
-                        <ul class="invalid-feedback" id="validationId">
-                            <li th:each="err : ${#fields.errors('created')}" th:text="${err}">error</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-
 </section>
 </body>
 </html>

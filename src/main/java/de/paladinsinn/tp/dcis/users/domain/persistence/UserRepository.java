@@ -18,6 +18,7 @@
 package de.paladinsinn.tp.dcis.users.domain.persistence;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -33,11 +34,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserRepository extends JpaRepository<UserJPA, UUID> {
-    public UserJPA findByNameSpaceAndName(String nameSpace, String name);
+    Optional<UserJPA> findByNameSpaceAndName(String nameSpace, String name);
 
-    public List<UserJPA> findByName(String name);
-    public Page<UserJPA> findByName(String name, Pageable pageable);
+    List<UserJPA> findByName(String name);
+    Page<UserJPA> findByName(String name, Pageable pageable);
 
-    public List<UserJPA> findByNameSpace(String nameSpace);
-    public Page<UserJPA> findByNameSpace(String nameSpace, Pageable pageable);
+    List<UserJPA> findByNameSpace(String nameSpace);
+    Page<UserJPA> findByNameSpace(String nameSpace, Pageable pageable);
 }

@@ -34,17 +34,14 @@ public class UserLogService {
     private final UserLogEntryToImpl toUserLogEntry;
 
     public UserLogEntry log(final User player, final String system, final String text) {
-        return log(player.getId(), system, text);
-    }
-
-    public UserLogEntry log(final UUID uid, final String system, final String text) {
-        log.entry(uid, system, text);
+        log.entry(player, system, text);
 
         UserLogEntry result = logRepository.save(UserLogEntryJPA.builder()
-                .user(loadUser(uid))
+                .user(loadUser(player))
                 .system(system)
                 .text(text)
-                .build());
+                .build()
+        );
 
         log.info("Created log entry for player. entry={}", result);
         return log.exit(result);
@@ -72,13 +69,18 @@ public class UserLogService {
         return log.exit(result);
     }
 
-    private UserJPA loadUser(final UUID uid) {
-        log.entry(uid);
+    private UserJPA loadUser(final User user) {
+        log.entry(user);
 
-        Optional<UserJPA> result = playerRepository.findById(uid);
+        Optional<UserJPA> result;
+        if (user.getId() != null) {
+            result = playerRepository.findById(user.getId());
+        } else {
+            result = playerRepository.findByNameSpaceAndName(user.getNameSpace(), user.getName());
+        }
 
         if (result.isEmpty()) {
-            log.throwing(WARN, new IllegalArgumentException("User with UID " + uid + " does not exist in database."));
+            log.throwing(WARN, new IllegalArgumentException("User does not exist in database. id='" + user.getId() + "', nameSpace='" + user.getNameSpace() + "', name='" + user.getName() + "'"));
         }
 
         //noinspection OptionalGetWithoutIsPresent

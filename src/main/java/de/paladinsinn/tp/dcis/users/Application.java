@@ -1,10 +1,8 @@
 package de.paladinsinn.tp.dcis.users;
 
 import de.paladinsinn.tp.dcis.commons.events.EnableEventBus;
-import de.paladinsinn.tp.dcis.commons.messaging.EnableMessagingConfiguration;
 import de.paladinsinn.tp.dcis.commons.rest.EnableRestConfiguration;
 import de.paladinsinn.tp.dcis.users.controller.UserLogEntryAmqpController;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -21,7 +19,6 @@ import lombok.Getter;
 @SpringBootApplication
 @EnableEventBus
 @EnableRestConfiguration
-@EnableMessagingConfiguration
 public class Application extends SpringApplication {
     @Value("${spring.application.name:PLAYERS}")
     @Getter(onMethod = @__(@Bean))

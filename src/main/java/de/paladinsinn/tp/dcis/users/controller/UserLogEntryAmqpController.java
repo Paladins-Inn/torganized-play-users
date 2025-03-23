@@ -18,16 +18,17 @@
 package de.paladinsinn.tp.dcis.users.controller;
 
 
-
+import de.paladinsinn.tp.dcis.users.domain.events.UserLoginEvent;
+import de.paladinsinn.tp.dcis.users.domain.events.UserLogoutEvent;
 import de.paladinsinn.tp.dcis.users.domain.services.UserLogService;
+import jakarta.inject.Inject;
 import lombok.*;
 import lombok.extern.slf4j.XSlf4j;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 
-import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntry;
+import java.util.function.Consumer;
 
 
 /**
@@ -37,22 +38,30 @@ import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntry;
  * @since 2024-11-01
  */
 @Service
-@RequiredArgsConstructor
-@Builder(toBuilder = true)
-@Getter
-@ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
 public class UserLogEntryAmqpController {
   private final UserLogService service;
-
-
-  @RabbitListener(queues = {"dcis.users.log"}, autoStartup = "true")
-  public void receiveLoggingEvent(@Payload UserLogEntry entry, @Header("amqp_consumerQueue") String queue) {
-    log.entry(entry, queue);
-
-    service.log(entry.getUser(), entry.getSystem(), entry.getText());
-
-    log.exit();
+  
+  @Bean
+  public Consumer<Message<UserLoginEvent>> userLoginConsumer() {
+    return log.exit(event -> {
+      log.entry(event.getHeaders(), event.getPayload());
+      
+      service.log(event.getPayload().getUser(), event.getPayload().getSystem(), "User logged in");
+      
+      log.exit(event.getPayload().getUser());
+    });
+  }
+  
+  @Bean
+  public Consumer<Message<UserLogoutEvent>> userLogoutConsumer() {
+    return log.exit(event -> {
+      log.entry(event.getHeaders(), event.getPayload());
+      
+      service.log(event.getPayload().getUser(), event.getPayload().getSystem(), "User logged out");
+      
+      log.exit(event.getPayload().getUser());
+    });
   }
 }

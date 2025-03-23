@@ -57,7 +57,7 @@ public class UserService {
 
         player = playerRepository.save(toUserJPA.apply(player));
 
-        logService.log(player.getId(), applicationName, "player.created");
+        logService.log(player, applicationName, "player.created");
 
         return log.exit(player);
     }
@@ -80,6 +80,16 @@ public class UserService {
 
         return Optional.of(log.exit(result.orElse(null)));
     }
+    
+    public Optional<User> retrieveUser(final String nameSpace, final String name) {
+        log.entry(nameSpace, name);
+        
+        Optional<UserJPA> result = playerRepository.findByNameSpaceAndName(nameSpace, name);
+        
+        log.debug("Loaded player from database. nameSpace={}, name={}, player={}", nameSpace, name, result.isPresent() ? result.get() : "***none***");
+        
+        return Optional.of(log.exit(result.orElse(null)));
+    }
 
     public List<User> retrieveUsers(final String nameSpace) {
         log.entry(nameSpace);
@@ -93,7 +103,7 @@ public class UserService {
         log.entry(nameSpace, pageable);
 
         Page<UserJPA> data = playerRepository.findByNameSpace(nameSpace, pageable);
-        Page<User> result = new PageImpl<>(new LinkedList<>(data.stream().map(toUser::apply).toList()), pageable, data.getTotalElements());
+        Page<User> result = new PageImpl<>(new LinkedList<>(data.stream().map(toUser).toList()), pageable, data.getTotalElements());
 
         log.debug("Loaded users for namespace. nameSpace='{}', page={}/{}, size={}", nameSpace, 
                 result.getPageable().getPageNumber(), result.getTotalPages(), result.getTotalElements());

@@ -67,7 +67,7 @@ public class UserLogServiceTest {
         when(playerRepository.findById(PLAYER.getId())).thenReturn(Optional.of(PLAYER));
         when(logRepository.save(logEntry.capture())).thenReturn(LOG_ENTRY);
 
-        UserLogEntry result = sut.log(PLAYER.getId(), "test", "playerLog.test");
+        UserLogEntry result = sut.log(PLAYER, "test", "playerLog.test");
         log.debug("Logged message. entry={}", result);
         
         assertEquals(PLAYER, result.getUser());
@@ -77,7 +77,7 @@ public class UserLogServiceTest {
     public void shouldFailWhenTheUserDoesNotExist() {
         when(playerRepository.findById(PLAYER.getId())).thenThrow(new IllegalArgumentException());
 
-        sut.log(PLAYER.getId(), "test", "playerLog.failure");
+        sut.log(PLAYER, "test", "playerLog.failure");
     }
 
     @Configuration

@@ -35,6 +35,25 @@ spring:
     showSummaryOutput: log
     uiService: logger
 
+  cloud:
+    stream:
+      # noinspection SpringBootApplicationYaml
+      bindings:
+        input:
+          user-log:
+            destination: dcis.user.log
+            content-type: application/json
+            consumer:
+              use-native-decoding: false
+              auto-startup: true
+        output:
+          user-log:
+            destination: dcis.user.log
+            content-type: application/json
+            producer:
+              use-native-encoding: false
+              auto-startup: true
+
   rabbitmq:
     host: localhost
     port: 5672
@@ -108,6 +127,23 @@ management:
       enabled: true
     readinessState:
       enabled: true
+    rabbit:
+      enabled: true
+    db:
+      enabled: true
+    circuitbreakers:
+      enabled: true
+    diskspace:
+      enabled: true
+      threshold: 10MB
+      path: /tmp
+    ping:
+      enabled: true
+    ratelimiters:
+      enabled: true
+    ssl:
+      enabled: true
+      certificate-validity-warning-threshold: 7d
 
 
 logging:

@@ -2,14 +2,14 @@ package de.paladinsinn.tp.dcis.users;
 
 import de.paladinsinn.tp.dcis.commons.events.EnableEventBus;
 import de.paladinsinn.tp.dcis.commons.rest.EnableRestConfiguration;
-import de.paladinsinn.tp.dcis.users.controller.UserLogEntryAmqpController;
+import de.paladinsinn.tp.dcis.users.domain.services.EnableUserLogEntryClient;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import lombok.Getter;
 
 /**
  * @author Roland T. Lichti {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -18,15 +18,13 @@ import lombok.Getter;
  */
 @SpringBootApplication
 @EnableEventBus
+@EnableUserLogEntryClient
 @EnableRestConfiguration
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class Application extends SpringApplication {
     @Value("${spring.application.name:PLAYERS}")
     @Getter(onMethod = @__(@Bean))
-    private String applicationName;
-
-    @SuppressWarnings("unused") // only to start the AMQP listener up
-    @Autowired
-    private UserLogEntryAmqpController userLogEntryAmqpController;
+    private final String applicationName;
 
     public static void main(String [] args) {
         SpringApplication.run(Application.class, args);

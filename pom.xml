@@ -240,7 +240,7 @@
         <dependency><!-- GHSA-7g45-4rm6-3mm3, GHSA-5mg8-w23w-74h3 -->
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>33.4.0-jre</version>
+            <version>33.4.5-jre</version>
         </dependency>
         <dependency><!-- GHSA-77rm-9x9h-xj3g, GHSA-wrvw-hg22-4m67, GHSA-g5ww-5jh7-63cx, GHSA-4gg5-vx3j-xwc7, GHSA-h4h5-3hr4-j3g2 -->
             <groupId>com.google.protobuf</groupId>

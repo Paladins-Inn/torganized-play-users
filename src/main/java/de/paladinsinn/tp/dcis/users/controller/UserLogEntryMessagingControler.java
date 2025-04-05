@@ -40,7 +40,7 @@ import java.util.function.Consumer;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
-public class UserLogEntryAmqpController {
+public class UserLogEntryMessagingControler {
   private final UserLogService service;
   
   @Bean

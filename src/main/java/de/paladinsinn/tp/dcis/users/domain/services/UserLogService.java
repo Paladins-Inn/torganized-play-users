@@ -22,6 +22,12 @@ import lombok.ToString;
 
 import static org.slf4j.ext.XLogger.Level.WARN;
 
+/**
+ * Writes log entries for the user log use-case
+ *
+ * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @since 1.1.0
+ */
 @SuppressWarnings("unused")
 @Service
 @RequiredArgsConstructor
@@ -29,8 +35,9 @@ import static org.slf4j.ext.XLogger.Level.WARN;
 @XSlf4j
 public class UserLogService {
     private final UserLogRepository logRepository;
-    private final UserRepository playerRepository;
+    private final UserRepository userRepository;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final UserLogEntryToImpl toUserLogEntry;
 
     public UserLogEntry log(final User player, final String system, final String text) {
@@ -39,11 +46,26 @@ public class UserLogService {
         UserLogEntry result = logRepository.save(UserLogEntryJPA.builder()
                 .user(loadUser(player))
                 .system(system)
-                .text(text)
+                .comment(text)
                 .build()
         );
-
-        log.info("Created log entry for player. entry={}", result);
+        
+        log.info("Created log entry for user. user={}, system={}, comment={}", player, system, text);
+        return log.exit(result);
+    }
+    
+    public UserLogEntry log(final User player, final String system, final String text, final String comment) {
+        log.entry(player, system, text, comment);
+        
+        UserLogEntry result = logRepository.save(UserLogEntryJPA.builder()
+            .user(loadUser(player))
+            .system(system)
+            .text(text)
+            .comment(comment)
+            .build()
+        );
+        
+        log.info("Created log entry for user. user={}, system={}, text={}, comment={}", player, system, text, comment);
         return log.exit(result);
     }
 
@@ -74,9 +96,9 @@ public class UserLogService {
 
         Optional<UserJPA> result;
         if (user.getId() != null) {
-            result = playerRepository.findById(user.getId());
+            result = userRepository.findById(user.getId());
         } else {
-            result = playerRepository.findByNameSpaceAndName(user.getNameSpace(), user.getName());
+            result = userRepository.findByNameSpaceAndName(user.getNameSpace(), user.getName());
         }
 
         if (result.isEmpty()) {

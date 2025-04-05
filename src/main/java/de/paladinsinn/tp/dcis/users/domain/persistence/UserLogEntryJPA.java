@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import de.kaiserpfalzedv.commons.jpa.AbstractJPAEntity;
 import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntry;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -60,6 +61,10 @@ public class UserLogEntryJPA extends AbstractJPAEntity<UUID> implements UserLogE
     @Column(name = "ENTRY", columnDefinition = "VARCHAR(1000)", nullable = false)
     @Size(min = 3, max = 1000, message = "The length of the string must be between 3 and 100 characters long.") 
     private String text;
+    
+    @Nullable
+    @Column(name = "COMMENT", columnDefinition = "VARCHAR(1000)")
+    private String comment;
 
     /**
      * Will prevent the updating of the data set.

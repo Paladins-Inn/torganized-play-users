@@ -1,9 +1,12 @@
 package de.paladinsinn.tp.dcis.users.domain.persistence;
 
+import java.time.OffsetDateTime;
+import java.time.Period;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.commons.jpa.AbstractRevisionedJPAEntity;
 import de.paladinsinn.tp.dcis.users.domain.model.User;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -11,12 +14,7 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -38,10 +36,23 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Data
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true)
 public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
+    @Nullable
+    @Column(name = "DETAINED_PERIOD")
+    private Period detainedPeriod;
+    
+    @Nullable
+    @Column(name = "DETAINED_TILL")
+    private OffsetDateTime detainedTill;
+    
+    @NotNull
+    @Column(name = "BANNED", nullable = false)
+    @Builder.Default
+    private boolean banned = false;
+    
     /** The namespace this player is registered for. */
     @NotNull
     @Column(name = "NAMESPACE", columnDefinition = "VARCHAR(100)", nullable = false, updatable = false)

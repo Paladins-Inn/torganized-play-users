@@ -32,8 +32,8 @@ import org.springframework.stereotype.Component;
 import java.util.function.Consumer;
 
 /**
- * @author klenkes74
- * @since 23.03.2025
+ * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @since 1.1.0
  */
 @Component
 @RequiredArgsConstructor
@@ -47,7 +47,7 @@ public class UserLogWriter  {
             log.entry(event.getPayload(), event.getHeaders());
             UserLoginEvent payload = event.getPayload();
             
-            userLogService.log(payload.getUser(), payload.getSystem(), "user logged in");
+            userLogService.log(payload.getUser(), payload.getSystem(), "log.user.log-in", "");
             log.exit();
         });
     }
@@ -58,7 +58,7 @@ public class UserLogWriter  {
             log.entry(event.getPayload(), event.getHeaders());
             UserLogoutEvent payload = event.getPayload();
             
-            userLogService.log(payload.getUser(), payload.getSystem(), "user logged out");
+            userLogService.log(payload.getUser(), payload.getSystem(), "log.user.log-out", "");
             log.exit();
         });
     }
@@ -69,7 +69,7 @@ public class UserLogWriter  {
             log.entry(event.getPayload(), event.getHeaders());
             UserBlockedEvent payload = event.getPayload();
             
-            userLogService.log(payload.getUser(), payload.getSystem(), "user is blocked");
+            userLogService.log(payload.getUser(), payload.getSystem(), "log.user.is-detained", "");
             log.exit();
         });
     }
@@ -80,7 +80,7 @@ public class UserLogWriter  {
             log.entry(event.getPayload(), event.getHeaders());
             UserRemovedEvent payload = event.getPayload();
             
-            userLogService.log(payload.getUser(), payload.getSystem(), "user is removed");
+            userLogService.log(payload.getUser(), payload.getSystem(), "log.user.is-deleted", "");
             log.exit();
             
         });

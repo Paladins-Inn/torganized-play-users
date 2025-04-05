@@ -18,15 +18,19 @@
 
 package de.paladinsinn.tp.dcis.users.domain.services;
 
+import java.time.Clock;
+import java.time.OffsetDateTime;
+import java.time.Period;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import lombok.*;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import de.paladinsinn.tp.dcis.users.domain.model.User;
@@ -35,46 +39,56 @@ import de.paladinsinn.tp.dcis.users.domain.model.UserToImpl;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserJPA;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserRepository;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserToJpa;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 @Service
 @RequiredArgsConstructor
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @XSlf4j
 public class UserService {
-    private final UserRepository playerRepository;
+    private final UserRepository userRepository;
 
     private final UserLogService logService;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final UserToImpl toUser;
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final UserToJpa toUserJPA;
 
     private final String applicationName;
+    
+    @Getter
+    @Setter
+    private Authentication authentication;
 
-    public User createUser(User player) {
-        log.entry(player);
+    public User createUser(final User player) {
+        log.entry(player, authentication);
 
-        player = playerRepository.save(toUserJPA.apply(player));
+        User result = userRepository.save(toUserJPA.apply(player));
 
-        logService.log(player, applicationName, "player.created");
+        logService.log(result, applicationName, "log.user.created");
 
-        return log.exit(player);
+        return log.exit(result);
     }
 
     public User createUser(final UUID uid, final String nameSpace, final String name) {
-        return createUser(UserImpl.builder()
+        log.entry(uid, nameSpace, name, authentication);
+        
+        User result = createUser(UserImpl.builder()
                 .id(uid)
                 .nameSpace(nameSpace)
                 .name(name)
                 .build()
         );
+        
+        logService.log(result, applicationName, "log.user.created");
+        
+        return log.exit(result);
     }
 
     public Optional<User> retrieveUser(final UUID uid) {
-        log.entry(uid);
+        log.entry(uid, authentication);
 
-        Optional<UserJPA> result = playerRepository.findById(uid);
+        Optional<UserJPA> result = userRepository.findById(uid);
 
         log.debug("Loaded player from database. uid={}, player={}", uid, result.isPresent() ? result.get() : "***none***");
 
@@ -82,32 +96,86 @@ public class UserService {
     }
     
     public Optional<User> retrieveUser(final String nameSpace, final String name) {
-        log.entry(nameSpace, name);
+        log.entry(nameSpace, name, authentication);
         
-        Optional<UserJPA> result = playerRepository.findByNameSpaceAndName(nameSpace, name);
+        Optional<UserJPA> result = userRepository.findByNameSpaceAndName(nameSpace, name);
         
         log.debug("Loaded player from database. nameSpace={}, name={}, player={}", nameSpace, name, result.isPresent() ? result.get() : "***none***");
         
         return Optional.of(log.exit(result.orElse(null)));
     }
 
-    public List<User> retrieveUsers(final String nameSpace) {
-        log.entry(nameSpace);
-
-        List<User> result = new LinkedList<>(playerRepository.findByNameSpace(nameSpace).stream().map(toUser).toList());
-
-        return log.exit(result);
-    }
-
     public Page<User> retrieveUsers(final String nameSpace, final Pageable pageable) {
-        log.entry(nameSpace, pageable);
+        log.entry(nameSpace, pageable, authentication);
 
-        Page<UserJPA> data = playerRepository.findByNameSpace(nameSpace, pageable);
+        Page<UserJPA> data = userRepository.findByNameSpace(nameSpace, pageable);
         Page<User> result = new PageImpl<>(new LinkedList<>(data.stream().map(toUser).toList()), pageable, data.getTotalElements());
 
         log.debug("Loaded users for namespace. nameSpace='{}', page={}/{}, size={}", nameSpace, 
                 result.getPageable().getPageNumber(), result.getTotalPages(), result.getTotalElements());
 
         return log.exit(result);
+    }
+    
+    public User updateUser(final UUID uid, final User user) {
+        log.entry(uid, user, authentication);
+        
+        log.info("Updating user not implemented yet. uid={}, user={}, authentication={}", uid, user, authentication);
+        
+        Optional<User> data = retrieveUser(uid);
+        
+        data.ifPresent(value -> logService.log(value, applicationName, "log.user.updated"));
+        
+        return log.exit(data.orElse(user));
+    }
+    
+    public void deleteUser(final UUID uid) {
+        log.entry(uid, authentication);
+        
+        log.info("Deleting user not implemented yet. uid={}, authentication={}", uid, authentication);
+        
+        Optional<User> data = retrieveUser(uid);
+        
+        data.ifPresent(value -> logService.log(value, applicationName, "log.user.deleted"));
+        
+        log.exit();
+    }
+    
+    public Optional<User> detainUser(final UUID uid, final Period ttl) {
+        log.entry(uid, authentication);
+        
+        Optional<UserJPA> data = userRepository.findById(uid);
+        
+        if (data.isEmpty()) {
+            log.warn("User can't be detained. User not found. uid={}", uid);
+            
+            return log.exit(Optional.empty());
+        }
+        
+        data.get().setDetainedPeriod(ttl);
+        data.get().setDetainedTill(OffsetDateTime.now(Clock.systemUTC()).plus(ttl));
+        
+        UserJPA result = userRepository.save(data.get());
+        logService.log(result, applicationName, "log.user.detained");
+
+        return log.exit(Optional.of(result));
+    }
+    
+    public Optional<User> releaseUser(final UUID uid) {
+        log.entry(uid, authentication);
+        
+        Optional<UserJPA> data = userRepository.findById(uid);
+        if (data.isEmpty()) {
+            log.warn("User can't be released. User not found. uid={}", uid);
+            return log.exit(Optional.empty());
+        }
+        
+        data.get().setDetainedPeriod(null);
+        data.get().setDetainedTill(null);
+        
+        UserJPA result = userRepository.save(data.get());
+        logService.log(result, applicationName, "log.user.released");
+        
+        return log.exit(Optional.of(result));
     }
 }

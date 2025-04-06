@@ -19,10 +19,10 @@
 package de.paladinsinn.tp.dcis.users.domain.services;
 
 
-import de.paladinsinn.tp.dcis.users.domain.events.UserBlockedEvent;
-import de.paladinsinn.tp.dcis.users.domain.events.UserLoginEvent;
-import de.paladinsinn.tp.dcis.users.domain.events.UserLogoutEvent;
-import de.paladinsinn.tp.dcis.users.domain.events.UserRemovedEvent;
+import de.paladinsinn.tp.dcis.domain.users.events.UserBlockedEvent;
+import de.paladinsinn.tp.dcis.domain.users.events.UserLoginEvent;
+import de.paladinsinn.tp.dcis.domain.users.events.UserLogoutEvent;
+import de.paladinsinn.tp.dcis.domain.users.events.UserRemovedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.context.annotation.Bean;

@@ -30,8 +30,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import de.paladinsinn.tp.dcis.users.domain.model.User;
-import de.paladinsinn.tp.dcis.users.domain.model.UserImpl;
+import de.paladinsinn.tp.dcis.domain.users.model.User;
+import de.paladinsinn.tp.dcis.domain.users.model.UserImpl;
 import de.paladinsinn.tp.dcis.users.domain.model.UserToImpl;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserJPA;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserRepository;

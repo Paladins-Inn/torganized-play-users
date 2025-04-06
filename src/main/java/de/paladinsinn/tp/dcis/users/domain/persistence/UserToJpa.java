@@ -5,7 +5,7 @@ import java.util.function.Function;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import de.paladinsinn.tp.dcis.users.domain.model.User;
+import de.paladinsinn.tp.dcis.domain.users.model.User;
 
 @Mapper
 public interface UserToJpa extends Function<User, UserJPA> {

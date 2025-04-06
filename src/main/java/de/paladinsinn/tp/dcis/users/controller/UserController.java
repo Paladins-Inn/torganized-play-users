@@ -1,6 +1,6 @@
 package de.paladinsinn.tp.dcis.users.controller;
 
-import de.paladinsinn.tp.dcis.users.domain.model.User;
+import de.paladinsinn.tp.dcis.domain.users.model.User;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserJPA;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserRepository;
 import de.paladinsinn.tp.dcis.users.domain.services.UserService;

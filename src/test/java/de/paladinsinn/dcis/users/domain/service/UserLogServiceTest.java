@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntry;
+import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
 import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntryToImpl;
 import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntryToImplImpl;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserJPA;

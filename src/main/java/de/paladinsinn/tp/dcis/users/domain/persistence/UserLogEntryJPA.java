@@ -3,7 +3,7 @@ package de.paladinsinn.tp.dcis.users.domain.persistence;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.commons.jpa.AbstractJPAEntity;
-import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntry;
+import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

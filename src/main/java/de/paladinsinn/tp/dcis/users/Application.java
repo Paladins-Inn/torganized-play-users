@@ -2,7 +2,7 @@ package de.paladinsinn.tp.dcis.users;
 
 import de.paladinsinn.tp.dcis.commons.events.EnableEventBus;
 import de.paladinsinn.tp.dcis.commons.rest.EnableRestConfiguration;
-import de.paladinsinn.tp.dcis.users.domain.services.EnableUserLogEntryClient;
+import de.paladinsinn.tp.dcis.domain.users.services.EnableUserLogEntryClient;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

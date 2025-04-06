@@ -18,8 +18,8 @@
 package de.paladinsinn.tp.dcis.users.controller;
 
 
-import de.paladinsinn.tp.dcis.users.domain.events.UserLoginEvent;
-import de.paladinsinn.tp.dcis.users.domain.events.UserLogoutEvent;
+import de.paladinsinn.tp.dcis.domain.users.events.UserLoginEvent;
+import de.paladinsinn.tp.dcis.domain.users.events.UserLogoutEvent;
 import de.paladinsinn.tp.dcis.users.domain.services.UserLogService;
 import jakarta.inject.Inject;
 import lombok.*;

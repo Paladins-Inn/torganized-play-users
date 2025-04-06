@@ -10,8 +10,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import de.paladinsinn.tp.dcis.users.domain.model.User;
-import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntry;
+import de.paladinsinn.tp.dcis.domain.users.model.User;
+import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
 import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntryToImpl;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserJPA;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogEntryJPA;

@@ -1,13 +1,10 @@
 package de.paladinsinn.tp.dcis.users.domain.persistence;
 
-import java.time.Duration;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.commons.jpa.AbstractRevisionedJPAEntity;
-import de.paladinsinn.tp.dcis.users.domain.model.User;
+import de.paladinsinn.tp.dcis.domain.users.model.User;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -105,6 +102,24 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
         log.entry();
         
         this.banned = false;
+        
+        log.exit();
+    }
+    
+    @Override
+    public void delete() {
+        log.entry();
+        
+        this.deleted = OffsetDateTime.now(Clock.systemUTC());
+        
+        log.exit();
+    }
+    
+    @Override
+    public void undelete() {
+        log.entry();
+        
+        this.deleted = null;
         
         log.exit();
     }

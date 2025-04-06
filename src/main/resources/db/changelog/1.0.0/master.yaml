@@ -1,27 +1,32 @@
 ---
 databaseChangeLog:
-- include:
-    file: users.yaml
-    relativeToChangelogFile: true
-    context: init
-    labels: 'v1.0.0'
-- include:
-    file: playerlog.yaml
-    relativeToChangelogFile: true
-    context: init
-    labels: 'v1.0.0'
-- include:
-    file: updateIDToUUID.yaml
-    relativeToChangelogFile: true
-    context: init
-    labels: 'v1.0.4'
-- include:
-    file: users-arbitration.yaml
-    relativeToChangelogFile: true
-    context: init
-    labels: 'v1.1.0'
-- include:
-    file: playerlog-comments.yaml
-    relativeToChangelogFile: true
-    context: init
-    labels: 'v1.1.0'
+  - include:
+      file: users.yaml
+      relativeToChangelogFile: true
+      context: init
+      labels: 'v1.0.0'
+  - include:
+      file: playerlog.yaml
+      relativeToChangelogFile: true
+      context: init
+      labels: 'v1.0.0'
+  - include:
+      file: updateIDToUUID.yaml
+      relativeToChangelogFile: true
+      context: init
+      labels: 'v1.0.4'
+  - include:
+      file: users-arbitration.yaml
+      relativeToChangelogFile: true
+      context: init
+      labels: 'v1.1.0'
+  - include:
+      file: playerlog-comments.yaml
+      relativeToChangelogFile: true
+      context: init
+      labels: 'v1.1.0'
+  - include:
+      file: users-arbitration-duration.yaml
+      relativeToChangelogFile: true
+      context: init
+      labels: 'v1.1.0'

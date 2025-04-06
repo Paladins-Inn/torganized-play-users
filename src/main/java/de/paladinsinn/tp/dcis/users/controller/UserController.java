@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.annotation.security.RolesAllowed;
 
-import java.time.Period;
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -123,7 +123,7 @@ public class UserController {
     
     @PutMapping("/{id}/detain")
     @RolesAllowed({"ADMIN","ORGA","JUDGE"})
-    public String detain(@PathVariable final UUID id, @RequestParam("ttl") Period ttl, Model model) {
+    public String detain(@PathVariable final UUID id, @RequestParam("ttl") Duration ttl, Model model) {
         log.entry(id, model);
         
         Optional<User> data = userService.detainUser(id, ttl);

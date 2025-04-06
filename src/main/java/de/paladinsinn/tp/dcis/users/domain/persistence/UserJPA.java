@@ -1,7 +1,7 @@
 package de.paladinsinn.tp.dcis.users.domain.persistence;
 
+import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.time.Period;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.commons.jpa.AbstractRevisionedJPAEntity;
@@ -41,8 +41,8 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(callSuper = true)
 public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
     @Nullable
-    @Column(name = "DETAINED_PERIOD")
-    private Period detainedPeriod;
+    @Column(name = "DETAINED_DURATION")
+    private Duration detainmentDuration;
     
     @Nullable
     @Column(name = "DETAINED_TILL")

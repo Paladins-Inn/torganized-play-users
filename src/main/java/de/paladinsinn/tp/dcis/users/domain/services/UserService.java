@@ -19,8 +19,8 @@
 package de.paladinsinn.tp.dcis.users.domain.services;
 
 import java.time.Clock;
+import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.time.Period;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.UUID;
@@ -141,7 +141,7 @@ public class UserService {
         log.exit();
     }
     
-    public Optional<User> detainUser(final UUID uid, final Period ttl) {
+    public Optional<User> detainUser(final UUID uid, final Duration ttl) {
         log.entry(uid, authentication);
         
         Optional<UserJPA> data = userRepository.findById(uid);
@@ -152,7 +152,7 @@ public class UserService {
             return log.exit(Optional.empty());
         }
         
-        data.get().setDetainedPeriod(ttl);
+        data.get().setDetainmentDuration(ttl);
         data.get().setDetainedTill(OffsetDateTime.now(Clock.systemUTC()).plus(ttl));
         
         UserJPA result = userRepository.save(data.get());
@@ -170,7 +170,7 @@ public class UserService {
             return log.exit(Optional.empty());
         }
         
-        data.get().setDetainedPeriod(null);
+        data.get().setDetainmentDuration(null);
         data.get().setDetainedTill(null);
         
         UserJPA result = userRepository.save(data.get());

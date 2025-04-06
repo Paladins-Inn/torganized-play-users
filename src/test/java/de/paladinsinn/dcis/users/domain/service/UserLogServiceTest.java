@@ -3,8 +3,7 @@ package de.paladinsinn.dcis.users.domain.service;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,6 +36,8 @@ public class UserLogServiceTest {
         .id(UUID.randomUUID())
         .nameSpace("namespace")
         .name("name")
+        .detainmentDuration(Duration.ofDays(30L))
+        .detainedTill(LocalDate.now().atStartOfDay(ZoneId.of("UTC")).minusDays(16L).toOffsetDateTime())
         .created(OffsetDateTime.now(ZoneOffset.UTC))
         .revisioned(OffsetDateTime.now(ZoneOffset.UTC))
         .build();

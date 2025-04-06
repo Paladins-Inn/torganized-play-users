@@ -2,6 +2,8 @@ package de.paladinsinn.tp.dcis.users.domain.persistence;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.commons.jpa.AbstractRevisionedJPAEntity;
@@ -17,6 +19,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+import lombok.extern.slf4j.XSlf4j;
 
 /**
  * The player
@@ -36,9 +39,10 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Data
+@Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true)
+@XSlf4j
 public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
     @Nullable
     @Column(name = "DETAINED_DURATION")
@@ -66,4 +70,42 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
     @Size(min = 3, max = 100, message = "The length of the string must be between 3 and 100 characters long.") @Pattern(regexp = "^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$", message = "The string must match the pattern '^[a-zA-Z][-a-zA-Z0-9]{1,61}(.[a-zA-Z][-a-zA-Z0-9]{1,61}){0,4}$'")
     @ToString.Include
     private String name;
+    
+    @Override
+    public void detain(long days) {
+        log.entry(days);
+        
+        detainmentDuration = Duration.ofDays(days);
+        detainedTill = ZonedDateTime.now(ZoneId.of("UTC")).plusDays(days).toOffsetDateTime();
+        
+        log.exit(detainedTill);
+    }
+    
+    @Override
+    public void release() {
+        log.entry();
+        
+        detainmentDuration = null;
+        detainedTill = null;
+        
+        log.exit();
+    }
+    
+    @Override
+    public void ban() {
+        log.entry();
+        
+        this.banned = true;
+        
+        log.exit();
+    }
+    
+    @Override
+    public void unban() {
+        log.entry();
+        
+        this.banned = false;
+        
+        log.exit();
+    }
 }

@@ -63,7 +63,7 @@ public class UserLogEntryJPA extends AbstractJPAEntity<UUID> implements UserLogE
     private String text;
     
     @Nullable
-    @Column(name = "COMMENT", columnDefinition = "VARCHAR(1000)")
+    @Column(name = "COMMENTS", columnDefinition = "VARCHAR(1000)")
     private String comment;
 
     /**

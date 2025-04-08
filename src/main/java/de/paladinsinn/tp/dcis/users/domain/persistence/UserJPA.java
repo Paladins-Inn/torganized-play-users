@@ -10,9 +10,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -69,7 +67,7 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
     private String name;
     
     @Override
-    public void detain(long days) {
+    public void detain(@Min(1) @Max(1095) long days) {
         log.entry(days);
         
         detainmentDuration = Duration.ofDays(days);

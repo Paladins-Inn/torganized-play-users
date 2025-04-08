@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Bean;
 public class Application extends SpringApplication {
     @Value("${spring.application.name:PLAYERS}")
     @Getter(onMethod = @__(@Bean))
-    private final String applicationName;
+    private String applicationName;
 
     public static void main(String [] args) {
         SpringApplication.run(Application.class, args);

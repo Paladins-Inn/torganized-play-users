@@ -73,7 +73,11 @@ public class UserJPA extends AbstractRevisionedJPAEntity<UUID> implements User {
         log.entry(days);
         
         detainmentDuration = Duration.ofDays(days);
-        detainedTill = ZonedDateTime.now(ZoneId.of("UTC")).plusDays(days).toOffsetDateTime();
+        
+        detainedTill = LocalDate.now()
+            .atStartOfDay(ZoneId.of("UTC"))
+            .plusDays(1+ days) // today end of day (1) + days
+            .toOffsetDateTime();
         
         log.exit(detainedTill);
     }

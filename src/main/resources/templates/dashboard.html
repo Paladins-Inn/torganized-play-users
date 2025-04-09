@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dcis.html}"
+      th:with="lang=${#locale.language}"
+      th:lang="${lang}">
+<head>
+    <title>Dashboard</title>
+</head>
+<body><section layout:fragment="content">
+
+<h1 class="torg-header"><span th:text="#{app.title}">Delphi Council IS</span></h1>
+
+<p class="torg-header-intend">
+    Willkommen beim Delphi Council Informations System.
+</p>
+
+    <div sec:authorize="isAuthenticated()" class="sb-sidenav-footer">
+        <div class="small" th:text="#{security.logged-in-as} + ':'"></div>
+        <span sec:authentication="name"></span><br/>
+        |<!-- remove blank
+                        --><span sec:authorize="hasRole('PLAYER')" th:text="#{roles.player} + '|'"></span><!-- remove blank
+                        --><span sec:authorize="hasRole('GM')" th:text="#{roles.gm} + '|'"></span><!-- remove blank
+                        --><span sec:authorize="hasRole('JUDGE')" th:text="#{roles.judge} + '|'"></span><!-- remove blank
+                        --><span sec:authorize="hasRole('ORGA')" th:text="#{roles.orga} + '|'"></span><!-- remove blank
+                        --><span sec:authorize="hasRole('ADMIN')" th:text="#{roles.admin} + '|'"></span>
+    </div>
+
+</section></body>
+</html>

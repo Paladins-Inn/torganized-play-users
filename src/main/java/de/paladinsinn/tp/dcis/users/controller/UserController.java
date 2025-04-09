@@ -1,13 +1,17 @@
 package de.paladinsinn.tp.dcis.users.controller;
 
+import de.paladinsinn.tp.dcis.commons.ui.WebUiModelDefaultValueSetter;
 import de.paladinsinn.tp.dcis.domain.users.model.User;
+import de.paladinsinn.tp.dcis.domain.users.model.UserImpl;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserJPA;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserRepository;
+import de.paladinsinn.tp.dcis.users.domain.services.UserLogService;
 import de.paladinsinn.tp.dcis.users.domain.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +33,7 @@ import java.util.UUID;
 @XSlf4j
 public class UserController {
 
-    @Value("${server.servlet.contextPath}:/users")
-    private String contextPath;
+    private final WebUiModelDefaultValueSetter uiSetter;
     
     /**
      * The user service to do the heavy lifting of work.
@@ -41,50 +44,52 @@ public class UserController {
      * The repository
      */
     private final UserRepository userRepository;
+    
+    private final UserLogService userLogService;
+    
+    private final String applicationName;
 
     
     @GetMapping
     @RolesAllowed({"ADMIN", "ORGA", "JUDGE", "GM", "PLAYER"})
-    public String index(Model model) {
+    public String index(Authentication authentication, Model model) {
         log.entry(model);
         
         List<UserJPA> data = userRepository.findAll();
         
         model.addAttribute("users", data);
 
-        return log.exit(addContextPath("user-list", model));
-    }
-    
-    
-    /**
-     * Adds the context path to the model to be used there.
-     *
-     * @param result The result to return.
-     * @param model The model the contextPath should be added to.
-     * @return The result string.
-     */
-    private String addContextPath(final String result, Model model) {
-        model.addAttribute("contextPath", contextPath);
-        return result;
+        return log.exit(uiSetter.addContextPath("user-list", authentication, model));
     }
     
     
     @PostMapping
-    @RolesAllowed({"ADMIN", "ORGA"})
-    public String create(@RequestBody User user, Model model) {
-        log.entry(user, model);
+    public String register(Authentication authentication) {
+        log.entry(authentication);
+        
+        DefaultOidcUser oidc = (DefaultOidcUser) authentication.getPrincipal();
+        
+        log.info("OIDC information. subject={}, issuer={}, username={}", oidc.getSubject(), oidc.getIssuer(), oidc.getPreferredUsername());
+        
+        User user = UserImpl.builder()
+            .id(UUID.fromString(oidc.getSubject()))
+            .nameSpace(oidc.getIssuer().toString())
+            .name(oidc.getPreferredUsername())
+            .build();
         
         User data = userService.createUser(user);
-        model.addAttribute("user", data);
+        log.info("Created user. user={}", data);
         
-        model.addAttribute("contextPath", contextPath);
-        return log.exit(addContextPath("user-create", model));
+        userLogService.log(data, applicationName, "user.created", "User created from OIDC data. issuer=" + oidc.getIssuer()
+            + ", username=" + oidc.getPreferredUsername());
+        
+        return log.exit("redirect:/user/" + data.getId());
     }
 
 
     @GetMapping("/{id}")
     @RolesAllowed({"ADMIN", "ORGA", "JUDGE", "GM", "PLAYER"})
-    public String detail(@PathVariable final UUID id, Model model) {
+    public String detail(@PathVariable final UUID id, Authentication authentication, Model model) {
         log.entry(id, model);
         
         Optional<User> user = userService.retrieveUser(id);
@@ -96,33 +101,33 @@ public class UserController {
             return log.exit("user-not-found");
         }
         
-        return log.exit(addContextPath("user-detail", model));
+        return log.exit(uiSetter.addContextPath("user-detail", authentication, model));
     }
     
     @PutMapping("/{id}")
     @RolesAllowed({"ADMIN", "ORGA", "JUDGE", "GM", "PLAYER"})
-    public String create(@PathVariable final UUID id, @RequestBody User user, Model model) {
+    public String create(@PathVariable final UUID id, @RequestBody User user, Authentication authentication, Model model) {
         log.entry(id, user, model);
         
         User data = userService.updateUser(id, user);
         model.addAttribute("user", data);
         
-        return log.exit(addContextPath("user-create", model));
+        return log.exit(uiSetter.addContextPath("user-create", authentication, model));
     }
     
     @DeleteMapping("/{id}")
     @RolesAllowed({"ADMIN", "ORGA", "JUDGE", "PLAYER"})
-    public String delete(@PathVariable final UUID id, Model model) {
+    public String delete(@PathVariable final UUID id, Authentication authentication, Model model) {
         log.entry(id, model);
         
         userService.deleteUser(id);
         
-        return log.exit(addContextPath("user-delete", model));
+        return log.exit(uiSetter.addContextPath("user-delete", authentication, model));
     }
     
     @PutMapping("/{id}/detain")
     @RolesAllowed({"ADMIN","ORGA","JUDGE"})
-    public String detain(@PathVariable final UUID id, @RequestParam("ttl") long ttl, Model model) {
+    public String detain(@PathVariable final UUID id, @RequestParam("ttl") long ttl, Authentication authentication, Model model) {
         log.entry(id, model);
         
         Optional<User> data = userService.detainUser(id, ttl);
@@ -133,12 +138,12 @@ public class UserController {
         
         model.addAttribute("user", data.get());
         
-        return log.exit(addContextPath("user-detain", model));
+        return log.exit(uiSetter.addContextPath("user-detain", authentication, model));
     }
     
     @PutMapping("/{id}/release")
     @RolesAllowed({"ADMIN", "ORGA", "JUDGE"})
-    public String release(@PathVariable final UUID id, Model model) {
+    public String release(@PathVariable final UUID id, Authentication authentication, Model model) {
         log.entry(id, model);
         
         Optional<User> data = userService.releaseUser(id);
@@ -149,6 +154,6 @@ public class UserController {
         
         model.addAttribute("user", data.get());
         
-        return log.exit(addContextPath("user-release", model));
+        return log.exit(uiSetter.addContextPath("user-release", authentication, model));
     }
 }

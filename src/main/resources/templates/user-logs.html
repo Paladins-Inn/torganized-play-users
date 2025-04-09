@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dcis.html}"
+      th:with="lang=${#locale.language}"
+      th:lang="${lang}">
+<head>
+    <title th:text="#{view.logs.title}">User log events</title>
+</head>
+<body><section layout:fragment="content">
+
+    <h1 class="torg-header"><span th:text="#{view.logs.title}">Delphi Council IS</span></h1>
+
+    <nav>
+        <ul class="pagination justify-content-end">
+            <li class="page-item"><a class="page-link"                                                            th:href="@{/{url}(url=${url},size=${data.pageable.pageSize},page=0)}"                            th:text="#{paging.first}">First</a></li>
+            <li class="page-item" th:if="${data.pageable.pageNumber > 2}"                   ><a class="page-link" th:href="@{/{url}(url=${url},size=${data.pageable.pageSize},page=data.pageable.pageNumber - 2)}" th:text="${data.pageable.pageNumber - 2}">1</a></li>
+            <li class="page-item" th:if="${data.pageable.pageNumber > 1}"                   ><a class="page-link" th:href="@{/{url}(url=${url},size=${data.pageable.pageSize},page=data.pageable.pageNumber - 1)}" th:text="${data.pageable.pageNumber - 1}">2</a></li>
+            <li class="page-item page-link"                                                                                                                                                                        th:text="${data.pageable.pageNumber}">3</li>
+            <li class="page-item" th:if="${data.pageable.pageNumber < data.totalPages - 1}" ><a class="page-link" th:href="@{/{url}(url=${url},size=${data.pageable.pageSize},page=data.pageable.pageNumber + 1)}" th:text="${data.pageable.pageNumber + 1}">4</a></li>
+            <li class="page-item" th:if="${data.pageable.pageNumber < data.totalPages - 2}" ><a class="page-link" th:href="@{/{url}(url=${url},size=${data.pageable.pageSize},page=data.pageable.pageNumber + 2)}" th:text="${data.pageable.pageNumber + 2}">5</a></li>
+            <li class="page-item"><a class="page-link"                                                            th:href="@{/{url}(url=${url},size=${data.pageable.pageSize},page=${data.totalPages - 1})}"       th:text="#{paging.last}">Last</a></li>
+        </ul>
+    </nav>
+    <table class="table table-responsive-lg table-sm table-borderless table-striped align-top align-left">
+        <caption th:text="#{view.logs.title}">Protocol</caption>
+        <thead>
+        <tr>
+            <th scope="col" style="width: 10%;" th:text="#{logs.table.header.created}">Date</th>
+            <th scope="col" style="width: 10%;" th:text="#{logs.table.header.system}">System</th>
+            <th scope="col" style="width: 40%;" th:text="#{logs.table.header.message}">Message</th>
+            <th scope="col" style="width: 40%;" th:text="#{logs.table.header.comment}">Comment</th>
+        </tr>
+        </thead>
+        <tbody th:each="entry : ${data.content}">
+        <tr>
+            <td th:text="${entry.created}">2017-04-03</td>
+            <td th:text="#{${'system.' + entry.system}}">./.</td>
+            <td th:text="#{${'logs.message.' + entry.message}}">./.</td>
+
+            <td th:text="${entry.comments}">./.</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr th:if="${data.totalElements == 0}">
+            <td colspan="5" th:text="#{view.logs.empty-list}">No data registered.</td>
+        </tr>
+        <tr th:if="${data.totalElements > 0}">
+            <td colspan="4" th:text="#{view.logs.total-number}">Total number of events</td>
+            <td th:text="${data.totalElements}">1</td>
+        </tr>
+        </tfoot>
+    </table>
+
+
+</section></body>
+</html>

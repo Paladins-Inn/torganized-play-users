@@ -43,8 +43,8 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserMenu">
                     <div sec:authorize="isAuthenticated()">
-                        <a class="dropdown-item" th:href="@{~/users/{name}/settings(name=${#authentication.name})}" th:text="#{menu.player.settings}">Settings</a>
-                        <a class="dropdown-item" th:href="@{~/users/{name}/log(name=${#authentication.name})}" th:text="#{menu.player.log}">Activity Log</a>
+                        <a class="dropdown-item" th:href="@{~/users/settings/{id}(id=${#authentication.principal.subject})}" th:text="#{menu.player.settings}">Settings</a>
+                        <a class="dropdown-item" th:href="@{~/users/log/{id}(id=${#authentication.principal.subject})}" th:text="#{menu.player.log}">Activity Log</a>
                         <hr class="dropdown-divider" />
                         <a class="dropdown-item" href="/users/logout" th:text="#{security.log-out-prompt}"></a>
                     </div>
@@ -60,44 +60,44 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div sec:authorize="isAnonymous()">
-                            <a class="nav-link" href="/users/public/list"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt fa-fw"></i></div><span th:text="#{menu.player.dashboard}">Dashboard</span></a>
-                            <a class="nav-link" href="/gaming/public/list"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.player.games}">Games</span></a>
-                            <a class="nav-link" href="/operatives/public/list"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.player.operatives}">Operatives</span></a>
-                            <a class="nav-link" href="/threats/public/list"><div class="sb-nav-link-icon"><i class="fas fa-file-text fa-fw"></i></div><span th:text="#{menu.threats.library}">Threats</span></a>
+                            <a class="nav-link" href="/users/dashboard/public"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt fa-fw"></i></div><span th:text="#{menu.player.dashboard}">Dashboard</span></a>
+                            <a class="nav-link" href="/gaming/list/public"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.player.games}">Games</span></a>
+                            <a class="nav-link" href="/operatives/list/public"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.player.operatives}">Operatives</span></a>
+                            <a class="nav-link" href="/threats/list/public"><div class="sb-nav-link-icon"><i class="fas fa-file-text fa-fw"></i></div><span th:text="#{menu.threats.library}">Threats</span></a>
                         </div>
 
                         <div sec:authorize="hasRole('PLAYER')">
                             <div class="sb-sidenav-menu-heading" th:text="#{roles.player}"></div>
-                            <a class="nav-link" th:href="@{~/users/{name}/dashboard(name=${#authentication.name})}"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt fa-fw"></i></div><span th:text="#{menu.player.dashboard}">Dashboard</span></a>
-                            <a class="nav-link" th:href="@{~/gaming/{name}/list(name=${#authentication.name})}"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.player.games}">Games</span></a>
-                            <a class="nav-link" th:href="@{~/operatives/{name}/list(name=${#authentication.name})}"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.player.operatives}">Operatives</span></a>
+                            <a class="nav-link" th:href="@{~/users/dashboard/{id}(id=${#authentication.principal.subject})}"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt fa-fw"></i></div><span th:text="#{menu.player.dashboard}">Dashboard</span></a>
+                            <a class="nav-link" th:href="@{~/gaming/list/{id}(id=${#authentication.principal.subject})}"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.player.games}">Games</span></a>
+                            <a class="nav-link" th:href="@{~/operatives/list/{id}(id=${#authentication.principal.subject})}"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.player.operatives}">Operatives</span></a>
                             <a class="nav-link" th:href="@{~/codex/}"><div class="sb-nav-link-icon"><i class="fas fa-file-text fa-fw"></i></div><span th:text="#{menu.player.codex}">Operatives</span></a>
                         </div>
 
                         <div sec:authorize="hasRole('GM')">
                             <div class="sb-sidenav-menu-heading" th:text="#{roles.gm}"></div>
-                            <a class="nav-link" th:href="@{~/gaming/{name}/list(name=${#authentication.name},filter='gm')}"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.gm.games}">My Sessions</span></a>
-                            <a class="nav-link" th:href="@{~/gaming/missions/{name}/create(name=${#authentication.name})}"><div class="sb-nav-link-icon"><i class="fas fa-plus-square-old fa-fw"></i></div><span th:text="#{menu.gm.new-mission}">Add Mission</span></a>
-                            <a class="nav-link" th:href="@{~/gaming/table/{name}/create(name=${#authentication.name})}"><div class="sb-nav-link-icon"><i class="fas fa-plus-square fa-fw"></i></div><span th:text="#{menu.gm.new-table}">Add Private Table</span></a>
+                            <a class="nav-link" th:href="@{~/gaming/list/{id}(id=${#authentication.principal.subject},filter='gm')}"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.gm.games}">My Sessions</span></a>
+                            <a class="nav-link" th:href="@{~/gaming/missions/{id}/create(id=${#authentication.principal.subject})}"><div class="sb-nav-link-icon"><i class="fas fa-plus-square-old fa-fw"></i></div><span th:text="#{menu.gm.new-mission}">Add Mission</span></a>
+                            <a class="nav-link" th:href="@{~/gaming/table/{id}/create(id=${#authentication.principal.subject})}"><div class="sb-nav-link-icon"><i class="fas fa-plus-square fa-fw"></i></div><span th:text="#{menu.gm.new-table}">Add Private Table</span></a>
 
                             <div class="sb-sidenav-menu-heading" th:text="#{menu.threats}"></div>
-                            <a class="nav-link" th:href="@{~/threats/{name}/list(name=${#authentication.name})}"><div class="sb-nav-link-icon"><i class="fas fa-file-text fa-fw"></i></div><span th:text="#{menu.threats.my-threats}">My Threats</span></a>
+                            <a class="nav-link" th:href="@{~/threats/list/{id}(id=${#authentication.principal.subject})}"><div class="sb-nav-link-icon"><i class="fas fa-file-text fa-fw"></i></div><span th:text="#{menu.threats.my-threats}">My Threats</span></a>
                             <a class="nav-link" href="/threats/list"><div class="sb-nav-link-icon"><i class="fas fa-file-text fa-fw"></i></div><span th:text="#{menu.threats.library}">Threat Library</span></a>
-                            <a class="nav-link" th:href="@{~/threats/{name}/create(name=${#authentication.name})}"><div class="sb-nav-link-icon"><i class="fas fa-plus-square fa-fw"></i></div><span th:text="#{menu.threats.create-new}">New Threat</span></a>
+                            <a class="nav-link" th:href="@{~/threats/{id}/create(id=${#authentication.principal.subject})}"><div class="sb-nav-link-icon"><i class="fas fa-plus-square fa-fw"></i></div><span th:text="#{menu.threats.create-new}">New Threat</span></a>
                         </div>
 
                         <div sec:authorize="hasRole('ORGA')">
                             <div class="sb-sidenav-menu-heading" th:text="#{roles.orga}"></div>
-                            <a class="nav-link" href="/operatives/orga/list"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.orga.operatives}">Operatives</span></a>
-                            <a class="nav-link" href="/gaming/orga/missions"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.orga.missions}">Sessions</span></a>
-                            <a class="nav-link" href="/gaming/orga/tables"><div class="sb-nav-link-icon"><i class="fas fa-ticket fa-fw"></i></div><span th:text="#{menu.orga.tables}">Local Tables</span></a>
+                            <a class="nav-link" href="/operatives/list/orga"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.orga.operatives}">Operatives</span></a>
+                            <a class="nav-link" href="/gaming/missions/orga"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.orga.missions}">Sessions</span></a>
+                            <a class="nav-link" href="/gaming/tables/orga"><div class="sb-nav-link-icon"><i class="fas fa-ticket fa-fw"></i></div><span th:text="#{menu.orga.tables}">Local Tables</span></a>
                         </div>
 
                         <div sec:authorize="hasRole('JUDGE')">
                             <div class="sb-sidenav-menu-heading" th:text="#{roles.judge}"></div>
-                            <a class="nav-link" href="/operatives/judge/list"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.orga.operatives}">Operatives</span></a>
-                            <a class="nav-link" href="/gaming/judge/missions"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.orga.missions}">Sessions</span></a>
-                            <a class="nav-link" href="/gaming/judge/tables"><div class="sb-nav-link-icon"><i class="fas fa-ticket fa-fw"></i></div><span th:text="#{menu.orga.tables}">Local Tables</span></a>
+                            <a class="nav-link" href="/operatives/list/judge"><div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div><span th:text="#{menu.orga.operatives}">Operatives</span></a>
+                            <a class="nav-link" href="/gaming/missions/judge"><div class="sb-nav-link-icon"><i class="fas fa-tasks fa-fw"></i></div><span th:text="#{menu.orga.missions}">Sessions</span></a>
+                            <a class="nav-link" href="/gaming/tables/judge"><div class="sb-nav-link-icon"><i class="fas fa-ticket fa-fw"></i></div><span th:text="#{menu.orga.tables}">Local Tables</span></a>
                         </div>
 
                         <div sec:authorize="hasRole('ADMIN')">

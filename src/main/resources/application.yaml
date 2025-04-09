@@ -92,7 +92,7 @@ server:
       enabled: false
   port: ${HTTP_PORT:8080}
   servlet:
-    contextPath: /api
+    contextPath: /users
   forward-headers-strategy: framework
 
 management:

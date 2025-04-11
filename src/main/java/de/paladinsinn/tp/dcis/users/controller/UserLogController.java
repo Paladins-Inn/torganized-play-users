@@ -7,7 +7,6 @@ import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -32,9 +31,7 @@ public class UserLogController {
     private final UserLogService logService;
     private final WebUiModelDefaultValueSetter uiSetter;
 
-    @Value("${server.servlet.contextPath}:/users")
-    private String contextPath;
-
+    
     @GetMapping(path = "/{id}")
     @RolesAllowed("PLAYER")
     public String showLogEntries(
@@ -45,7 +42,7 @@ public class UserLogController {
     ) {
         log.entry(id, page, size, authentication, model);
 
-        prepareList(id, "/users/" + id, page, size, model);
+        prepareList(id, uiSetter.fullUrl("log/" + id), page, size, model);
 
         return log.exit(uiSetter.addContextPath("user-logs", authentication, model));
     }

@@ -66,7 +66,6 @@ public class UserLogService {
                 .build()
         );
         
-        log.info("Created log entry for user. user={}, system={}, comment={}", player, system, text);
         return log.exit(result);
     }
     
@@ -81,7 +80,6 @@ public class UserLogService {
             .build()
         );
         
-        log.info("Created log entry for user. user={}, system={}, text={}, comment={}", player, system, text, comment);
         return log.exit(result);
     }
 

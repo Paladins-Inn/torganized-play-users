@@ -21,7 +21,7 @@ package de.paladinsinn.tp.dcis;
 import de.paladinsinn.tp.dcis.commons.events.EnableEventBus;
 import de.paladinsinn.tp.dcis.commons.rest.EnableRestConfiguration;
 import de.paladinsinn.tp.dcis.domain.users.persistence.EnableLocalUserDatabase;
-import de.paladinsinn.tp.dcis.domain.users.services.EnableUserLogEntryClient;
+import de.paladinsinn.tp.dcis.domain.users.services.EnableUserManagement;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +37,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @version 1.0.0
  * @since 2024-06-09
  */
-@SpringBootApplication(scanBasePackages = {"de.paladinsinn.tp.dcis"})
+@SpringBootApplication(
+    scanBasePackages = {
+        "de.paladinsinn.tp.dcis",
+        "de.kaiserpfalzedv.commons"
+    }
+)
 @EnableEventBus
-@EnableUserLogEntryClient
+@EnableUserManagement
 @EnableLocalUserDatabase
 @EnableRestConfiguration
 @EnableJpaRepositories

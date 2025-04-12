@@ -5,7 +5,6 @@ databaseChangeLog:
       author: rlichti
       context: init
       labels: "v1.0.0"
-      dbms: postgresql
       created: 1.0.0
       changes:
         - createTable:

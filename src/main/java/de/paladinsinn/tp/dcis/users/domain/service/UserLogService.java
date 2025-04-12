@@ -25,6 +25,8 @@ import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
 import de.paladinsinn.tp.dcis.domain.users.persistence.UserRepository;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogEntryJPA;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogRepository;
+import groovy.lang.Singleton;
+import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.XSlf4j;
@@ -47,7 +49,8 @@ import static org.slf4j.ext.XLogger.Level.WARN;
  */
 @SuppressWarnings("unused")
 @Service
-@RequiredArgsConstructor
+@Singleton
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @ToString(callSuper = true, onlyExplicitlyIncluded = true)
 @XSlf4j
 public class UserLogService {

@@ -12,14 +12,14 @@ spring:
       # noinspection SpringBootApplicationYaml
       bindings:
         input:
-          user-log:
+          user-events:
             destination: dcis.user.log
             content-type: application/json
             consumer:
               use-native-decoding: false
               auto-startup: true
         output:
-          user-log:
+          user-events:
             destination: dcis.user.log
             content-type: application/json
             producer:

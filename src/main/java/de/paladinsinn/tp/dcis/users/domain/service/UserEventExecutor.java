@@ -35,6 +35,8 @@ import de.paladinsinn.tp.dcis.domain.users.events.state.UserRemovedEvent;
 import de.paladinsinn.tp.dcis.domain.users.services.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.stereotype.Service;
@@ -47,7 +49,8 @@ import org.springframework.stereotype.Service;
  * @since 12.04.25
  */
 @Service
-@RequiredArgsConstructor
+@Singleton
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
 public class UserEventExecutor implements UserEventsHandler {
   private final UserService userService;

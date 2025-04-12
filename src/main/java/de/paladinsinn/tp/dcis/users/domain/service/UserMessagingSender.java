@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025. Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright (c) 2024-2025. Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -15,14 +15,9 @@
  * License along with this program.
  * If not, see <https://www.gnu.org/licenses/>.
  */
-
 package de.paladinsinn.tp.dcis.users.domain.service;
 
-
-import com.google.common.eventbus.Subscribe;
-import de.kaiserpfalzedv.commons.api.i18n.Translator;
 import de.paladinsinn.tp.dcis.commons.events.LoggingEventBus;
-import de.paladinsinn.tp.dcis.domain.users.events.UserBaseEvent;
 import de.paladinsinn.tp.dcis.domain.users.events.UserEventsHandler;
 import de.paladinsinn.tp.dcis.domain.users.events.activity.UserLoginEvent;
 import de.paladinsinn.tp.dcis.domain.users.events.activity.UserLogoutEvent;
@@ -40,150 +35,139 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
-
-import java.util.Locale;
 
 
 /**
- * Handles all {@link de.paladinsinn.tp.dcis.domain.users.events.UserBaseEvent}.
+ *  This service reports all user login event to the AMQP queue for user logins.
  *
- * @author klenkes74
- * @since 12.04.25
+ * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 1.1.0
+ * @since 2024-11-05
  */
 @Service
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
-public class UserEventLogger implements UserEventsHandler {
-  private final UserLogService logService;
-
+public class UserMessagingSender implements UserEventsHandler {
+  private static final String sinkName = "user-events";
+  
+  @Value("${spring.application.name:unknown}")
+  private String application;
+  
   private final LoggingEventBus bus;
-  private final Translator translator;
+
+  /** The messaging infrastructure. */
+  private final StreamBridge streamBridge;
+
   
   @PostConstruct
   public void init() {
-    log.entry(bus, logService, translator);
-    
+    log.entry(streamBridge, bus);
+
     bus.register(this);
     
     log.exit();
   }
+
   
   @PreDestroy
-  public void destroy() {
-    log.entry(bus, logService, translator);
+  public void shutdown() {
+    log.entry(streamBridge, bus);
     
     bus.unregister(this);
     
     log.exit();
   }
- 
-  @Subscribe
+  
   @Override
   public void event(final UserActivatedEvent event) {
     log.entry(event);
     
-    logEvent(event);
-  
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
+    
     log.exit();
   }
   
-  @Subscribe
   @Override
   public void event(final UserCreatedEvent event) {
     log.entry(event);
     
-    logEvent(event);
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
     
     log.exit();
   }
   
-  @Subscribe
   @Override
   public void event(final UserDeletedEvent event) {
     log.entry(event);
     
-    logEvent(event);
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
     
     log.exit();
   }
   
-  @Subscribe
   @Override
   public void event(final UserRemovedEvent event) {
     log.entry(event);
     
-    logEvent(event);
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
     
     log.exit();
   }
   
-  @Subscribe
   @Override
   public void event(final UserBannedEvent event) {
     log.entry(event);
     
-    logEvent(event);
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
     
     log.exit();
   }
   
-  @Subscribe
   @Override
   public void event(final UserDetainedEvent event) {
     log.entry(event);
     
-    logEvent(event);
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
     
     log.exit();
   }
   
-  @Subscribe
   @Override
   public void event(final UserPetitionedEvent event) {
     log.entry(event);
     
-    logEvent(event);
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
     
     log.exit();
   }
   
-  @Subscribe
   @Override
   public void event(final UserReleasedEvent event) {
     log.entry(event);
     
-    logEvent(event);
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
     
     log.exit();
   }
   
-  @Subscribe
   @Override
   public void event(final UserLoginEvent event) {
     log.entry(event);
-
-    logEvent(event);
+    
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
     
     log.exit();
   }
   
-  @Subscribe
   @Override
   public void event(final UserLogoutEvent event) {
     log.entry(event);
     
-    logEvent(event);
-    
-    log.exit();
-  }
-  
-  private void logEvent(final UserBaseEvent event) {
-    log.entry(event);
-    
-    logService.log(event.getUser(), event.getSystem(), event.getI18nKey());
-    log.info(translator.getTranslation(event.getI18nKey(), Locale.getDefault(), event.getI18nData()));
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
     
     log.exit();
   }

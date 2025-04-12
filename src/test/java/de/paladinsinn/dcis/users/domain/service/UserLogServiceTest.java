@@ -17,13 +17,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
-import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntryToImpl;
+import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntryToImpl;
 import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntryToImplImpl;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserJPA;
+import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogEntryJPA;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogRepository;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserRepository;
-import de.paladinsinn.tp.dcis.users.domain.services.UserLogService;
+import de.paladinsinn.tp.dcis.domain.users.persistence.UserRepository;
+import de.paladinsinn.tp.dcis.users.domain.service.UserLogService;
 import jakarta.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

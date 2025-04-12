@@ -1,9 +1,28 @@
-package de.paladinsinn.tp.dcis.users.domain.services;
+/*
+ * Copyright (c) 2025. Kaiserpfalz EDV-Service, Roland T. Lichti
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or  (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package de.paladinsinn.tp.dcis.users.domain.service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntryToImpl;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -12,11 +31,10 @@ import org.springframework.stereotype.Service;
 
 import de.paladinsinn.tp.dcis.domain.users.model.User;
 import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
-import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntryToImpl;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserJPA;
+import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogEntryJPA;
 import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogRepository;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserRepository;
+import de.paladinsinn.tp.dcis.domain.users.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
@@ -37,7 +55,6 @@ public class UserLogService {
     private final UserLogRepository logRepository;
     private final UserRepository userRepository;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final UserLogEntryToImpl toUserLogEntry;
 
     public UserLogEntry log(final User player, final String system, final String text) {

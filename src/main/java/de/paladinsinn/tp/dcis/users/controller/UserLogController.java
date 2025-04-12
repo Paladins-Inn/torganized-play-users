@@ -2,7 +2,7 @@ package de.paladinsinn.tp.dcis.users.controller;
 
 import de.paladinsinn.tp.dcis.commons.ui.WebUiModelDefaultValueSetter;
 import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
-import de.paladinsinn.tp.dcis.users.domain.services.UserLogService;
+import de.paladinsinn.tp.dcis.users.domain.service.UserLogService;
 import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;

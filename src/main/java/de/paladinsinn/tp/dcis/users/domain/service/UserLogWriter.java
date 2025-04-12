@@ -1,28 +1,28 @@
 /*
  * Copyright (c) 2025. Kaiserpfalz EDV-Service, Roland T. Lichti
  *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 3 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or  (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
  *
- *   You should have received a copy of the GNU Lesser General Public License
- *  along with this program; if not, write to the Free Software Foundation,
- *  Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.paladinsinn.tp.dcis.users.domain.services;
+package de.paladinsinn.tp.dcis.users.domain.service;
 
 
-import de.paladinsinn.tp.dcis.domain.users.events.UserBlockedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.UserLoginEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.UserLogoutEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.UserRemovedEvent;
+import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserDetainedEvent;
+import de.paladinsinn.tp.dcis.domain.users.events.activity.UserLoginEvent;
+import de.paladinsinn.tp.dcis.domain.users.events.activity.UserLogoutEvent;
+import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserBannedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.context.annotation.Bean;
@@ -64,10 +64,10 @@ public class UserLogWriter  {
     }
     
     @Bean
-    public Consumer<Message<UserBlockedEvent>> userBlocked() {
+    public Consumer<Message<UserDetainedEvent>> userBlocked() {
         return log.exit(event -> {
             log.entry(event.getPayload(), event.getHeaders());
-            UserBlockedEvent payload = event.getPayload();
+            UserDetainedEvent payload = event.getPayload();
             
             userLogService.log(payload.getUser(), payload.getSystem(), "log.user.is-detained", "");
             log.exit();
@@ -75,10 +75,10 @@ public class UserLogWriter  {
     }
     
     @Bean
-    public Consumer<Message<UserRemovedEvent>> userRemoved() {
+    public Consumer<Message<UserBannedEvent>> userRemoved() {
         return log.exit(event -> {
             log.entry(event.getPayload(), event.getHeaders());
-            UserRemovedEvent payload = event.getPayload();
+            UserBannedEvent payload = event.getPayload();
             
             userLogService.log(payload.getUser(), payload.getSystem(), "log.user.is-deleted", "");
             log.exit();

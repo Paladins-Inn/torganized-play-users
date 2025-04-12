@@ -18,9 +18,9 @@
 package de.paladinsinn.tp.dcis.users.controller;
 
 
-import de.paladinsinn.tp.dcis.domain.users.events.UserLoginEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.UserLogoutEvent;
-import de.paladinsinn.tp.dcis.users.domain.services.UserLogService;
+import de.paladinsinn.tp.dcis.domain.users.events.activity.UserLoginEvent;
+import de.paladinsinn.tp.dcis.domain.users.events.activity.UserLogoutEvent;
+import de.paladinsinn.tp.dcis.users.domain.service.UserLogService;
 import jakarta.inject.Inject;
 import lombok.*;
 import lombok.extern.slf4j.XSlf4j;

@@ -1,36 +1,30 @@
 package de.paladinsinn.dcis.users.domain.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
+import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
+import de.paladinsinn.tp.dcis.domain.users.persistence.UserRepository;
+import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogEntryJPA;
+import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogRepository;
+import de.paladinsinn.tp.dcis.users.domain.service.UserLogService;
+import lombok.extern.slf4j.XSlf4j;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.*;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.junit4.SpringRunner;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.when;
 
-import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
-import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntryToImpl;
-import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntryToImplImpl;
-import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogEntryJPA;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogRepository;
-import de.paladinsinn.tp.dcis.domain.users.persistence.UserRepository;
-import de.paladinsinn.tp.dcis.users.domain.service.UserLogService;
-import jakarta.inject.Inject;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-
-@SuppressWarnings("CdiInjectionPointsInspection")
-@RunWith(SpringRunner.class)
-@Slf4j
+@XSlf4j
+@ExtendWith(MockitoExtension.class)
 public class UserLogServiceTest {
     private static final UserJPA PLAYER = UserJPA.builder()
         .id(UUID.randomUUID())
@@ -50,55 +44,49 @@ public class UserLogServiceTest {
         .text("test.text")
         .build();
 
-
-    @Inject
-    private UserRepository playerRepository;
-
-    @Inject
+    @Mock
+    private UserRepository userRepository;
+    
+    @Mock
     private UserLogRepository logRepository;
 
-    @Inject
+    @InjectMocks
     private UserLogService sut;
-
+    
     @Captor
     private ArgumentCaptor<UserLogEntryJPA> logEntry;
-    
+
+
     @Test
     public void shouldLogANewLogEntryWhenAnExistingUserIsUsed() {
-        when(playerRepository.findById(PLAYER.getId())).thenReturn(Optional.of(PLAYER));
+        log.exit();
+        
+        when(userRepository.findById(PLAYER.getId())).thenReturn(Optional.of(PLAYER));
         when(logRepository.save(logEntry.capture())).thenReturn(LOG_ENTRY);
 
         UserLogEntry result = sut.log(PLAYER, "test", "playerLog.test");
+        
+        log.debug("log repository saved entry. entry={}", logEntry.getValue());
         log.debug("Logged message. entry={}", result);
         
         assertEquals(PLAYER, result.getUser());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldFailWhenTheUserDoesNotExist() {
-        when(playerRepository.findById(PLAYER.getId())).thenThrow(new IllegalArgumentException());
-
-        sut.log(PLAYER, "test", "playerLog.failure");
-    }
-
-    @Configuration
-    static class TestConfiguration {
-        @MockBean
-        @Getter(onMethod = @__(@Bean))
-        private UserLogRepository logRepository;
-    
-        @MockBean
-        @Getter(onMethod = @__(@Bean))
-        private UserRepository playerRepository;
         
-        @Bean 
-        public UserLogEntryToImpl toUserLogEntry() {
-            return new UserLogEntryToImplImpl();
-        }
+        log.exit();
+    }
 
-        @Bean
-        public UserLogService sut() {
-            return new UserLogService(logRepository, playerRepository, toUserLogEntry());
+    @Test
+    public void shouldFailWhenTheUserDoesNotExist() {
+        log.entry();
+        
+        when(userRepository.findById(PLAYER.getId())).thenThrow(new IllegalArgumentException());
+
+        try {
+            sut.log(PLAYER, "test", "playerLog.failure");
+            fail("Should have thrown an IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            // everything is fine.
         }
+        
+        log.exit();
     }
 }

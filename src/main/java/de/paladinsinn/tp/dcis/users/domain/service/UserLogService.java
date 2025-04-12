@@ -18,25 +18,24 @@
 
 package de.paladinsinn.tp.dcis.users.domain.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
+import de.paladinsinn.tp.dcis.domain.users.model.User;
+import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
 import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntryToImpl;
+import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
+import de.paladinsinn.tp.dcis.domain.users.persistence.UserRepository;
+import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogEntryJPA;
+import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import de.paladinsinn.tp.dcis.domain.users.model.User;
-import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
-import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogEntryJPA;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogRepository;
-import de.paladinsinn.tp.dcis.domain.users.persistence.UserRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.slf4j.ext.XLogger.Level.WARN;
 

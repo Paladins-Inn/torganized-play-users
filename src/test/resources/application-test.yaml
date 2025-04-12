@@ -1,7 +1,7 @@
 ---
 spring:
   application:
-    name: dcis-commons
+    name: dcis-users
     admin:
       enabled: false
   main:
@@ -51,7 +51,7 @@ spring:
     enabled: true
     show-summary-output: log
     show-summary: summary
-    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    change-log: /db/changelog/dcis-users.yaml
     url: *dburl
     user: *dbusername
     password: *dbpassword

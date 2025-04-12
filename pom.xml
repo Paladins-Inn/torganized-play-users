@@ -281,6 +281,21 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- JPA -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- spring cloud messaging -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-test-binder</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- for spring-cloud-starter-contract-stub-runner -->
         <dependency>
             <groupId>org.codehaus.plexus</groupId>

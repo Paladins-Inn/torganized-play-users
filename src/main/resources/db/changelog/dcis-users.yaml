@@ -1,7 +1,7 @@
 ---
 databaseChangeLog:
   - include:
-      file: classpath:/db/changelog/db.changelog-master.yaml
+      file: classpath:/db/changelog/db.users-master.yaml
       relativeToChangelogFile: false
       context: init
       labels: 'v1.0.0'

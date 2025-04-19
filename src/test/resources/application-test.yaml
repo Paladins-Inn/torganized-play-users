@@ -51,7 +51,7 @@ spring:
     enabled: true
     show-summary-output: log
     show-summary: summary
-    change-log: /db/changelog/dcis-users.yaml
+    change-log: /db/users/dcis-users.yaml
     url: *dburl
     user: *dbusername
     password: *dbpassword

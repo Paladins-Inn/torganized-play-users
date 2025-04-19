@@ -48,9 +48,9 @@
             <url>https://maven.pkg.github.com/Paladins-Inn/torganized-play-users</url>
         </repository>
         <repository>
-            <id>torganized-play-commons</id>
-            <name>GitHub Packages for torganized-play-commons</name>
-            <url>https://maven.pkg.github.com/Paladins-Inn/torganized-play-commons</url>
+            <id>dcis-libraries</id>
+            <name>GitHub Packages for dcis-libraries</name>
+            <url>https://maven.pkg.github.com/Paladins-Inn/dcis-libraries</url>
         </repository>
     </repositories>
     

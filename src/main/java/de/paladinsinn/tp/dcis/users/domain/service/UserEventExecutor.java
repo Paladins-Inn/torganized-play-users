@@ -32,6 +32,7 @@ import de.paladinsinn.tp.dcis.users.client.events.state.UserActivatedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.state.UserCreatedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.state.UserDeletedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.state.UserRemovedEvent;
+import de.paladinsinn.tp.dcis.users.client.model.User;
 import de.paladinsinn.tp.dcis.users.store.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -91,9 +92,9 @@ public class UserEventExecutor implements UserEventsHandler {
   public void event(final UserCreatedEvent event) {
     log.entry(event);
     
-    userService.createUser(event.getUser());
+    User result = userService.createUser(event.getUser());
     
-    log.exit();
+    log.exit(result);
   }
   
   @Subscribe

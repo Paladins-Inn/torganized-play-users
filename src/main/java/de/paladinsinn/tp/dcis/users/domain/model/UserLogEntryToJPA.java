@@ -16,16 +16,15 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.paladinsinn.tp.dcis.users.domain.persistence;
+package de.paladinsinn.tp.dcis.users.domain.model;
 
-import java.util.function.Function;
-
-import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
+import de.paladinsinn.tp.dcis.users.client.model.User;
+import de.paladinsinn.tp.dcis.users.client.model.UserLogEntry;
+import de.paladinsinn.tp.dcis.users.store.UserJPA;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import de.paladinsinn.tp.dcis.domain.users.model.User;
-import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
+import java.util.function.Function;
 
 @Mapper
 public interface UserLogEntryToJPA extends Function<UserLogEntry, UserLogEntryJPA> {

@@ -1,11 +1,11 @@
-package de.paladinsinn.dcis.users.domain.service;
+package de.paladinsinn.tp.dcis.users.domain.service;
 
-import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
-import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
-import de.paladinsinn.tp.dcis.domain.users.persistence.UserRepository;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogEntryJPA;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogRepository;
-import de.paladinsinn.tp.dcis.users.domain.service.UserLogService;
+import de.paladinsinn.tp.dcis.users.client.model.User;
+import de.paladinsinn.tp.dcis.users.client.model.UserLogEntry;
+import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntryJPA;
+import de.paladinsinn.tp.dcis.users.domain.model.UserLogRepository;
+import de.paladinsinn.tp.dcis.users.store.UserJPA;
+import de.paladinsinn.tp.dcis.users.store.UserRepository;
 import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +38,7 @@ public class UserLogServiceTest {
 
     private static final UserLogEntryJPA LOG_ENTRY = UserLogEntryJPA.builder()
         .id(UUID.randomUUID())
-        .user(PLAYER)
+        .user(PLAYER.getId())
         .created(OffsetDateTime.now(ZoneOffset.UTC))
         .system("system")
         .text("test.text")
@@ -61,7 +61,6 @@ public class UserLogServiceTest {
     public void shouldLogANewLogEntryWhenAnExistingUserIsUsed() {
         log.exit();
         
-        when(userRepository.findById(PLAYER.getId())).thenReturn(Optional.of(PLAYER));
         when(logRepository.save(logEntry.capture())).thenReturn(LOG_ENTRY);
 
         UserLogEntry result = sut.log(PLAYER, "test", "playerLog.test");
@@ -69,23 +68,46 @@ public class UserLogServiceTest {
         log.debug("log repository saved entry. entry={}", logEntry.getValue());
         log.debug("Logged message. entry={}", result);
         
-        assertEquals(PLAYER, result.getUser());
+        assertEquals(PLAYER.getId(), result.getUser());
         
         log.exit();
     }
 
     @Test
-    public void shouldFailWhenTheUserDoesNotExist() {
+    public void shouldFailWhenTheUserHasNoIDAndTheNameAndNamespaceIsNotFound() {
         log.entry();
         
-        when(userRepository.findById(PLAYER.getId())).thenThrow(new IllegalArgumentException());
+        User object = PLAYER.toBuilder().id(null).build();
+        
+        when(userRepository.findByNameSpaceAndName(object.getNameSpace(), object.getName()))
+            .thenReturn(Optional.empty());
 
         try {
-            sut.log(PLAYER, "test", "playerLog.failure");
+            sut.log(object, "test", "playerLog.failure");
             fail("Should have thrown an IllegalArgumentException");
         } catch (IllegalArgumentException e) {
             // everything is fine.
         }
+        
+        log.exit();
+    }
+    
+    @Test
+    public void shouldFindTheUserWhenTheUserHasNoIDButTheNameAndNamespaceIsFound() {
+        log.entry();
+        
+        User object = PLAYER.toBuilder().id(null).build();
+        
+        when(userRepository.findByNameSpaceAndName(object.getNameSpace(), object.getName()))
+            .thenReturn(Optional.of(PLAYER));
+        when(logRepository.save(logEntry.capture())).thenReturn(LOG_ENTRY);
+        
+        UserLogEntry result = sut.log(object, "test", "playerLog.test");
+        
+        log.debug("log repository saved entry. entry={}", logEntry.getValue());
+        log.debug("Logged message. entry={}", result);
+        
+        assertEquals(PLAYER.getId(), result.getUser());
         
         log.exit();
     }

@@ -16,32 +16,20 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.paladinsinn.tp.dcis.users.domain.persistence;
-
-import java.util.UUID;
+package de.paladinsinn.tp.dcis.users.domain.model;
 
 import de.kaiserpfalzedv.commons.jpa.AbstractJPAEntity;
-import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
-import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
+import de.paladinsinn.tp.dcis.users.client.model.UserLogEntry;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+
+import java.util.UUID;
 
 /**
  * The player action log.
@@ -65,10 +53,9 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(callSuper = true)
 public class UserLogEntryJPA extends AbstractJPAEntity<UUID> implements UserLogEntry {
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "PLAYER", columnDefinition = "UUID", nullable = false, updatable = false)
+    @Column(name = "PLAYER", columnDefinition = "UUID", nullable = false, updatable = false)
     @ToString.Include
-    private UserJPA user;
+    private UUID user;
 
     @NotNull
     @Column(name = "SYSTEM", columnDefinition = "VARCHAR(100)", nullable = false, updatable = false)

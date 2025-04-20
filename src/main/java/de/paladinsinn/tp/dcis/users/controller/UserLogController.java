@@ -1,12 +1,12 @@
 package de.paladinsinn.tp.dcis.users.controller;
 
-import de.paladinsinn.tp.dcis.commons.ui.WebUiModelDefaultValueSetter;
-import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
+import de.paladinsinn.tp.dcis.lib.ui.WebUiModelDefaultValueSetter;
+import de.paladinsinn.tp.dcis.users.client.model.UserLogEntry;
 import de.paladinsinn.tp.dcis.users.domain.service.UserLogService;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -22,7 +22,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/log")
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
 public class UserLogController {
     private static final String DEFAULT_PAGE_SIZE = "25";

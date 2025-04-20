@@ -19,19 +19,20 @@
 package de.paladinsinn.tp.dcis.users.controller;
 
 
-import de.paladinsinn.tp.dcis.commons.events.LoggingEventBus;
-import de.paladinsinn.tp.dcis.domain.users.events.UserBaseEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.activity.UserLoginEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.activity.UserLogoutEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserBannedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserDetainedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserReleasedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.state.UserActivatedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.state.UserCreatedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.state.UserDeletedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.state.UserRemovedEvent;
+import de.paladinsinn.tp.dcis.lib.messaging.events.LoggingEventBus;
+import de.paladinsinn.tp.dcis.users.client.events.UserBaseEvent;
+import de.paladinsinn.tp.dcis.users.client.events.activity.UserLoginEvent;
+import de.paladinsinn.tp.dcis.users.client.events.activity.UserLogoutEvent;
+import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserBannedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserDetainedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserReleasedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.state.UserActivatedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.state.UserCreatedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.state.UserDeletedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.state.UserRemovedEvent;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +49,7 @@ import java.util.function.Consumer;
  * @since 1.1.0
  */
 @Component
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Inject})
 @XSlf4j
 public class UserEventsMessagingConsumer {
     private final LoggingEventBus bus;

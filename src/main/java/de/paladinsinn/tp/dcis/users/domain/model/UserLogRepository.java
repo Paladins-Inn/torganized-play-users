@@ -16,22 +16,18 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.paladinsinn.tp.dcis.users.domain.persistence;
+package de.paladinsinn.tp.dcis.users.domain.model;
 
-import java.util.List;
-import java.util.UUID;
-
-import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.UUID;
+
 @Repository
 public interface UserLogRepository extends JpaRepository<UserLogEntryJPA, UUID> {
-    List<UserLogEntryJPA> findByUser(UserJPA player);
-    Page<UserLogEntryJPA> findByUser(UserJPA player, Pageable pageable);
-    
-    List<UserLogEntryJPA> findByUser_Id(UUID player);
-    Page<UserLogEntryJPA> findByUser_Id(UUID player, Pageable pageable);
+    List<UserLogEntryJPA> findByUser(final UUID user_id);
+    Page<UserLogEntryJPA> findByUser(UUID player, Pageable pageable);
 }

@@ -20,19 +20,19 @@ package de.paladinsinn.tp.dcis.users.domain.service;
 
 
 import com.google.common.eventbus.Subscribe;
-import de.paladinsinn.tp.dcis.commons.events.LoggingEventBus;
-import de.paladinsinn.tp.dcis.domain.users.events.UserEventsHandler;
-import de.paladinsinn.tp.dcis.domain.users.events.activity.UserLoginEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.activity.UserLogoutEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserBannedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserDetainedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserPetitionedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserReleasedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.state.UserActivatedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.state.UserCreatedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.state.UserDeletedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.state.UserRemovedEvent;
-import de.paladinsinn.tp.dcis.domain.users.services.UserService;
+import de.paladinsinn.tp.dcis.lib.messaging.events.LoggingEventBus;
+import de.paladinsinn.tp.dcis.users.client.events.UserEventsHandler;
+import de.paladinsinn.tp.dcis.users.client.events.activity.UserLoginEvent;
+import de.paladinsinn.tp.dcis.users.client.events.activity.UserLogoutEvent;
+import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserBannedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserDetainedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserPetitionedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserReleasedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.state.UserActivatedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.state.UserCreatedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.state.UserDeletedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.state.UserRemovedEvent;
+import de.paladinsinn.tp.dcis.users.store.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
@@ -43,7 +43,7 @@ import org.springframework.stereotype.Service;
 
 
 /**
- * Handles all {@link de.paladinsinn.tp.dcis.domain.users.events.UserBaseEvent}.
+ * Handles all {@link de.paladinsinn.tp.dcis.users.client.events.UserBaseEvent}.
  *
  * @author klenkes74
  * @since 12.04.25

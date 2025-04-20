@@ -18,15 +18,15 @@
 
 package de.paladinsinn.tp.dcis.users.domain.service;
 
-import de.paladinsinn.tp.dcis.domain.users.model.User;
-import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntry;
-import de.paladinsinn.tp.dcis.domain.users.model.UserLogEntryToImpl;
-import de.paladinsinn.tp.dcis.domain.users.persistence.UserJPA;
-import de.paladinsinn.tp.dcis.domain.users.persistence.UserRepository;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogEntryJPA;
-import de.paladinsinn.tp.dcis.users.domain.persistence.UserLogRepository;
-import groovy.lang.Singleton;
+import de.paladinsinn.tp.dcis.users.client.model.User;
+import de.paladinsinn.tp.dcis.users.client.model.UserLogEntry;
+import de.paladinsinn.tp.dcis.users.client.model.UserLogEntryToImpl;
+import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntryJPA;
+import de.paladinsinn.tp.dcis.users.domain.model.UserLogRepository;
+import de.paladinsinn.tp.dcis.users.store.UserJPA;
+import de.paladinsinn.tp.dcis.users.store.UserRepository;
 import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.XSlf4j;
@@ -63,7 +63,7 @@ public class UserLogService {
         log.entry(player, system, text);
 
         UserLogEntry result = logRepository.save(UserLogEntryJPA.builder()
-                .user(loadUser(player))
+                .user(getUserId(player))
                 .system(system)
                 .comment(text)
                 .build()
@@ -76,7 +76,7 @@ public class UserLogService {
         log.entry(player, system, text, comment);
         
         UserLogEntry result = logRepository.save(UserLogEntryJPA.builder()
-            .user(loadUser(player))
+            .user(getUserId(player))
             .system(system)
             .text(text)
             .comment(comment)
@@ -89,7 +89,7 @@ public class UserLogService {
     public List<UserLogEntry> load(final UUID uid) {
         log.entry(uid);
 
-        List<UserLogEntry> result = logRepository.findByUser_Id(uid).stream().map(p -> (UserLogEntry)toUserLogEntry.apply(p)).toList();
+        List<UserLogEntry> result = logRepository.findByUser(uid).stream().map(p -> (UserLogEntry)toUserLogEntry.apply(p)).toList();
 
         log.debug("Loaded log file for player. uid={}, log={}", uid, result);
 
@@ -99,7 +99,7 @@ public class UserLogService {
     public Page<UserLogEntry> load(final UUID uid, Pageable pageable) {
         log.entry(uid);
 
-        Page<UserLogEntryJPA> data = logRepository.findByUser_Id(uid, pageable);
+        Page<UserLogEntryJPA> data = logRepository.findByUser(uid, pageable);
         Page<UserLogEntry> result = new PageImpl<>(data.stream().map(p -> (UserLogEntry)toUserLogEntry.apply(p)).toList(), data.getPageable(), data.getTotalElements());
 
         log.debug("Loaded log page for player. uid={}, page={}/{}, log={}", uid,
@@ -108,21 +108,20 @@ public class UserLogService {
         return log.exit(result);
     }
 
-    private UserJPA loadUser(final User user) {
+    private UUID getUserId(final User user) {
         log.entry(user);
 
-        Optional<UserJPA> result;
-        if (user.getId() != null) {
-            result = userRepository.findById(user.getId());
-        } else {
-            result = userRepository.findByNameSpaceAndName(user.getNameSpace(), user.getName());
+        UUID result = user.getId();
+        if (result == null) {
+            Optional<UserJPA> jpa = userRepository.findByNameSpaceAndName(user.getNameSpace(), user.getName());
+            if (jpa.isPresent()) {
+                result = jpa.get().getId();
+            } else {
+                throw log.throwing(WARN, new IllegalArgumentException("User does not exist in database. id='" + user.getId()
+                    + "', nameSpace='" + user.getNameSpace() + "', name='" + user.getName() + "'"));
+            }
         }
 
-        if (result.isEmpty()) {
-            log.throwing(WARN, new IllegalArgumentException("User does not exist in database. id='" + user.getId() + "', nameSpace='" + user.getNameSpace() + "', name='" + user.getName() + "'"));
-        }
-
-        //noinspection OptionalGetWithoutIsPresent
-        return log.exit(result.get());
+        return result;
     }
 }

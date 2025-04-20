@@ -40,9 +40,9 @@ spring:
   
   datasource:
     name: in-memory
-    url: &dburl jdbc:h2:file:./target/db;MODE=PostgreSQL
-    username: &dbusername sa
-    password: &dbpassword password
+    url: jdbc:h2:file:./target/db;MODE=PostgreSQL
+    username: sa
+    password: password
     hikari:
       connectionTimeout: 20000
       maximumPoolSize: 5
@@ -51,10 +51,10 @@ spring:
     enabled: true
     show-summary-output: log
     show-summary: summary
-    change-log: /db/users/dcis-users.yaml
-    url: *dburl
-    user: *dbusername
-    password: *dbpassword
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
   
   jpa:
     showSql: false

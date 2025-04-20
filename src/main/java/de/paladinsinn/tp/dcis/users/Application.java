@@ -16,40 +16,44 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-package de.paladinsinn.tp.dcis;
+package de.paladinsinn.tp.dcis.users;
 
-import de.paladinsinn.tp.dcis.commons.events.EnableEventBus;
-import de.paladinsinn.tp.dcis.commons.rest.EnableRestConfiguration;
-import de.paladinsinn.tp.dcis.domain.users.persistence.EnableLocalUserDatabase;
-import de.paladinsinn.tp.dcis.domain.users.services.EnableUserManagement;
+import de.paladinsinn.tp.dcis.lib.messaging.events.EnableEventBus;
+import de.paladinsinn.tp.dcis.lib.rest.EnableRestConfiguration;
+import de.paladinsinn.tp.dcis.lib.ui.EnableWebUiConfiguration;
+import de.paladinsinn.tp.dcis.users.store.EnableUserStore;
+import jakarta.inject.Inject;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.envers.repository.config.EnableEnversRepositories;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @author Roland T. Lichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2024-06-09
  */
-@SpringBootApplication(
-    scanBasePackages = {
-        "de.paladinsinn.tp.dcis",
-        "de.kaiserpfalzedv.commons"
-    }
-)
+@SpringBootApplication(scanBasePackages = {
+    "de.paladinsinn.tp.dcis.users.controller",
+    "de.paladinsinn.tp.dcis.users.domain.service"
+})
 @EnableEventBus
-@EnableUserManagement
-@EnableLocalUserDatabase
+@EnableUserStore
 @EnableRestConfiguration
-@EnableJpaRepositories
-@EntityScan
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@EnableWebUiConfiguration
+@EnableJpaRepositories(basePackages = {"de.paladinsinn.tp.dcis.users.domain.model"})
+@EntityScan(basePackages = {"de.paladinsinn.tp.dcis.users.domain.model"})
+@EnableJpaAuditing
+@EnableEnversRepositories
+@EnableTransactionManagement
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class Application extends SpringApplication {
     @Value("${spring.application.name:PLAYERS}")
     @Getter(onMethod = @__(@Bean))

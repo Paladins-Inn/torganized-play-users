@@ -1,21 +1,21 @@
 package de.paladinsinn.tp.dcis.users.controller;
 
-import de.paladinsinn.tp.dcis.commons.events.LoggingEventBus;
-import de.paladinsinn.tp.dcis.commons.ui.WebUiModelDefaultValueSetter;
-import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserBannedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserDetainedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.arbitation.UserReleasedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.state.UserCreatedEvent;
-import de.paladinsinn.tp.dcis.domain.users.events.state.UserDeletedEvent;
-import de.paladinsinn.tp.dcis.domain.users.model.User;
-import de.paladinsinn.tp.dcis.domain.users.model.UserImpl;
-import de.paladinsinn.tp.dcis.domain.users.services.UserService;
+import de.paladinsinn.tp.dcis.lib.messaging.events.LoggingEventBus;
+import de.paladinsinn.tp.dcis.lib.ui.WebUiModelDefaultValueSetter;
+import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserBannedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserDetainedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserReleasedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.state.UserCreatedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.state.UserDeletedEvent;
+import de.paladinsinn.tp.dcis.users.client.model.User;
+import de.paladinsinn.tp.dcis.users.client.model.UserImpl;
+import de.paladinsinn.tp.dcis.users.store.UserService;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.inject.Inject;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.XSlf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
@@ -33,7 +33,7 @@ import java.util.UUID;
  * @since 1.1.0
  */
 @Controller
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @XSlf4j
 public class UserController {
     private final WebUiModelDefaultValueSetter uiSetter;

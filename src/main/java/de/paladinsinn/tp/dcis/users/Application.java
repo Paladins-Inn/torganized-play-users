@@ -42,7 +42,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication(scanBasePackages = {
     "de.paladinsinn.tp.dcis.users.controller",
-    "de.paladinsinn.tp.dcis.users.domain.service"
+    "de.paladinsinn.tp.dcis.users.domain.model"
 })
 @EnableEventBus
 @EnableUserStore

@@ -1,7 +1,7 @@
 package de.paladinsinn.tp.dcis.users.controller;
 
 import de.paladinsinn.tp.dcis.lib.ui.WebUiModelDefaultValueSetter;
-import de.paladinsinn.tp.dcis.users.client.model.UserLogEntry;
+import de.paladinsinn.tp.dcis.users.client.model.user.UserLogEntry;
 import de.paladinsinn.tp.dcis.users.domain.service.UserLogService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;

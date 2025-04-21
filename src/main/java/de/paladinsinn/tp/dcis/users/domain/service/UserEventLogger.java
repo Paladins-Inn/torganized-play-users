@@ -26,6 +26,8 @@ import de.paladinsinn.tp.dcis.users.client.events.UserBaseEvent;
 import de.paladinsinn.tp.dcis.users.client.events.UserEventsHandler;
 import de.paladinsinn.tp.dcis.users.client.events.activity.UserLoginEvent;
 import de.paladinsinn.tp.dcis.users.client.events.activity.UserLogoutEvent;
+import de.paladinsinn.tp.dcis.users.client.events.apikey.ApiKeyCreatedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.apikey.ApiKeyRevokedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserBannedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserDetainedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserPetitionedEvent;
@@ -178,6 +180,25 @@ public class UserEventLogger implements UserEventsHandler {
     
     log.exit();
   }
+  
+  @Override
+  public void event(final ApiKeyCreatedEvent event) {
+    log.entry(event);
+    
+    logEvent(event);
+    
+    log.exit();
+  }
+  
+  @Override
+  public void event(final ApiKeyRevokedEvent event) {
+    log.entry(event);
+    
+    logEvent(event);
+    
+    log.exit();
+  }
+  
   
   private void logEvent(final UserBaseEvent event) {
     log.entry(event);

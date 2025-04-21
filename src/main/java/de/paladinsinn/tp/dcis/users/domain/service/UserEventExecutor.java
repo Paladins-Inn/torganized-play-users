@@ -24,6 +24,8 @@ import de.paladinsinn.tp.dcis.lib.messaging.events.LoggingEventBus;
 import de.paladinsinn.tp.dcis.users.client.events.UserEventsHandler;
 import de.paladinsinn.tp.dcis.users.client.events.activity.UserLoginEvent;
 import de.paladinsinn.tp.dcis.users.client.events.activity.UserLogoutEvent;
+import de.paladinsinn.tp.dcis.users.client.events.apikey.ApiKeyCreatedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.apikey.ApiKeyRevokedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserBannedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserDetainedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserPetitionedEvent;
@@ -32,7 +34,7 @@ import de.paladinsinn.tp.dcis.users.client.events.state.UserActivatedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.state.UserCreatedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.state.UserDeletedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.state.UserRemovedEvent;
-import de.paladinsinn.tp.dcis.users.client.model.User;
+import de.paladinsinn.tp.dcis.users.client.model.user.User;
 import de.paladinsinn.tp.dcis.users.store.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -173,6 +175,24 @@ public class UserEventExecutor implements UserEventsHandler {
     log.entry(event);
     
     logService.log(event.getUser(), event.getSystem(), event.getI18nKey());
+    
+    log.exit();
+  }
+  
+  @Override
+  public void event(final ApiKeyCreatedEvent event) {
+    log.entry(event);
+    
+    userService.saveApiKey(event.getUser(), event.getApiKey());
+    
+    log.exit();
+  }
+  
+  @Override
+  public void event(final ApiKeyRevokedEvent event) {
+    log.entry(event);
+    
+    userService.revokeApiKey(event.getUser(), event.getApiKey());
     
     log.exit();
   }

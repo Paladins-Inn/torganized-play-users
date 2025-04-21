@@ -18,9 +18,9 @@
 
 package de.paladinsinn.tp.dcis.users.domain.service;
 
-import de.paladinsinn.tp.dcis.users.client.model.User;
-import de.paladinsinn.tp.dcis.users.client.model.UserLogEntry;
-import de.paladinsinn.tp.dcis.users.client.model.UserLogEntryToImpl;
+import de.paladinsinn.tp.dcis.users.client.model.user.User;
+import de.paladinsinn.tp.dcis.users.client.model.user.UserLogEntry;
+import de.paladinsinn.tp.dcis.users.client.model.user.UserLogEntryToImpl;
 import de.paladinsinn.tp.dcis.users.domain.model.UserLogEntryJPA;
 import de.paladinsinn.tp.dcis.users.domain.model.UserLogRepository;
 import de.paladinsinn.tp.dcis.users.store.UserJPA;

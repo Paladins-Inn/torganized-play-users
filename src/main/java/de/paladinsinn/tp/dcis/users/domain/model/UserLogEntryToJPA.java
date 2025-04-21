@@ -18,8 +18,8 @@
 
 package de.paladinsinn.tp.dcis.users.domain.model;
 
-import de.paladinsinn.tp.dcis.users.client.model.User;
-import de.paladinsinn.tp.dcis.users.client.model.UserLogEntry;
+import de.paladinsinn.tp.dcis.users.client.model.user.User;
+import de.paladinsinn.tp.dcis.users.client.model.user.UserLogEntry;
 import de.paladinsinn.tp.dcis.users.store.UserJPA;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

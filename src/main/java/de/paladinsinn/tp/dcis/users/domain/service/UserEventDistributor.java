@@ -21,6 +21,8 @@ import de.paladinsinn.tp.dcis.lib.messaging.events.LoggingEventBus;
 import de.paladinsinn.tp.dcis.users.client.events.UserEventsHandler;
 import de.paladinsinn.tp.dcis.users.client.events.activity.UserLoginEvent;
 import de.paladinsinn.tp.dcis.users.client.events.activity.UserLogoutEvent;
+import de.paladinsinn.tp.dcis.users.client.events.apikey.ApiKeyCreatedEvent;
+import de.paladinsinn.tp.dcis.users.client.events.apikey.ApiKeyRevokedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserBannedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserDetainedEvent;
 import de.paladinsinn.tp.dcis.users.client.events.arbitation.UserPetitionedEvent;
@@ -165,6 +167,24 @@ public class UserEventDistributor implements UserEventsHandler {
   
   @Override
   public void event(final UserLogoutEvent event) {
+    log.entry(event);
+    
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
+    
+    log.exit();
+  }
+  
+  @Override
+  public void event(final ApiKeyCreatedEvent event) {
+    log.entry(event);
+    
+    streamBridge.send(sinkName, event.toBuilder().system(application).build());
+    
+    log.exit();
+  }
+  
+  @Override
+  public void event(final ApiKeyRevokedEvent event) {
     log.entry(event);
     
     streamBridge.send(sinkName, event.toBuilder().system(application).build());

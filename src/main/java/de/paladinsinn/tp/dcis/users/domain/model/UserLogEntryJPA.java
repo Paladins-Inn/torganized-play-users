@@ -19,7 +19,7 @@
 package de.paladinsinn.tp.dcis.users.domain.model;
 
 import de.kaiserpfalzedv.commons.jpa.AbstractJPAEntity;
-import de.paladinsinn.tp.dcis.users.client.model.UserLogEntry;
+import de.paladinsinn.tp.dcis.users.client.model.user.UserLogEntry;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

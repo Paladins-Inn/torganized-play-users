@@ -18,48 +18,45 @@
 
 package de.paladinsinn.tp.dcis.users;
 
-import de.paladinsinn.tp.dcis.lib.messaging.events.EnableEventBus;
-import de.paladinsinn.tp.dcis.lib.rest.EnableRestConfiguration;
-import de.paladinsinn.tp.dcis.lib.ui.EnableWebUiConfiguration;
-import de.paladinsinn.tp.dcis.users.store.EnableUserStore;
+import de.kaiserpfalzedv.commons.users.messaging.EnableUsersMessaging;
+import de.kaiserpfalzedv.commons.users.store.EnableUsersStore;
+import de.paladinsinn.tp.dcis.users.controller.UserController;
 import jakarta.inject.Inject;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.envers.repository.config.EnableEnversRepositories;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * @author Roland T. Lichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2024-06-09
  */
-@SpringBootApplication(scanBasePackages = {
-    "de.paladinsinn.tp.dcis.users.controller",
-    "de.paladinsinn.tp.dcis.users.domain.model"
+@SpringBootApplication(scanBasePackageClasses = {
+    UserController.class,
 })
-@EnableEventBus
-@EnableUserStore
-@EnableRestConfiguration
-@EnableWebUiConfiguration
-@EnableJpaRepositories(basePackages = {"de.paladinsinn.tp.dcis.users.domain.model"})
-@EntityScan(basePackages = {"de.paladinsinn.tp.dcis.users.domain.model"})
 @EnableJpaAuditing
-@EnableEnversRepositories
 @EnableTransactionManagement
+@EnableUsersMessaging
+@EnableUsersStore
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
+@XSlf4j
 public class Application extends SpringApplication {
     @Value("${spring.application.name:PLAYERS}")
     @Getter(onMethod = @__(@Bean))
     private String applicationName;
 
     public static void main(String [] args) {
-        SpringApplication.run(Application.class, args);
+        log.entry(Arrays.stream(args).collect(Collectors.toList()));
+        
+        log.exit(SpringApplication.run(Application.class, args));
     }
 }
